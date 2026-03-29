@@ -1,1 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module apprentissage - Contrats de services</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <main class="home-page">
+    <section class="hero" style="min-height: 100vh;">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
 
+      <header class="hero-header">
+        <div class="brand">
+          <div class="brand-mark">CS</div>
+          <div>
+            <div class="brand-name">Contrats de Services Academy</div>
+            <div class="brand-sub">Module apprentissage • V3.0</div>
+          </div>
+        </div>
+
+        <nav class="hero-nav">
+          <a href="index.html" class="nav-link">Accueil</a>
+          <a href="learning.html" class="nav-link">Apprentissage</a>
+          <a href="simulateur.html" class="nav-link">Simulateur</a>
+          <a href="certification.html" class="nav-link">Certification</a>
+        </nav>
+      </header>
+
+      <div class="hero-content" style="max-width: 980px; margin-bottom: 30px;">
+        <div class="hero-kicker">Brique de training</div>
+
+        <h1>
+          Module apprentissage
+          <br />
+          Contrats de services après-vente
+        </h1>
+
+        <p class="hero-subtitle">
+          Cette brique prépare le vendeur avant la mise en situation.
+          L’univers Dacia est actif dans cette V3.0. Les autres univers sont visibles
+          pour montrer la logique multi-marques de la plateforme.
+        </p>
+
+        <div class="hero-proof">
+          <span class="proof-pill active">Dacia actif</span>
+          <span class="proof-pill">Renault VL à venir</span>
+          <span class="proof-pill">Renault Utilitaires à venir</span>
+        </div>
+      </div>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Choix de l’univers</div>
+              <h2>Sélectionnez votre brique d’apprentissage</h2>
+            </div>
+            <div class="journey-side-badge">Multi-univers</div>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step" style="border-color: rgba(214, 179, 106, 0.28);">
+              <div class="step-top">
+                <span class="step-number">01</span>
+                <span class="step-tag">Disponible</span>
+              </div>
+              <h3>Dacia</h3>
+              <p>Module actif dans cette V3.0. Questions métier conçues pour préparer directement le simulateur atelier.</p>
+            </div>
+
+            <div class="step-card premium-step" style="opacity: 0.72;">
+              <div class="step-top">
+                <span class="step-number">02</span>
+                <span class="step-tag">À venir</span>
+              </div>
+              <h3>Renault VL</h3>
+              <p>Univers visible dans la plateforme mais non encore activé dans cette version de démonstration.</p>
+            </div>
+
+            <div class="step-card premium-step" style="opacity: 0.72;">
+              <div class="step-top">
+                <span class="step-number">03</span>
+                <span class="step-tag">À venir</span>
+              </div>
+              <h3>Renault Utilitaires</h3>
+              <p>Univers prévu pour la suite, avec logique de modules et de simulation dédiée.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">04</span>
+                <span class="step-tag">Objectif</span>
+              </div>
+              <h3>Préparer la simulation</h3>
+              <p>Le but du module est de renforcer les bons réflexes avant la mise en situation commerciale.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section" style="margin-top: 22px;">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Module Dacia</div>
+              <h2>QCM vendeur — préparation au simulateur</h2>
+            </div>
+            <div class="journey-side-badge">8 questions</div>
+          </div>
+
+          <div style="margin-bottom: 22px;">
+            <div class="proof-pill active" style="display:inline-flex;">Univers actif : Dacia</div>
+          </div>
+
+          <div class="step-card premium-step" style="min-height: unset;">
+            <div class="step-top" style="margin-bottom: 12px;">
+              <span class="step-number" id="questionNumber">Question 1 / 8</span>
+              <span class="step-tag" id="questionTheme">Éligibilité</span>
+            </div>
+
+            <h3 id="questionText" style="margin-bottom: 18px;">
+              Chargement de la question...
+            </h3>
+
+            <div id="answersBox" style="display:grid; gap:12px;"></div>
+
+            <div id="feedbackBox" style="display:none; margin-top:18px; padding:16px; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);">
+              <div id="feedbackTitle" style="font-weight:700; margin-bottom:8px;"></div>
+              <div id="feedbackText" style="color: var(--muted); line-height:1.7;"></div>
+            </div>
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px;">
+              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">Valider ma réponse</button>
+              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display:none;">Question suivante</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section" style="margin-top: 22px;">
+        <div class="journey-card" id="resultsCard" style="display:none;">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Résultat</div>
+              <h2>Fin du module Dacia</h2>
+            </div>
+            <div class="journey-side-badge" id="scoreBadge">Score</div>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number" id="finalScoreValue">0/8</span>
+                <span class="step-tag" id="finalScorePercent">0%</span>
+              </div>
+              <h3>Score final</h3>
+              <p id="finalScoreText">Résultat du module.</p>
+            </div>
+
+            <a href="simulateur.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">A</span>
+                <span class="step-tag">Étape suivante</span>
+              </div>
+              <h3>Accéder au simulateur</h3>
+              <p>Passez maintenant à la mise en situation commerciale en atelier.</p>
+            </a>
+
+            <a href="index.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">B</span>
+                <span class="step-tag">Portail</span>
+              </div>
+              <h3>Retour au portail vendeur</h3>
+              <p>Revenez au hub central pour lancer une autre brique du parcours.</p>
+            </a>
+
+            <button id="restartBtn" class="step-card premium-step" type="button" style="text-align:left; cursor:pointer;">
+              <div class="step-top">
+                <span class="step-number">C</span>
+                <span class="step-tag">Rejouer</span>
+              </div>
+              <h3>Refaire le module</h3>
+              <p>Relancez le QCM Dacia pour consolider vos réflexes avant la simulation.</p>
+            </button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="learning.js"></script>
+</body>
+</html>
