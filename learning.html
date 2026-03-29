@@ -35,19 +35,19 @@
         <h1>
           Module apprentissage
           <br />
-          Fondamentaux contrats de services
+          Contrats de services après-vente
         </h1>
 
         <p class="hero-subtitle">
-          Cette première brique prépare le vendeur avant la mise en situation.
-          Elle permet de travailler les règles d’éligibilité, les repères métier
-          et la logique commerciale avant d’entrer dans le simulateur.
+          Cette brique prépare le vendeur avant la mise en situation.
+          L’univers Dacia est actif dans cette V3.0. Les autres univers sont visibles
+          pour montrer la logique multi-marques de la plateforme.
         </p>
 
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
-          <span class="proof-pill">QCM métier</span>
-          <span class="proof-pill">Préparation au simulateur</span>
+          <span class="proof-pill">Renault VL à venir</span>
+          <span class="proof-pill">Renault Utilitaires à venir</span>
         </div>
       </div>
 
@@ -55,47 +55,47 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Objectif pédagogique</div>
-              <h2>Se préparer avant la mise en situation commerciale</h2>
+              <div class="journey-kicker">Choix de l’univers</div>
+              <h2>Sélectionnez votre brique d’apprentissage</h2>
             </div>
-            <div class="journey-side-badge">Training vendeur</div>
+            <div class="journey-side-badge">Multi-univers</div>
           </div>
 
           <div class="journey-grid">
-            <div class="step-card premium-step">
+            <div class="step-card premium-step" style="border-color: rgba(214, 179, 106, 0.28);">
               <div class="step-top">
                 <span class="step-number">01</span>
-                <span class="step-tag">Règles</span>
+                <span class="step-tag">Disponible</span>
               </div>
-              <h3>Comprendre</h3>
-              <p>Assimiler les conditions clés d’accès aux contrats de services et les grands repères d’éligibilité.</p>
+              <h3>Dacia</h3>
+              <p>Module actif dans cette V3.0. Questions métier conçues pour préparer directement le simulateur atelier.</p>
             </div>
 
-            <div class="step-card premium-step">
+            <div class="step-card premium-step" style="opacity: 0.72;">
               <div class="step-top">
                 <span class="step-number">02</span>
-                <span class="step-tag">Discours</span>
+                <span class="step-tag">À venir</span>
               </div>
-              <h3>Structurer</h3>
-              <p>Préparer un discours vendeur plus fluide avant d’aborder le client en situation atelier.</p>
+              <h3>Renault VL</h3>
+              <p>Univers visible dans la plateforme mais non encore activé dans cette version de démonstration.</p>
             </div>
 
-            <div class="step-card premium-step">
+            <div class="step-card premium-step" style="opacity: 0.72;">
               <div class="step-top">
                 <span class="step-number">03</span>
-                <span class="step-tag">Réflexes</span>
+                <span class="step-tag">À venir</span>
               </div>
-              <h3>Réviser</h3>
-              <p>Renforcer les automatismes utiles sur les objections, l’argumentation et la proposition commerciale.</p>
+              <h3>Renault Utilitaires</h3>
+              <p>Univers prévu pour la suite, avec logique de modules et de simulation dédiée.</p>
             </div>
 
             <div class="step-card premium-step">
               <div class="step-top">
                 <span class="step-number">04</span>
-                <span class="step-tag">Transition</span>
+                <span class="step-tag">Objectif</span>
               </div>
-              <h3>Enchaîner</h3>
-              <p>Passer ensuite au simulateur avec une meilleure maîtrise du cadre produit et du parcours client.</p>
+              <h3>Préparer la simulation</h3>
+              <p>Le but du module est de renforcer les bons réflexes avant la mise en situation commerciale.</p>
             </div>
           </div>
         </div>
@@ -105,85 +105,68 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Questions d’entraînement</div>
-              <h2>Exemples de questions métier</h2>
+              <div class="journey-kicker">Module Dacia</div>
+              <h2>QCM vendeur — préparation au simulateur</h2>
             </div>
-            <div class="journey-side-badge">Version démonstration</div>
+            <div class="journey-side-badge">8 questions</div>
           </div>
 
-          <div class="journey-grid">
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">Q1</span>
-                <span class="step-tag">Éligibilité</span>
-              </div>
-              <h3>Mon véhicule a 200 000 km, puis-je souscrire au CEP+ ?</h3>
-              <p>
-                A. Oui<br />
-                B. Les véhicules doivent avoir moins de 120 000 km à la souscription<br />
-                C. Les véhicules doivent avoir moins de 150 000 km
-              </p>
+          <div style="margin-bottom: 22px;">
+            <div class="proof-pill active" style="display:inline-flex;">Univers actif : Dacia</div>
+          </div>
+
+          <div class="step-card premium-step" style="min-height: unset;">
+            <div class="step-top" style="margin-bottom: 12px;">
+              <span class="step-number" id="questionNumber">Question 1 / 8</span>
+              <span class="step-tag" id="questionTheme">Éligibilité</span>
             </div>
 
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">Q2</span>
-                <span class="step-tag">Durée</span>
-              </div>
-              <h3>Quelle est la durée maximale d’un contrat dans cette logique de parcours ?</h3>
-              <p>
-                A. 12 mois<br />
-                B. 24 mois<br />
-                C. 48 mois
-              </p>
+            <h3 id="questionText" style="margin-bottom: 18px;">
+              Chargement de la question...
+            </h3>
+
+            <div id="answersBox" style="display:grid; gap:12px;"></div>
+
+            <div id="feedbackBox" style="display:none; margin-top:18px; padding:16px; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);">
+              <div id="feedbackTitle" style="font-weight:700; margin-bottom:8px;"></div>
+              <div id="feedbackText" style="color: var(--muted); line-height:1.7;"></div>
             </div>
 
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">Q3</span>
-                <span class="step-tag">Argumentaire</span>
-              </div>
-              <h3>Quel angle est le plus cohérent pour introduire un contrat de services ?</h3>
-              <p>
-                A. Commencer directement par le prix<br />
-                B. Partir de la tranquillité, du budget maîtrisé et de la couverture entretien<br />
-                C. Attendre que le client pose la question
-              </p>
-            </div>
-
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">Q4</span>
-                <span class="step-tag">Réflexe vendeur</span>
-              </div>
-              <h3>Avant de proposer un contrat, quel réflexe métier doit être présent ?</h3>
-              <p>
-                A. Vérifier l’éligibilité du véhicule et la faisabilité du dossier<br />
-                B. Donner directement une mensualité<br />
-                C. Passer immédiatement à la signature
-              </p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px;">
+              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">Valider ma réponse</button>
+              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display:none;">Question suivante</button>
             </div>
           </div>
         </div>
       </section>
 
       <section class="journey-section" style="margin-top: 22px;">
-        <div class="journey-card">
-          <div class="journey-head" style="margin-bottom: 18px;">
+        <div class="journey-card" id="resultsCard" style="display:none;">
+          <div class="journey-head">
             <div>
-              <div class="journey-kicker">Suite du parcours</div>
-              <h2>Que fait le vendeur après ce module ?</h2>
+              <div class="journey-kicker">Résultat</div>
+              <h2>Fin du module Dacia</h2>
             </div>
+            <div class="journey-side-badge" id="scoreBadge">Score</div>
           </div>
 
           <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number" id="finalScoreValue">0/8</span>
+                <span class="step-tag" id="finalScorePercent">0%</span>
+              </div>
+              <h3>Score final</h3>
+              <p id="finalScoreText">Résultat du module.</p>
+            </div>
+
             <a href="simulateur.html" class="step-card premium-step">
               <div class="step-top">
                 <span class="step-number">A</span>
                 <span class="step-tag">Étape suivante</span>
               </div>
               <h3>Accéder au simulateur</h3>
-              <p>Passer de l’apprentissage théorique à la mise en situation commerciale en atelier.</p>
+              <p>Passez maintenant à la mise en situation commerciale en atelier.</p>
             </a>
 
             <a href="index.html" class="step-card premium-step">
@@ -192,30 +175,23 @@
                 <span class="step-tag">Portail</span>
               </div>
               <h3>Retour au portail vendeur</h3>
-              <p>Revenir au hub central pour choisir la prochaine brique du parcours de training.</p>
+              <p>Revenez au hub central pour lancer une autre brique du parcours.</p>
             </a>
 
-            <a href="certification.html" class="step-card premium-step">
+            <button id="restartBtn" class="step-card premium-step" type="button" style="text-align:left; cursor:pointer;">
               <div class="step-top">
                 <span class="step-number">C</span>
-                <span class="step-tag">Vision cible</span>
+                <span class="step-tag">Rejouer</span>
               </div>
-              <h3>Voir la certification</h3>
-              <p>Comprendre la finalité du parcours et la logique de validation à terme.</p>
-            </a>
-
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">D</span>
-                <span class="step-tag">Évolution</span>
-              </div>
-              <h3>Version V3.1</h3>
-              <p>Cette brique pourra ensuite intégrer un vrai QCM dynamique, le score et le suivi vendeur.</p>
-            </div>
+              <h3>Refaire le module</h3>
+              <p>Relancez le QCM Dacia pour consolider vos réflexes avant la simulation.</p>
+            </button>
           </div>
         </div>
       </section>
     </section>
   </main>
+
+  <script src="learning.js"></script>
 </body>
 </html>
