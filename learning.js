@@ -2,107 +2,107 @@ document.addEventListener("DOMContentLoaded", () => {
   const questions = [
     {
       theme: "Éligibilité",
-      question: "Cliente : « Mon véhicule a 8 ans et 4 mois et 118 000 km. Je peux encore souscrire ? »",
+      question: "Cliente : « Mon véhicule a 8 ans et 7 mois et 119 000 km. On est encore bon pour souscrire ? »",
       options: [
-        "Non, dès que le véhicule a plus de 8 ans, la souscription est impossible.",
-        "Oui, car l’éligibilité va jusqu’à 8 ans + 6 mois de souplesse, avec un maximum de 120 000 km à la souscription.",
-        "Oui, mais uniquement sur la formule CEP+.",
-        "Non, parce qu’à partir de 8 ans il faut moins de 100 000 km."
+        "Oui, car le kilométrage est inférieur à 120 000 km.",
+        "Oui, mais uniquement sur la formule CEP et pas sur CEP+.",
+        "Non, car le véhicule dépasse la limite d’âge à la souscription malgré un kilométrage encore recevable.",
+        "Non, car à partir de 8 ans il faut forcément moins de 100 000 km."
+      ],
+      correct: 2,
+      explanation:
+        "La souscription est possible de 1 à 8 ans + 6 mois de souplesse maximum, avec un maximum de 120 000 km à la souscription. À 8 ans et 7 mois, le véhicule sort du cadre, même avec 119 000 km."
+    },
+    {
+      theme: "Éligibilité",
+      question: "Cliente : « Ma Dacia a 8 ans et 5 mois et 120 100 km. Vu qu’on est presque dedans, vous pouvez quand même me le faire ? »",
+      options: [
+        "Oui, car la tolérance de 6 mois permet aussi de dépasser légèrement le kilométrage.",
+        "Non, car l’âge est encore recevable, mais le kilométrage dépasse la limite maximale de souscription.",
+        "Oui, à condition de partir sur CEP+.",
+        "Oui, si le véhicule a toujours été entretenu dans le réseau."
       ],
       correct: 1,
       explanation:
-        "La souscription est possible de 1 à 8 ans + 6 mois de souplesse, avec un maximum de 120 000 km à la souscription. Ici, le véhicule reste donc éligible."
+        "Les deux critères doivent être respectés à la souscription : âge et kilométrage. Ici, l’âge reste dans la fenêtre de 8 ans + 6 mois, mais le véhicule dépasse les 120 000 km autorisés."
     },
     {
       theme: "Résiliation",
-      question: "Cliente : « Si je résilie mon contrat plus tard, je récupère simplement ce qu’il reste à payer, sans frais ? »",
+      question: "Cliente : « Si j’arrête mon contrat dans un an, je récupère simplement les mensualités restantes, sans autre impact ? »",
       options: [
-        "Oui, la résiliation est toujours gratuite.",
-        "Non, il existe un calcul au prorata des mensualités réglées et du montant des factures atelier, avec 38 € de frais de résiliation hors rachat du véhicule dans le réseau.",
-        "Non, un contrat signé ne peut jamais être résilié.",
-        "Oui, mais seulement si aucune révision n’a encore été faite."
+        "Oui, la résiliation est libre et sans frais.",
+        "Non, car un contrat signé n’est plus résiliable.",
+        "Non, la résiliation se fait au prorata des mensualités réglées et du montant des factures atelier, avec 38 € de frais hors rachat du véhicule dans le réseau.",
+        "Oui, sauf si une révision constructeur a déjà eu lieu."
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        "Le contrat est résiliable, mais pas sans condition. La résiliation se fait au prorata des mensualités réglées et du montant des factures atelier, avec 38 € de frais, hors cas de rachat du véhicule dans le réseau."
+        "Le contrat est bien résiliable, mais selon un calcul au prorata des mensualités réglées et du montant des factures atelier, avec 38 € de frais de résiliation, hors cas de rachat du véhicule dans le réseau."
     },
     {
-      theme: "Cessibilité",
-      question: "Cliente : « Si je revends mon véhicule, mon contrat est perdu automatiquement ? »",
+      theme: "Cessibilité / Revente",
+      question: "Cliente : « Si je revends ma voiture, le contrat devient forcément inutile ? »",
       options: [
-        "Oui, en cas de revente le contrat disparaît forcément.",
-        "Non, le contrat peut être cessible ou résiliable selon le cas.",
-        "Oui, sauf si le repreneur est un professionnel.",
-        "Non, mais seulement sur CEP+, pas sur CEP."
+        "Oui, puisque le contrat est attaché uniquement à ma personne.",
+        "Non, car le contrat peut être cessible, et sinon il peut aussi être résilié selon les conditions prévues.",
+        "Oui, sauf si la revente se fait entre particuliers.",
+        "Non, mais seulement si je revends dans les 12 premiers mois."
       ],
       correct: 1,
       explanation:
-        "Le contrat est bien cessible ou résiliable. Le vendeur doit donc connaître cette souplesse et ne jamais présenter le contrat comme automatiquement perdu en cas de revente."
+        "Le vendeur doit maîtriser la nuance : le contrat n’est pas automatiquement perdu à la revente. Il peut être cessible ou résiliable selon le cas."
     },
     {
       theme: "Dacia Zen",
-      question: "Cliente : « J’ai une Dacia de 6 ans, 90 000 km. Avec Dacia Zen, l’écran multimédia est couvert lui aussi ? »",
+      question: "Cliente : « Mon véhicule a 6 ans, 145 000 km, et je veux surtout être couverte sur les pannes électroniques. Le multimédia est compris avec Dacia Zen ? »",
       options: [
-        "Oui, Dacia Zen couvre tout ce qui est mécanique, électrique, électronique et multimédia.",
-        "Oui, à condition de choisir la formule Essentielle +.",
-        "Non, car le multimédia fait partie des exclusions de Dacia Zen.",
-        "Non, car Dacia Zen ne peut plus s’appliquer à partir de 6 ans."
+        "Oui, car Dacia Zen couvre tout l’électronique du véhicule sans exception.",
+        "Oui, mais uniquement si le client prend Essentielle+.",
+        "Non, car même si Dacia Zen couvre certaines pièces mécaniques, électriques et électroniques, le multimédia fait partie des exclusions.",
+        "Non, car Dacia Zen n’est plus possible à partir de 6 ans."
       ],
       correct: 2,
       explanation:
-        "Dacia Zen couvre des pièces mécaniques, électriques et électroniques, mais exclut notamment le multimédia, la carrosserie, les rétros électriques et les réseaux dégivrants."
+        "Dacia Zen peut s’appliquer entre 3 et 7 ans maximum, sous réserve des autres conditions. En revanche, le multimédia fait partie des exclusions, tout comme la carrosserie, les rétros électriques et les réseaux dégivrants."
     },
     {
       theme: "Conditions Dacia Zen",
-      question: "Cliente : « Ma voiture a 7 ans et 155 000 km. Je roule peu maintenant, donc pour Dacia Zen c’est encore possible ? »",
+      question: "Cliente : « Ma voiture a 7 ans et 149 500 km. Je peux encore déclencher Dacia Zen si je prends le bon forfait ? »",
       options: [
-        "Oui, car seule l’ancienneté compte.",
-        "Oui, si le véhicule est encore bien entretenu dans le réseau.",
-        "Non, car Dacia Zen est plafonnée à 150 000 km maximum de couverture constructeur.",
-        "Non, car Dacia Zen s’arrête obligatoirement à 5 ans."
-      ],
-      correct: 2,
-      explanation:
-        "Pour Dacia Zen, le véhicule doit être entre 3 et 7 ans maximum, avec une couverture constructeur allant jusqu’à 150 000 km maximum et 30 000 km maximum par an. À 155 000 km, ce n’est plus dans le cadre."
-    },
-    {
-      theme: "CEP vs CEP+",
-      question: "Cliente : « Concrètement, quelle est la différence entre CEP et CEP+ ? »",
-      options: [
-        "Il n’y en a pas vraiment, CEP et CEP+ couvrent la même chose.",
-        "CEP couvre l’entretien, l’assistance, le véhicule de remplacement et l’extension de garantie ; CEP+ ajoute notamment les pièces d’usure et le contrôle technique.",
-        "CEP couvre seulement l’assistance ; CEP+ couvre seulement l’entretien.",
-        "CEP inclut les amortisseurs, mais CEP+ non."
-      ],
-      correct: 1,
-      explanation:
-        "Le CEP couvre assistance, entretien, véhicule de remplacement et extension de garantie. Le CEP+ ajoute notamment les pièces d’usure, le contrôle technique, MyCheckUp et la contre-visite."
-    },
-    {
-      theme: "Client professionnel",
-      question: "Cliente : « Je suis gérante d’une SARL avec 6 véhicules. Je peux souscrire ce contrat sur mon parc ? »",
-      options: [
-        "Oui, car la flotte est inférieure à 10 véhicules.",
-        "Oui, mais seulement sur CEP et pas sur CEP+.",
-        "Non, car les sociétés de type SARL sont exclues.",
-        "Non, car les clients professionnels sont tous exclus."
-      ],
-      correct: 2,
-      explanation:
-        "L’offre est disponible pour les artisans, commerçants et professions libérales agissant en nom propre avec une flotte de moins de 10 véhicules. Les formes juridiques de type société, comme la SARL, sont exclues."
-    },
-    {
-      theme: "Fin de contrat",
-      question: "Cliente : « Si je souscris tard, jusqu’où peut aller mon contrat au maximum ? »",
-      options: [
-        "La couverture peut aller jusqu’à 48 mois maximum, avec une fin de contrat possible jusqu’à 200 000 km et jusqu’à 12 ans et demi maximum selon l’âge de départ.",
-        "Le contrat peut durer sans vraie limite tant que le client paie.",
-        "Le contrat s’arrête forcément au 8e anniversaire du véhicule.",
-        "La seule limite, c’est de rester sous 150 000 km."
+        "Oui, car elle est encore dans la limite d’âge et sous le plafond de 150 000 km constructeur.",
+        "Non, car à 7 ans Dacia Zen n’existe plus.",
+        "Oui, mais seulement si le véhicule est diesel.",
+        "Non, car à partir de 140 000 km Dacia Zen est toujours refusée."
       ],
       correct: 0,
       explanation:
-        "Le cadre global à maîtriser est le suivant : 48 mois de couverture maximum, avec une fin de contrat plafonnée à 200 000 km et jusqu’à 12 ans et demi maximum selon l’âge du véhicule au départ."
+        "Pour Dacia Zen, il faut un véhicule entre 3 et 7 ans maximum, avec une couverture constructeur plafonnée à 150 000 km et 30 000 km maximum par an. Ici, 7 ans et 149 500 km restent encore dans le cadre."
+    },
+    {
+      theme: "CEP vs CEP+",
+      question: "Cliente : « Je veux une formule qui couvre aussi les amortisseurs, le freinage et le contrôle technique. Laquelle correspond à ce besoin ? »",
+      options: [
+        "Le CEP, car il inclut déjà l’ensemble des pièces d’usure.",
+        "Le CEP+, car il ajoute notamment les pièces d’usure et le contrôle technique.",
+        "Le CEP, mais seulement sur un véhicule diesel.",
+        "Les deux formules le permettent de la même manière."
+      ],
+      correct: 1,
+      explanation:
+        "Le CEP couvre principalement l’entretien, l’assistance, le véhicule de remplacement et l’extension de garantie. Le CEP+ ajoute notamment les pièces d’usure et le contrôle technique."
+    },
+    {
+      theme: "Client professionnel",
+      question: "Cliente : « Je suis artisan en nom propre avec 4 véhicules. Mon voisin, lui, a une SARL avec 4 véhicules aussi. On est traités pareil ? »",
+      options: [
+        "Oui, tant qu’on reste sous 10 véhicules, la forme juridique ne change rien.",
+        "Oui, mais seulement si les deux véhicules sont entretenus dans le réseau.",
+        "Non, l’artisan en nom propre peut être éligible, alors que la SARL fait partie des formes juridiques exclues.",
+        "Non, car aucun professionnel n’est éligible à cette offre."
+      ],
+      correct: 2,
+      explanation:
+        "L’offre est ouverte aux artisans, commerçants et professions libérales agissant en nom propre avec une flotte de moins de 10 véhicules. Les sociétés de type SARL sont exclues."
     }
   ];
 
