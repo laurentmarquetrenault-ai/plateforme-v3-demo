@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const qcmScoreText = document.getElementById("qcmScoreText");
-  const simScoreText = document.getElementById("simScoreText");
-  const bestSimScoreText = document.getElementById("bestSimScoreText");
+  const qcmDaciaScoreText = document.getElementById("qcmDaciaScoreText");
+  const simDaciaScoreText = document.getElementById("simDaciaScoreText");
+  const bestDaciaSimScoreText = document.getElementById("bestDaciaSimScoreText");
+  const daciaCertStatusText = document.getElementById("daciaCertStatusText");
+  const daciaStatusBadge = document.getElementById("daciaStatusBadge");
+
+  const qcmRenaultScoreText = document.getElementById("qcmRenaultScoreText");
+  const simRenaultScoreText = document.getElementById("simRenaultScoreText");
+  const bestRenaultSimScoreText = document.getElementById("bestRenaultSimScoreText");
+  const renaultCertStatusText = document.getElementById("renaultCertStatusText");
+  const renaultStatusBadge = document.getElementById("renaultStatusBadge");
+
+  const globalScoreText = document.getElementById("globalScoreText");
   const certStatusText = document.getElementById("certStatusText");
   const globalStatusBadge = document.getElementById("globalStatusBadge");
 
@@ -11,22 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const certificateRecipient = document.getElementById("certificateRecipient");
   const certificateEmail = document.getElementById("certificateEmail");
-  const certificateQcmValue = document.getElementById("certificateQcmValue");
-  const certificateSimValue = document.getElementById("certificateSimValue");
-  const certificateBestSimValue = document.getElementById("certificateBestSimValue");
+
+  const certificateQcmDaciaValue = document.getElementById("certificateQcmDaciaValue");
+  const certificateSimDaciaValue = document.getElementById("certificateSimDaciaValue");
+  const certificateQcmRenaultValue = document.getElementById("certificateQcmRenaultValue");
+  const certificateSimRenaultValue = document.getElementById("certificateSimRenaultValue");
+  const certificateBestDaciaSimValue = document.getElementById("certificateBestDaciaSimValue");
+  const certificateBestRenaultSimValue = document.getElementById("certificateBestRenaultSimValue");
+  const certificateGlobalValue = document.getElementById("certificateGlobalValue");
   const certificateResultBadge = document.getElementById("certificateResultBadge");
   const certificateDateValue = document.getElementById("certificateDateValue");
 
   const downloadPdfBtn = document.getElementById("downloadPdfBtn");
   const sendEmailBtn = document.getElementById("sendEmailBtn");
   const emailNote = document.getElementById("emailNote");
-
-  const qcmRaw = localStorage.getItem("qcm_dacia_score");
-  const qcmPercentRaw = localStorage.getItem("qcm_dacia_percent");
-  const qcmTotalRaw = localStorage.getItem("qcm_dacia_total");
-
-  const simLastRaw = localStorage.getItem("simulator_last_score");
-  const simBestRaw = localStorage.getItem("simulator_best_score");
 
   const sellerFirstName = (localStorage.getItem("seller_first_name") || "").trim();
   const sellerLastName = (localStorage.getItem("seller_last_name") || "").trim();
@@ -35,11 +43,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
   const formattedDate = today.toLocaleDateString("fr-FR");
 
-  let qcmScore = null;
-  let qcmPercent = null;
-  let qcmTotal = null;
-  let simLast = null;
-  let simBest = null;
+  const dacia = {
+    qcmScore: toNumber(localStorage.getItem("qcm_dacia_score")),
+    qcmPercent: toNumber(localStorage.getItem("qcm_dacia_percent")),
+    qcmTotal: toNumber(localStorage.getItem("qcm_dacia_total")),
+    simLast: toNumber(localStorage.getItem("simulator_last_score")),
+    simBest: toNumber(localStorage.getItem("simulator_best_score"))
+  };
+
+  const renault = {
+    qcmScore: toNumber(localStorage.getItem("qcm_renault_score")),
+    qcmPercent: toNumber(localStorage.getItem("qcm_renault_percent")),
+    qcmTotal: toNumber(localStorage.getItem("qcm_renault_total")),
+    simLast: toNumber(localStorage.getItem("simulator_renault_last_score")),
+    simBest: toNumber(localStorage.getItem("simulator_renault_best_score"))
+  };
 
   function toNumber(value) {
     if (value === null || value === undefined || value === "") {
@@ -84,6 +102,36 @@ document.addEventListener("DOMContentLoaded", () => {
     return Boolean(sellerEmail);
   }
 
+  function isBrandValidated(brandData) {
+    const qcmValidated = brandData.qcmPercent !== null && brandData.qcmPercent >= 75;
+    const simValidated = brandData.simBest !== null && brandData.simBest >= 75;
+    return qcmValidated && simValidated;
+  }
+
+  function hasAnyBrandResult(brandData) {
+    return (
+      brandData.qcmScore !== null ||
+      brandData.qcmPercent !== null ||
+      brandData.qcmTotal !== null ||
+      brandData.simLast !== null ||
+      brandData.simBest !== null
+    );
+  }
+
+  function computeGlobalAverage() {
+    const values = [];
+
+    if (dacia.qcmPercent !== null) values.push(dacia.qcmPercent);
+    if (dacia.simBest !== null) values.push(dacia.simBest);
+    if (renault.qcmPercent !== null) values.push(renault.qcmPercent);
+    if (renault.simBest !== null) values.push(renault.simBest);
+
+    if (!values.length) return null;
+
+    const total = values.reduce((sum, value) => sum + value, 0);
+    return Math.round(total / values.length);
+  }
+
   function renderSellerIdentity() {
     if (hasSellerIdentity()) {
       sellerIdentityText.textContent = `Vendeur actif : ${getSellerFullName()}.`;
@@ -108,67 +156,77 @@ document.addEventListener("DOMContentLoaded", () => {
     certificateDateValue.textContent = formattedDate;
   }
 
-  function renderScores() {
-    qcmScore = toNumber(qcmRaw);
-    qcmPercent = toNumber(qcmPercentRaw);
-    qcmTotal = toNumber(qcmTotalRaw);
-    simLast = toNumber(simLastRaw);
-    simBest = toNumber(simBestRaw);
-
-    if (qcmScore !== null && qcmPercent !== null && qcmTotal !== null) {
-      qcmScoreText.textContent = `Score enregistré : ${qcmScore}/${qcmTotal} (${Math.round(qcmPercent)}%).`;
-      certificateQcmValue.textContent = `${qcmScore}/${qcmTotal}`;
+  function renderDaciaScores() {
+    if (dacia.qcmScore !== null && dacia.qcmPercent !== null && dacia.qcmTotal !== null) {
+      qcmDaciaScoreText.textContent = `Score enregistré : ${dacia.qcmScore}/${dacia.qcmTotal} (${Math.round(dacia.qcmPercent)}%).`;
+      certificateQcmDaciaValue.textContent = `${dacia.qcmScore}/${dacia.qcmTotal}`;
     } else {
-      qcmScoreText.textContent = "Aucun score QCM enregistré pour le moment.";
-      certificateQcmValue.textContent = "--";
+      qcmDaciaScoreText.textContent = "Aucun score QCM Dacia enregistré pour le moment.";
+      certificateQcmDaciaValue.textContent = "--";
     }
 
-    if (simLast !== null) {
-      simScoreText.textContent = `Dernier score simulateur enregistré : ${Math.round(simLast)}/100.`;
-      certificateSimValue.textContent = formatScoreOver100(simLast);
+    if (dacia.simLast !== null) {
+      simDaciaScoreText.textContent = `Dernier score simulateur Dacia enregistré : ${Math.round(dacia.simLast)}/100.`;
+      certificateSimDaciaValue.textContent = formatScoreOver100(dacia.simLast);
     } else {
-      simScoreText.textContent = "Aucun score simulateur enregistré pour le moment.";
-      certificateSimValue.textContent = "--";
+      simDaciaScoreText.textContent = "Aucun score simulateur Dacia enregistré pour le moment.";
+      certificateSimDaciaValue.textContent = "--";
     }
 
-    if (simBest !== null) {
-      bestSimScoreText.textContent = `Meilleur score simulateur enregistré : ${Math.round(simBest)}/100.`;
-      certificateBestSimValue.textContent = formatScoreOver100(simBest);
+    if (dacia.simBest !== null) {
+      bestDaciaSimScoreText.textContent = `Meilleur score simulateur Dacia enregistré : ${Math.round(dacia.simBest)}/100.`;
+      certificateBestDaciaSimValue.textContent = formatScoreOver100(dacia.simBest);
     } else {
-      bestSimScoreText.textContent = "Aucun meilleur score enregistré pour le moment.";
-      certificateBestSimValue.textContent = "--";
+      bestDaciaSimScoreText.textContent = "Aucun meilleur score Dacia enregistré pour le moment.";
+      certificateBestDaciaSimValue.textContent = "--";
     }
   }
 
-  function renderCertificationStatus() {
-    const qcmValidated = qcmPercent !== null && qcmPercent >= 75;
-    const simValidated = simBest !== null && simBest >= 75;
-    const sellerReady = hasSellerIdentity();
+  function renderRenaultScores() {
+    if (renault.qcmScore !== null && renault.qcmPercent !== null && renault.qcmTotal !== null) {
+      qcmRenaultScoreText.textContent = `Score enregistré : ${renault.qcmScore}/${renault.qcmTotal} (${Math.round(renault.qcmPercent)}%).`;
+      certificateQcmRenaultValue.textContent = `${renault.qcmScore}/${renault.qcmTotal}`;
+    } else {
+      qcmRenaultScoreText.textContent = "Aucun score QCM Renault enregistré pour le moment.";
+      certificateQcmRenaultValue.textContent = "--";
+    }
 
-    const hasAnyResult =
-      qcmScore !== null ||
-      qcmPercent !== null ||
-      qcmTotal !== null ||
-      simLast !== null ||
-      simBest !== null;
+    if (renault.simLast !== null) {
+      simRenaultScoreText.textContent = `Dernier score simulateur Renault enregistré : ${Math.round(renault.simLast)}/100.`;
+      certificateSimRenaultValue.textContent = formatScoreOver100(renault.simLast);
+    } else {
+      simRenaultScoreText.textContent = "Aucun score simulateur Renault enregistré pour le moment.";
+      certificateSimRenaultValue.textContent = "--";
+    }
+
+    if (renault.simBest !== null) {
+      bestRenaultSimScoreText.textContent = `Meilleur score simulateur Renault enregistré : ${Math.round(renault.simBest)}/100.`;
+      certificateBestRenaultSimValue.textContent = formatScoreOver100(renault.simBest);
+    } else {
+      bestRenaultSimScoreText.textContent = "Aucun meilleur score Renault enregistré pour le moment.";
+      certificateBestRenaultSimValue.textContent = "--";
+    }
+  }
+
+  function renderBrandStatus(brandName, brandData, statusTextElement, badgeElement) {
+    const sellerReady = hasSellerIdentity();
+    const qcmValidated = brandData.qcmPercent !== null && brandData.qcmPercent >= 75;
+    const simValidated = brandData.simBest !== null && brandData.simBest >= 75;
+    const hasAnyResult = hasAnyBrandResult(brandData);
 
     if (!sellerReady) {
-      certStatusText.textContent =
-        "Certification bloquée tant que l’identité vendeur n’est pas correctement renseignée sur le portail.";
-      setBadgeText(globalStatusBadge, "Identité requise");
-      setBadgeText(certificateResultBadge, "IDENTITÉ VENDEUR MANQUANTE");
-      applyStatusClass(globalStatusBadge, "status-locked");
-      applyStatusClass(certificateResultBadge, "status-locked");
+      statusTextElement.textContent =
+        `Validation ${brandName} bloquée tant que l’identité vendeur n’est pas correctement renseignée sur le portail.`;
+      setBadgeText(badgeElement, "Identité requise");
+      applyStatusClass(badgeElement, "status-locked");
       return;
     }
 
     if (qcmValidated && simValidated) {
-      certStatusText.textContent =
-        "Certification débloquée. Les seuils de validation sont atteints sur le QCM et sur la simulation.";
-      setBadgeText(globalStatusBadge, "Débloquée");
-      setBadgeText(certificateResultBadge, "VENDEUR CERTIFIÉ");
-      applyStatusClass(globalStatusBadge, "status-certified");
-      applyStatusClass(certificateResultBadge, "status-certified");
+      statusTextElement.textContent =
+        `Validation ${brandName} débloquée. Les seuils sont atteints sur le QCM et sur la simulation.`;
+      setBadgeText(badgeElement, "Validé");
+      applyStatusClass(badgeElement, "status-certified");
       return;
     }
 
@@ -176,15 +234,84 @@ document.addEventListener("DOMContentLoaded", () => {
       const missingBlocks = [];
 
       if (!qcmValidated) {
-        missingBlocks.push(`QCM insuffisant (${formatPercent(qcmPercent)})`);
+        missingBlocks.push(`QCM insuffisant (${formatPercent(brandData.qcmPercent)})`);
       }
 
       if (!simValidated) {
-        missingBlocks.push(`simulation insuffisante (${formatScoreOver100(simBest)})`);
+        missingBlocks.push(`simulation insuffisante (${formatScoreOver100(brandData.simBest)})`);
       }
 
+      statusTextElement.textContent =
+        `Validation ${brandName} en cours. Résultats partiels ou seuils non atteints : ${missingBlocks.join(" • ")}.`;
+      setBadgeText(badgeElement, "En cours");
+      applyStatusClass(badgeElement, "status-progress");
+      return;
+    }
+
+    statusTextElement.textContent = `Validation ${brandName} verrouillée. Aucun résultat exploitable n’est encore enregistré.`;
+    setBadgeText(badgeElement, "Verrouillée");
+    applyStatusClass(badgeElement, "status-locked");
+  }
+
+  function renderGlobalStatus() {
+    const sellerReady = hasSellerIdentity();
+    const daciaValidated = isBrandValidated(dacia);
+    const renaultValidated = isBrandValidated(renault);
+    const daciaHasResults = hasAnyBrandResult(dacia);
+    const renaultHasResults = hasAnyBrandResult(renault);
+    const globalAverage = computeGlobalAverage();
+
+    certificateGlobalValue.textContent = globalAverage !== null ? `${globalAverage}%` : "--";
+
+    if (globalAverage !== null) {
+      globalScoreText.textContent = `Score global calculé sur les résultats disponibles : ${globalAverage}%.`;
+    } else {
+      globalScoreText.textContent = "Le score global sera calculé à partir des résultats Dacia et Renault.";
+    }
+
+    if (!sellerReady) {
       certStatusText.textContent =
-        `Certification en cours. Résultats partiellement renseignés ou seuils non atteints : ${missingBlocks.join(" • ")}.`;
+        "Certification multi-marques bloquée tant que l’identité vendeur n’est pas correctement renseignée sur le portail.";
+      setBadgeText(globalStatusBadge, "Identité requise");
+      setBadgeText(certificateResultBadge, "IDENTITÉ VENDEUR MANQUANTE");
+      applyStatusClass(globalStatusBadge, "status-locked");
+      applyStatusClass(certificateResultBadge, "status-locked");
+      return;
+    }
+
+    if (daciaValidated && renaultValidated) {
+      certStatusText.textContent =
+        "Certification multi-marques débloquée. Les blocs Dacia et Renault sont validés.";
+      setBadgeText(globalStatusBadge, "Certifié");
+      setBadgeText(certificateResultBadge, "VENDEUR CERTIFIÉ MULTI-MARQUES");
+      applyStatusClass(globalStatusBadge, "status-certified");
+      applyStatusClass(certificateResultBadge, "status-certified");
+      return;
+    }
+
+    if (daciaValidated && !renaultValidated) {
+      certStatusText.textContent =
+        "Bloc Dacia validé. La certification multi-marques reste en cours tant que le bloc Renault n’atteint pas les seuils requis.";
+      setBadgeText(globalStatusBadge, "Dacia validé");
+      setBadgeText(certificateResultBadge, "VALIDÉ DACIA • RENAULT EN COURS");
+      applyStatusClass(globalStatusBadge, "status-progress");
+      applyStatusClass(certificateResultBadge, "status-progress");
+      return;
+    }
+
+    if (!daciaValidated && renaultValidated) {
+      certStatusText.textContent =
+        "Bloc Renault validé. La certification multi-marques reste en cours tant que le bloc Dacia n’atteint pas les seuils requis.";
+      setBadgeText(globalStatusBadge, "Renault validé");
+      setBadgeText(certificateResultBadge, "VALIDÉ RENAULT • DACIA EN COURS");
+      applyStatusClass(globalStatusBadge, "status-progress");
+      applyStatusClass(certificateResultBadge, "status-progress");
+      return;
+    }
+
+    if (daciaHasResults || renaultHasResults) {
+      certStatusText.textContent =
+        "Certification multi-marques en cours. Des résultats existent, mais les deux blocs marque ne sont pas encore validés.";
       setBadgeText(globalStatusBadge, "En cours");
       setBadgeText(certificateResultBadge, "EN COURS DE VALIDATION");
       applyStatusClass(globalStatusBadge, "status-progress");
@@ -193,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     certStatusText.textContent =
-      "Certification verrouillée. Aucun résultat exploitable n’est encore enregistré.";
+      "Certification multi-marques verrouillée. Aucun résultat exploitable n’est encore enregistré.";
     setBadgeText(globalStatusBadge, "Verrouillée");
     setBadgeText(certificateResultBadge, "NON DÉBLOQUÉE");
     applyStatusClass(globalStatusBadge, "status-locked");
@@ -228,8 +355,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   renderSellerIdentity();
-  renderScores();
-  renderCertificationStatus();
+  renderDaciaScores();
+  renderRenaultScores();
+  renderBrandStatus("Dacia", dacia, daciaCertStatusText, daciaStatusBadge);
+  renderBrandStatus("Renault", renault, renaultCertStatusText, renaultStatusBadge);
+  renderGlobalStatus();
   setupPdfDownload();
   setupEmailButton();
 });
