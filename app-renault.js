@@ -24,6 +24,16 @@ const endSubtitle = document.getElementById("endSubtitle");
 const modeBadge = document.getElementById("modeBadge");
 const helpRecommendation = document.getElementById("helpRecommendation");
 const helpAngle = document.getElementById("helpAngle");
+const helpOffer = document.getElementById("helpOffer");
+const helpEligibility = document.getElementById("helpEligibility");
+const helpContractEnd = document.getElementById("helpContractEnd");
+const helpPriceLine1 = document.getElementById("helpPriceLine1");
+const helpPriceLine2 = document.getElementById("helpPriceLine2");
+const helpPriceLine3 = document.getElementById("helpPriceLine3");
+const helpArg1 = document.getElementById("helpArg1");
+const helpArg2 = document.getElementById("helpArg2");
+const helpArg3 = document.getElementById("helpArg3");
+const helpObjection = document.getElementById("helpObjection");
 const briefText = document.getElementById("briefText");
 const toggleHelpBtn = document.getElementById("toggleHelpBtn");
 
@@ -135,31 +145,113 @@ function updateAvatar() {
   }
 }
 
-function updateHelpContent() {
-  if (!helpRecommendation || !helpAngle) return;
+function parseVehicleAge() {
+  const raw = vehicleAgeSelect?.value || "1 an";
+  const match = raw.match(/\d+/);
+  return match ? Number(match[0]) : 1;
+}
 
+function getRenaultPriceTable(vehicleAge, energyType) {
+  const bucket = vehicleAge <= 5 ? "1-5" : "6-8";
+
+  const matrix = {
+    "1-5": {
+      ev: { cep: 29, cepp: 49, label: "Véhicules électriques (VP, VU)" },
+      essence: { cep: 39, cepp: 69, label: "Véhicules essence & GPL" },
+      hybrid: { cep: 49, cepp: 69, label: "Véhicules hybrides (HEV, PHEV)" },
+      diesel: { cep: 49, cepp: 79, label: "Véhicules diesel" },
+      vu: { cep: 59, cepp: 89, label: "Véhicules utilitaires thermiques" }
+    },
+    "6-8": {
+      ev: { cep: 25, cepp: 39, label: "Véhicules électriques (VP, VU)" },
+      essence: { cep: 35, cepp: 59, label: "Véhicules essence & GPL" },
+      hybrid: { cep: 45, cepp: 59, label: "Véhicules hybrides (HEV, PHEV)" },
+      diesel: { cep: 45, cepp: 69, label: "Véhicules diesel" },
+      vu: { cep: 55, cepp: 79, label: "Véhicules utilitaires thermiques" }
+    }
+  };
+
+  return matrix[bucket]?.[energyType] || null;
+}
+
+function updateHelpContent() {
   const scenario = scenarioSelect?.value || "revision";
   const profil = profilSelect?.value || "convaincu";
+  const vehicleAge = parseVehicleAge();
+  const energyType = energyTypeSelect?.value || "essence";
+  const priceData = getRenaultPriceTable(vehicleAge, energyType);
+  const ageBucketLabel = vehicleAge <= 5 ? "1 à 5 ans" : "6 à 8 ans + 6 mois de souplesse";
 
   let reco = "Commencez par découvrir l’usage et ce qui compte vraiment pour le client.";
   let angle = "Reliez ensuite la solution à la tranquillité, à la visibilité budgétaire et au suivi dans le réseau.";
+  let offer = "Proposez CEP+ en premier, puis ajustez si le besoin est plus simple.";
+  let objection = "“C’est trop cher” → “Le contrat coûte souvent moins cher qu’un imprévu non couvert.”";
 
   if (profil === "pro") {
     reco = "Avec un client professionnel, parlez d’abord continuité d’usage, maîtrise budgétaire et limitation des immobilisations.";
     angle = "L’angle clé est l’impact concret sur l’activité : moins d’imprévus, meilleure visibilité, véhicule plus facilement maintenu en usage.";
+    offer = "Sur un pro, reliez la proposition à l’activité, à la disponibilité du véhicule et à la lisibilité budgétaire.";
   } else if (scenario === "facture") {
     reco = "Transformez la facture subie en réflexion sur l’anticipation et la maîtrise des dépenses futures.";
-    angle = "Il faut relier la dépense actuelle à l’intérêt d’une solution plus lisible dans le temps.";
+    angle = "Reliez la dépense actuelle à l’intérêt d’une solution plus lisible dans le temps.";
+    objection = "“Je verrai plus tard” → “Plus tard, la révision déjà faite ne sera pas comprise. Aujourd’hui, vous sécurisez tout de suite l’avantage complet.”";
   } else if (scenario === "fin-garantie") {
     reco = "Mettez en avant la suite logique après la garantie et la sécurisation du véhicule dans la durée.";
     angle = "Parlez sérénité, continuité de suivi et réduction du risque de mauvaises surprises après la fin de garantie.";
+    offer = "La fin de garantie est un moment clé pour proposer une continuité de protection et d’entretien.";
   } else if (scenario === "usure") {
     reco = "Faites parler le client sur son usage réel, puis reliez ce besoin à une logique d’anticipation.";
-    angle = "L’idée n’est pas de pousser un produit, mais de montrer le sens de la solution par rapport à l’usage.";
+    angle = "Montrez le sens de la solution par rapport à l’usage, pas juste par rapport au produit.";
+    objection = "“Je roule peu, ça vaut le coup ?” → “Même en roulant peu, le temps et l’usure continuent d’agir. Le contrat garde son intérêt.”";
   }
 
-  helpRecommendation.textContent = reco;
-  helpAngle.textContent = angle;
+  if (helpRecommendation) {
+    helpRecommendation.textContent = reco;
+  }
+
+  if (helpAngle) {
+    helpAngle.textContent = angle;
+  }
+
+  if (helpOffer) {
+    helpOffer.textContent = offer;
+  }
+
+  if (helpEligibility) {
+    helpEligibility.textContent = "Éligibilité : 1 à 8 ans + 6 mois et moins de 120 000 km à la souscription.";
+  }
+
+  if (helpContractEnd) {
+    helpContractEnd.textContent = "Fin de contrat : 48 mois maximum, avec fin de contrat au plus à 200 000 km et jusqu’à 12 ans et demi selon l’âge de départ.";
+  }
+
+  if (helpPriceLine1 && helpPriceLine2 && helpPriceLine3) {
+    if (priceData) {
+      helpPriceLine1.textContent = `CEP : ${priceData.cep} €/mois`;
+      helpPriceLine2.textContent = `CEP+ : ${priceData.cepp} €/mois`;
+      helpPriceLine3.textContent = `Base tarifaire : Renault ${ageBucketLabel} • ${priceData.label}`;
+    } else {
+      helpPriceLine1.textContent = "CEP : tarif indisponible";
+      helpPriceLine2.textContent = "CEP+ : tarif indisponible";
+      helpPriceLine3.textContent = "Base tarifaire : configuration non reconnue";
+    }
+  }
+
+  if (helpArg1) {
+    helpArg1.textContent = "Budget maîtrisé : mensualités fixes sans augmentation pendant 4 ans.";
+  }
+
+  if (helpArg2) {
+    helpArg2.textContent = "Respect du programme d’entretien et suivi dans le réseau Renault.";
+  }
+
+  if (helpArg3) {
+    helpArg3.textContent = "Assistance, véhicule de remplacement et revente facilitée grâce au suivi réseau.";
+  }
+
+  if (helpObjection) {
+    helpObjection.textContent = objection;
+  }
 }
 
 function updateModeUI() {
@@ -502,8 +594,14 @@ function resetDemo() {
 
 function toggleHelp() {
   const helpBox = document.getElementById("helpBox");
-  if (helpBox) {
-    helpBox.classList.toggle("hidden");
+  if (!helpBox) return;
+
+  helpBox.classList.toggle("hidden");
+
+  if (toggleHelpBtn) {
+    toggleHelpBtn.textContent = helpBox.classList.contains("hidden")
+      ? "Afficher aide"
+      : "Masquer aide";
   }
 }
 
