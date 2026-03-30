@@ -162,6 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function getSelectedBrand() {
+    return (localStorage.getItem("selected_brand") || "").trim().toLowerCase();
+  }
+
   function ensureSellerIdentity() {
     const seller = getSellerIdentity();
 
@@ -170,6 +174,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     alert("Aucun vendeur actif n’est enregistré. Merci de revenir sur le portail pour renseigner le prénom et le nom du vendeur avant de lancer le module.");
+    window.location.href = "index.html";
+    return false;
+  }
+
+  function ensureDaciaEnvironment() {
+    const selectedBrand = getSelectedBrand();
+
+    if (!selectedBrand || selectedBrand === "dacia") {
+      return true;
+    }
+
+    alert("Ce module correspond à l’univers Dacia. Merci de revenir au portail pour sélectionner le bon environnement.");
     window.location.href = "index.html";
     return false;
   }
@@ -350,6 +366,10 @@ document.addEventListener("DOMContentLoaded", () => {
   restartBtn.addEventListener("click", restartQuiz);
 
   if (!ensureSellerIdentity()) {
+    return;
+  }
+
+  if (!ensureDaciaEnvironment()) {
     return;
   }
 
