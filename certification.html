@@ -46,9 +46,59 @@
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
           <span class="proof-pill">PDF exportable</span>
-          <span class="proof-pill">Meilleur score conservé</span>
+          <span class="proof-pill">Scores vendeur actif</span>
         </div>
       </div>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Vendeur concerné</div>
+              <h2>Identité utilisée pour la certification</h2>
+            </div>
+            <div class="journey-side-badge" id="sellerIdentityBadge">À vérifier</div>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">V</span>
+                <span class="step-tag">Vendeur</span>
+              </div>
+              <h3>Nom affiché</h3>
+              <p id="sellerIdentityText">Aucun vendeur enregistré pour le moment.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">@</span>
+                <span class="step-tag">Email</span>
+              </div>
+              <h3>Email vendeur</h3>
+              <p id="sellerEmailText">Aucune adresse email enregistrée.</p>
+            </div>
+
+            <a href="index.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">I</span>
+                <span class="step-tag">Identité</span>
+              </div>
+              <h3>Modifier le vendeur</h3>
+              <p>Revenez au portail pour changer le vendeur actif et réinitialiser ses scores si besoin.</p>
+            </a>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">R</span>
+                <span class="step-tag">Règle</span>
+              </div>
+              <h3>Logique de score</h3>
+              <p>Les scores affichés ici correspondent au vendeur actuellement enregistré sur ce navigateur.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="journey-section">
         <div class="journey-card">
@@ -123,6 +173,7 @@
 
                   <div class="certificate-subline">Ce certificat est attribué à</div>
                   <div class="certificate-recipient" id="certificateRecipient">Prénom Nom</div>
+                  <div class="certificate-email" id="certificateEmail">email@entreprise.com</div>
 
                   <div class="certificate-body-text">
                     pour la validation du parcours vendeur sur l’univers
@@ -155,6 +206,12 @@
                       <div class="certificate-signature-line"></div>
                       <div class="certificate-signature-text">Signature plateforme</div>
                     </div>
+
+                    <div class="certificate-center-note">
+                      <div class="certificate-center-note-label">Univers</div>
+                      <div class="certificate-center-note-value">Dacia</div>
+                    </div>
+
                     <div class="certificate-date-block">
                       <div class="certificate-date-label">Date</div>
                       <div class="certificate-date-value" id="certificateDateValue">--/--/----</div>
@@ -169,8 +226,15 @@
             <button id="downloadPdfBtn" class="btn btn-primary btn-xl" type="button">
               Télécharger en PDF
             </button>
+            <button id="sendEmailBtn" class="btn btn-secondary btn-xl" type="button">
+              Envoyer par email
+            </button>
             <a href="simulateur.html" class="btn btn-secondary btn-xl">Accéder au simulateur</a>
             <a href="index.html" class="btn btn-secondary btn-xl">Retour au portail</a>
+          </div>
+
+          <div class="certification-email-note" id="emailNote">
+            L’envoi email nécessite une étape backend. L’adresse vendeur est déjà prévue pour ce futur usage.
           </div>
         </div>
       </section>
