@@ -23,35 +23,29 @@
 
         <nav class="hero-nav">
           <a href="index.html" class="nav-link active">Accueil</a>
-          <a href="learning.html" class="nav-link">Apprentissage</a>
-          <a href="simulateur.html" class="nav-link">Simulateur</a>
+          <a href="learning.html" class="nav-link">Apprentissage Dacia</a>
+          <a href="simulateur.html" class="nav-link">Simulateur Dacia</a>
           <a href="certification.html" class="nav-link">Certification</a>
         </nav>
       </header>
 
-      <div class="hero-content">
-        <div class="hero-kicker">Plateforme de formation et certification</div>
+      <div class="hero-content hero-content-simple">
+        <div class="hero-kicker">Plateforme de formation vendeur</div>
 
         <h1>
-          Développez l’expertise commerciale
-          de vos vendeurs sur les contrats de services après-vente
+          Identifiez le vendeur, choisissez une marque,
+          puis entrez dans un parcours clair et guidé
         </h1>
 
         <p class="hero-subtitle">
-          Depuis ce portail, le vendeur accède aux différentes briques de training,
-          suit son parcours et progresse étape par étape entre apprentissage,
-          mise en situation, validation et certification.
+          La plateforme oriente le vendeur étape par étape entre apprentissage,
+          entraînement commercial et certification, sans multiplier les accès inutiles.
         </p>
-
-        <div class="hero-cta-row">
-          <a href="#univers-marques" class="btn btn-primary btn-xl">Choisir une marque</a>
-          <a href="certification.html" class="btn btn-secondary btn-xl">Voir la certification</a>
-        </div>
 
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
-          <span class="proof-pill">Renault en préparation</span>
-          <span class="proof-pill">Architecture multi-marques</span>
+          <span class="proof-pill">Renault bientôt disponible</span>
+          <span class="proof-pill">Parcours guidé + training libre</span>
         </div>
       </div>
 
@@ -59,8 +53,8 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Vendeur actif</div>
-              <h2>Identité du vendeur pour la session</h2>
+              <div class="journey-kicker">Étape 1</div>
+              <h2>Identité du vendeur</h2>
             </div>
             <div class="journey-side-badge" id="sellerStatusBadge">Non renseigné</div>
           </div>
@@ -83,12 +77,16 @@
               </div>
 
               <div class="hero-cta-row">
-                <button id="saveSellerBtn" class="btn btn-primary btn-xl" type="button">Enregistrer le vendeur</button>
-                <button id="resetSellerBtn" class="btn btn-secondary btn-xl" type="button">Réinitialiser le vendeur</button>
+                <button id="saveSellerBtn" class="btn btn-primary btn-xl" type="button">
+                  Enregistrer le vendeur
+                </button>
+                <button id="resetSellerBtn" class="btn btn-secondary btn-xl" type="button">
+                  Réinitialiser
+                </button>
               </div>
             </div>
 
-            <div class="step-card premium-step">
+            <div class="step-card premium-step compact-summary-card">
               <div class="step-top">
                 <span class="step-number">ID</span>
                 <span class="step-tag">Session locale</span>
@@ -102,124 +100,98 @@
         </div>
       </section>
 
-      <section class="journey-section">
+      <section class="journey-section" id="brandSection">
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Parcours vendeur</div>
-              <h2>Choisissez votre prochaine brique de progression</h2>
+              <div class="journey-kicker">Étape 2</div>
+              <h2>Choix de la marque</h2>
             </div>
-            <div class="journey-side-badge">Training • Évaluation • Certification</div>
+            <div class="journey-side-badge" id="brandStatusBadge">Choix en attente</div>
           </div>
 
-          <div class="journey-grid">
-            <a href="learning.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">01</span>
-                <span class="step-tag">Disponible</span>
-              </div>
-              <h3>Apprentissage</h3>
-              <p>
-                Accédez aux modules d’apprentissage par marque pour maîtriser les fondamentaux
-                produit, l’éligibilité et les objections commerciales.
-              </p>
-            </a>
-
-            <a href="simulateur.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">02</span>
-                <span class="step-tag">Disponible</span>
-              </div>
-              <h3>Simulateur</h3>
-              <p>
-                Entraînez-vous dans des mises en situation par marque avec une logique de confiance,
-                de qualification client et de compétences à valider.
-              </p>
-            </a>
-
-            <a href="simulateur.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">03</span>
-                <span class="step-tag">Training</span>
-              </div>
-              <h3>Validation</h3>
-              <p>
-                Mesurez votre niveau sur chaque univers marque : argumentation, traitement des
-                objections, qualité de proposition et closing.
-              </p>
-            </a>
-
-            <a href="certification.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">04</span>
-                <span class="step-tag">Disponible</span>
-              </div>
-              <h3>Certification</h3>
-              <p>
-                Visualisez votre progression globale sur la plateforme et la synthèse de vos
-                résultats Dacia, Renault et certification vendeur.
-              </p>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="journey-section" id="univers-marques">
-        <div class="journey-card">
-          <div class="journey-head">
-            <div>
-              <div class="journey-kicker">Accès rapide</div>
-              <h2>Les briques disponibles dans cette V3.0</h2>
-            </div>
-          </div>
-
-          <div class="journey-grid">
-            <a href="learning.html" class="step-card premium-step">
+          <div class="brand-selection-grid">
+            <button class="step-card premium-step brand-card brand-card-active" type="button" id="selectDaciaBtn">
               <div class="step-top">
                 <span class="step-number">DA</span>
                 <span class="step-tag">Actif</span>
               </div>
               <h3>Univers Dacia</h3>
               <p>
-                Accédez au module d’apprentissage puis au simulateur Dacia pour travailler
-                le discours commercial et les mises en situation de la marque.
+                Accédez au parcours Dacia pour former le vendeur sur les contrats
+                d’entretien et la posture commerciale associée.
               </p>
-            </a>
+            </button>
 
-            <a href="learning-renault.html" class="step-card premium-step">
+            <button class="step-card premium-step brand-card brand-card-disabled" type="button" id="selectRenaultBtn">
               <div class="step-top">
                 <span class="step-number">RE</span>
-                <span class="step-tag">À ouvrir</span>
+                <span class="step-tag">Bientôt disponible</span>
               </div>
               <h3>Univers Renault</h3>
               <p>
-                Préparez la future brique Renault sur la même logique que Dacia :
-                apprentissage, simulation, validation et progression dédiée.
+                Le parcours Renault sera intégré sur la même logique, avec apprentissage,
+                mise en situation et certification dédiés.
               </p>
-            </a>
+            </button>
+          </div>
+        </div>
+      </section>
 
-            <a href="certification.html" class="step-card premium-step">
+      <section class="journey-section" id="modeSection">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Étape 3</div>
+              <h2>Choisissez votre mode d’entrée</h2>
+            </div>
+            <div class="journey-side-badge" id="modeStatusBadge">Sélection en attente</div>
+          </div>
+
+          <div class="mode-intro-box">
+            <p id="selectedBrandText">
+              Aucune marque sélectionnée pour le moment.
+            </p>
+          </div>
+
+          <div class="mode-grid">
+            <div class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">CM</span>
-                <span class="step-tag">Synthèse</span>
+                <span class="step-number">01</span>
+                <span class="step-tag">Recommandé</span>
               </div>
-              <h3>Certification multi-marques</h3>
+              <h3>Parcours guidé</h3>
               <p>
-                Consultez la consolidation des résultats de formation, des simulations et
-                de la progression vendeur sur l’ensemble de la plateforme.
+                Le vendeur suit l’ordre conseillé : apprentissage d’abord,
+                puis simulation, puis certification.
               </p>
-            </a>
+              <button id="guidedModeBtn" class="btn btn-primary btn-block" type="button" disabled>
+                Démarrer le parcours guidé
+              </button>
+            </div>
 
             <div class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">+</span>
-                <span class="step-tag">Évolutif</span>
+                <span class="step-number">02</span>
+                <span class="step-tag">Accès rapide</span>
               </div>
-              <h3>Autres univers à venir</h3>
+              <h3>Mode training</h3>
               <p>
-                La plateforme est pensée pour accueillir d’autres briques marque sans
-                perturber les modules déjà déployés.
+                Accès direct aux briques utiles pour s’entraîner librement sans alourdir
+                la lecture principale de la plateforme.
               </p>
+
+              <div class="training-actions">
+                <a id="trainingLearningLink" href="learning.html" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
+                  Refaire l’apprentissage
+                </a>
+                <a id="trainingSimulationLink" href="simulateur.html" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
+                  Relancer une simulation
+                </a>
+                <a id="trainingCertificationLink" href="certification.html" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
+                  Voir la certification
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -234,8 +206,21 @@
       const sellerEmail = document.getElementById("sellerEmail");
       const saveSellerBtn = document.getElementById("saveSellerBtn");
       const resetSellerBtn = document.getElementById("resetSellerBtn");
+
       const sellerSummaryText = document.getElementById("sellerSummaryText");
       const sellerStatusBadge = document.getElementById("sellerStatusBadge");
+
+      const brandStatusBadge = document.getElementById("brandStatusBadge");
+      const modeStatusBadge = document.getElementById("modeStatusBadge");
+      const selectedBrandText = document.getElementById("selectedBrandText");
+
+      const selectDaciaBtn = document.getElementById("selectDaciaBtn");
+      const selectRenaultBtn = document.getElementById("selectRenaultBtn");
+
+      const guidedModeBtn = document.getElementById("guidedModeBtn");
+      const trainingLearningLink = document.getElementById("trainingLearningLink");
+      const trainingSimulationLink = document.getElementById("trainingSimulationLink");
+      const trainingCertificationLink = document.getElementById("trainingCertificationLink");
 
       const sellerKeys = [
         "seller_first_name",
@@ -256,12 +241,28 @@
         "simulator_renault_best_score"
       ];
 
+      const brandKey = "selected_brand";
+
       function getStoredSeller() {
         return {
           firstName: (localStorage.getItem("seller_first_name") || "").trim(),
           lastName: (localStorage.getItem("seller_last_name") || "").trim(),
           email: (localStorage.getItem("seller_email") || "").trim()
         };
+      }
+
+      function getSellerDisplayName() {
+        const seller = getStoredSeller();
+        return `${seller.firstName} ${seller.lastName}`.trim();
+      }
+
+      function hasSellerIdentity() {
+        const seller = getStoredSeller();
+        return Boolean(seller.firstName && seller.lastName);
+      }
+
+      function getSelectedBrand() {
+        return (localStorage.getItem(brandKey) || "").trim();
       }
 
       function fillFormFromStorage() {
@@ -271,27 +272,108 @@
         sellerEmail.value = seller.email;
       }
 
+      function clearSellerScores() {
+        sellerScoreKeys.forEach((key) => localStorage.removeItem(key));
+      }
+
+      function setTrainingLinksEnabled(enabled) {
+        const links = [
+          trainingLearningLink,
+          trainingSimulationLink,
+          trainingCertificationLink
+        ];
+
+        links.forEach((link) => {
+          if (enabled) {
+            link.classList.remove("disabled-link");
+            link.setAttribute("aria-disabled", "false");
+            link.tabIndex = 0;
+          } else {
+            link.classList.add("disabled-link");
+            link.setAttribute("aria-disabled", "true");
+            link.tabIndex = -1;
+          }
+        });
+      }
+
       function renderSellerSummary() {
         const seller = getStoredSeller();
         const hasSeller = seller.firstName && seller.lastName;
 
         if (hasSeller) {
           sellerSummaryText.textContent =
-            `Vendeur actif : ${seller.firstName} ${seller.lastName}${seller.email ? ` • ${seller.email}` : ""}. Les scores affichés dans la plateforme correspondent à ce vendeur courant sur ce navigateur.`;
+            `Vendeur actif : ${seller.firstName} ${seller.lastName}${seller.email ? ` • ${seller.email}` : ""}. Les résultats enregistrés sur ce navigateur seront rattachés à cette session vendeur.`;
           sellerStatusBadge.textContent = "Vendeur enregistré";
           sellerStatusBadge.classList.add("status-certified");
           sellerStatusBadge.classList.remove("status-locked");
         } else {
-          sellerSummaryText.textContent =
-            "Aucun vendeur actif pour le moment.";
+          sellerSummaryText.textContent = "Aucun vendeur actif pour le moment.";
           sellerStatusBadge.textContent = "Non renseigné";
           sellerStatusBadge.classList.add("status-locked");
           sellerStatusBadge.classList.remove("status-certified");
         }
       }
 
-      function clearSellerScores() {
-        sellerScoreKeys.forEach((key) => localStorage.removeItem(key));
+      function renderBrandSelection() {
+        const selectedBrand = getSelectedBrand();
+
+        selectDaciaBtn.classList.toggle("selected-brand", selectedBrand === "dacia");
+        selectRenaultBtn.classList.toggle("selected-brand", selectedBrand === "renault");
+
+        if (selectedBrand === "dacia") {
+          brandStatusBadge.textContent = "Dacia sélectionné";
+        } else if (selectedBrand === "renault") {
+          brandStatusBadge.textContent = "Renault sélectionné";
+        } else {
+          brandStatusBadge.textContent = "Choix en attente";
+        }
+      }
+
+      function renderModeState() {
+        const sellerReady = hasSellerIdentity();
+        const selectedBrand = getSelectedBrand();
+        const sellerName = getSellerDisplayName();
+
+        if (!sellerReady) {
+          selectedBrandText.textContent =
+            "Renseignez d’abord le prénom et le nom du vendeur pour continuer.";
+          modeStatusBadge.textContent = "Identité requise";
+          guidedModeBtn.disabled = true;
+          setTrainingLinksEnabled(false);
+          return;
+        }
+
+        if (!selectedBrand) {
+          selectedBrandText.textContent =
+            `Vendeur actif : ${sellerName}. Choisissez maintenant une marque pour ouvrir le bon environnement.`;
+          modeStatusBadge.textContent = "Marque requise";
+          guidedModeBtn.disabled = true;
+          setTrainingLinksEnabled(false);
+          return;
+        }
+
+        if (selectedBrand === "dacia") {
+          selectedBrandText.textContent =
+            `Vendeur actif : ${sellerName}. Marque sélectionnée : Dacia. Vous pouvez soit démarrer le parcours guidé, soit accéder directement aux briques du training.`;
+          modeStatusBadge.textContent = "Dacia prêt";
+          guidedModeBtn.disabled = false;
+          setTrainingLinksEnabled(true);
+          return;
+        }
+
+        if (selectedBrand === "renault") {
+          selectedBrandText.textContent =
+            `Vendeur actif : ${sellerName}. Renault est visible dans la plateforme mais n’est pas encore ouvert dans cette version.`;
+          modeStatusBadge.textContent = "Renault bientôt disponible";
+          guidedModeBtn.disabled = true;
+          setTrainingLinksEnabled(false);
+        }
+      }
+
+      function refreshScreen() {
+        renderSellerSummary();
+        renderBrandSelection();
+        renderModeState();
       }
 
       function saveSeller() {
@@ -318,27 +400,85 @@
         localStorage.setItem("seller_last_name", lastName);
         localStorage.setItem("seller_email", email);
 
-        renderSellerSummary();
-        alert("Vendeur enregistré. Les scores affichés seront désormais ceux de ce vendeur.");
+        refreshScreen();
+        alert("Vendeur enregistré.");
       }
 
       function resetSeller() {
         sellerKeys.forEach((key) => localStorage.removeItem(key));
         clearSellerScores();
+        localStorage.removeItem(brandKey);
 
         sellerFirstName.value = "";
         sellerLastName.value = "";
         sellerEmail.value = "";
 
-        renderSellerSummary();
+        refreshScreen();
         alert("Vendeur et scores réinitialisés sur ce navigateur.");
+      }
+
+      function selectBrand(brand) {
+        if (!hasSellerIdentity()) {
+          alert("Merci d’enregistrer d’abord le vendeur avant de choisir une marque.");
+          return;
+        }
+
+        if (brand === "renault") {
+          localStorage.setItem(brandKey, "renault");
+          refreshScreen();
+          alert("Renault sera bientôt disponible dans cette version.");
+          return;
+        }
+
+        localStorage.setItem(brandKey, brand);
+        refreshScreen();
+      }
+
+      function handleTrainingBlocked(event) {
+        if (event.currentTarget.classList.contains("disabled-link")) {
+          event.preventDefault();
+
+          if (!hasSellerIdentity()) {
+            alert("Merci d’enregistrer d’abord le vendeur.");
+            return;
+          }
+
+          const selectedBrand = getSelectedBrand();
+
+          if (!selectedBrand) {
+            alert("Merci de sélectionner une marque avant d’ouvrir une brique.");
+            return;
+          }
+
+          if (selectedBrand === "renault") {
+            alert("L’univers Renault n’est pas encore disponible.");
+          }
+        }
       }
 
       saveSellerBtn.addEventListener("click", saveSeller);
       resetSellerBtn.addEventListener("click", resetSeller);
 
+      selectDaciaBtn.addEventListener("click", () => selectBrand("dacia"));
+      selectRenaultBtn.addEventListener("click", () => selectBrand("renault"));
+
+      guidedModeBtn.addEventListener("click", () => {
+        const selectedBrand = getSelectedBrand();
+
+        if (selectedBrand === "dacia") {
+          window.location.href = "learning.html";
+          return;
+        }
+
+        alert("Merci de sélectionner un univers actif.");
+      });
+
+      trainingLearningLink.addEventListener("click", handleTrainingBlocked);
+      trainingSimulationLink.addEventListener("click", handleTrainingBlocked);
+      trainingCertificationLink.addEventListener("click", handleTrainingBlocked);
+
       fillFormFromStorage();
-      renderSellerSummary();
+      refreshScreen();
     });
   </script>
 </body>
