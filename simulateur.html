@@ -3,54 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plateforme V3 - Formation et certification vendeur</title>
+  <title>Simulation Dacia - Contrats de services</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
+    <div class="topbar">
+      <div class="title-wrap">
+        <h1>Simulation Atelier Dacia</h1>
+        <p>Entraînement commercial CEP / CEP+ pour le parcours vendeur Dacia.</p>
+      </div>
+      <div class="badge" id="modeBadge">Simulation vendeur</div>
+    </div>
+
     <section class="panel" style="margin-bottom: 18px;">
       <div class="panel-inner">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;">
           <div style="max-width:760px;">
-            <div class="badge" style="margin-bottom:10px;">V3.0 • Parcours vendeur</div>
-            <h1 style="margin:0 0 10px;">Académie Après-Vente Dacia</h1>
-            <p class="sub" style="font-size:15px; line-height:1.6; margin:0 0 16px;">
-              Plateforme de formation et de certification vendeurs contrats de services après-vente.
-              Cette version V3 structure le parcours commercial autour de l’apprentissage,
-              de l’entraînement, de la validation et de la certification.
+            <div class="badge" style="margin-bottom:10px;">Univers Dacia</div>
+            <h2 style="margin:0 0 10px;">Mise en situation commerciale</h2>
+            <p class="sub" style="font-size:15px; line-height:1.6; margin:0;">
+              Le vendeur travaille ici la découverte client, l’argumentation CEP / CEP+,
+              le traitement des objections et la conclusion commerciale.
             </p>
-
-            <div class="chips" style="margin-bottom:10px;">
-              <span class="chip">Dacia actif</span>
-              <span class="chip">Renault VL à venir</span>
-              <span class="chip">Renault Utilitaires à venir</span>
-            </div>
           </div>
 
-          <div style="min-width:220px;">
-            <div class="panel-title" style="margin-bottom:10px;">
-              <h2 style="font-size:18px;">Parcours vendeur</h2>
-              <span class="sub">Structure V3</span>
-            </div>
-
-            <div class="chips" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start;">
-              <span class="chip">1. Apprendre</span>
-              <span class="chip">2. S’entraîner</span>
-              <span class="chip">3. Valider</span>
-              <span class="chip">4. Être certifié</span>
-            </div>
+          <div style="min-width:260px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+            <a href="learning.html" class="btn btn-secondary">Reprendre l’apprentissage</a>
+            <a href="certification.html" class="btn btn-secondary">Voir certification</a>
+            <a href="index.html" class="btn btn-secondary">Retour portail</a>
           </div>
         </div>
       </div>
     </section>
-
-    <div class="topbar">
-      <div class="title-wrap">
-        <h1>Simulation Atelier Dacia</h1>
-        <p>Entraînement commercial CEP / CEP+ orienté évaluation et validation vendeur.</p>
-      </div>
-      <div class="badge" id="modeBadge">Simulation vendeur</div>
-    </div>
 
     <div class="layout">
       <section class="panel">
@@ -168,7 +153,7 @@
           <div id="endMessage" class="hidden">
             <h3 id="endTitle">Fin de simulation</h3>
             <div class="sub" id="endSubtitle" style="margin-bottom:10px;">
-              La discussion est terminée. Consulte maintenant l’évaluation.
+              La discussion est terminée. Lance maintenant l’évaluation.
             </div>
             <button class="btn btn-primary" id="evalBtn">Voir évaluation</button>
           </div>
