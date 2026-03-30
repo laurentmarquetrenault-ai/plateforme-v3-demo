@@ -23,8 +23,8 @@
 
         <nav class="hero-nav">
           <a href="index.html" class="nav-link active">Accueil</a>
-          <a href="learning.html" class="nav-link">Apprentissage Dacia</a>
-          <a href="simulateur.html" class="nav-link">Simulateur Dacia</a>
+          <a href="learning-dacia.html" class="nav-link">Apprentissage Dacia</a>
+          <a href="simulateur-dacia.html" class="nav-link">Simulateur Dacia</a>
           <a href="certification.html" class="nav-link">Certification</a>
         </nav>
       </header>
@@ -39,12 +39,13 @@
 
         <p class="hero-subtitle">
           La plateforme oriente le vendeur étape par étape entre apprentissage,
-          entraînement commercial et certification, sans multiplier les accès inutiles.
+          entraînement commercial et certification, avec un accès rapide possible
+          en mode training libre.
         </p>
 
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
-          <span class="proof-pill">Renault bientôt disponible</span>
+          <span class="proof-pill active">Renault actif</span>
           <span class="proof-pill">Parcours guidé + training libre</span>
         </div>
       </div>
@@ -118,20 +119,20 @@
               </div>
               <h3>Univers Dacia</h3>
               <p>
-                Accédez au parcours Dacia pour former le vendeur sur les contrats
-                d’entretien et la posture commerciale associée.
+                Parcours orienté contrats d’entretien Dacia, CEP / CEP+, éligibilité,
+                argumentation commerciale et simulation atelier.
               </p>
             </button>
 
-            <button class="step-card premium-step brand-card brand-card-disabled" type="button" id="selectRenaultBtn">
+            <button class="step-card premium-step brand-card brand-card-active" type="button" id="selectRenaultBtn">
               <div class="step-top">
                 <span class="step-number">RE</span>
-                <span class="step-tag">Bientôt disponible</span>
+                <span class="step-tag">Actif</span>
               </div>
               <h3>Univers Renault</h3>
               <p>
-                Le parcours Renault sera intégré sur la même logique, avec apprentissage,
-                mise en situation et certification dédiés.
+                Parcours Renault dédié avec son apprentissage, sa simulation
+                et sa logique de progression propre.
               </p>
             </button>
           </div>
@@ -177,15 +178,15 @@
               </div>
               <h3>Mode training</h3>
               <p>
-                Accès direct aux briques utiles pour s’entraîner librement sans alourdir
-                la lecture principale de la plateforme.
+                Accès direct aux briques utiles pour s’entraîner librement
+                sans alourdir la lecture principale du portail.
               </p>
 
               <div class="training-actions">
-                <a id="trainingLearningLink" href="learning.html" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
+                <a id="trainingLearningLink" href="#" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
                   Refaire l’apprentissage
                 </a>
-                <a id="trainingSimulationLink" href="simulateur.html" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
+                <a id="trainingSimulationLink" href="#" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
                   Relancer une simulation
                 </a>
                 <a id="trainingCertificationLink" href="certification.html" class="btn btn-secondary btn-block training-link disabled-link" aria-disabled="true">
@@ -296,6 +297,23 @@
         });
       }
 
+      function updateLinksForBrand(brand) {
+        if (brand === "dacia") {
+          trainingLearningLink.href = "learning-dacia.html";
+          trainingSimulationLink.href = "simulateur-dacia.html";
+          return;
+        }
+
+        if (brand === "renault") {
+          trainingLearningLink.href = "learning-renault.html";
+          trainingSimulationLink.href = "simulateur-renault.html";
+          return;
+        }
+
+        trainingLearningLink.href = "#";
+        trainingSimulationLink.href = "#";
+      }
+
       function renderSellerSummary() {
         const seller = getStoredSeller();
         const hasSeller = seller.firstName && seller.lastName;
@@ -334,6 +352,8 @@
         const selectedBrand = getSelectedBrand();
         const sellerName = getSellerDisplayName();
 
+        updateLinksForBrand(selectedBrand);
+
         if (!sellerReady) {
           selectedBrandText.textContent =
             "Renseignez d’abord le prénom et le nom du vendeur pour continuer.";
@@ -363,10 +383,10 @@
 
         if (selectedBrand === "renault") {
           selectedBrandText.textContent =
-            `Vendeur actif : ${sellerName}. Renault est visible dans la plateforme mais n’est pas encore ouvert dans cette version.`;
-          modeStatusBadge.textContent = "Renault bientôt disponible";
-          guidedModeBtn.disabled = true;
-          setTrainingLinksEnabled(false);
+            `Vendeur actif : ${sellerName}. Marque sélectionnée : Renault. Vous pouvez soit démarrer le parcours guidé, soit accéder directement aux briques du training.`;
+          modeStatusBadge.textContent = "Renault prêt";
+          guidedModeBtn.disabled = false;
+          setTrainingLinksEnabled(true);
         }
       }
 
@@ -423,13 +443,6 @@
           return;
         }
 
-        if (brand === "renault") {
-          localStorage.setItem(brandKey, "renault");
-          refreshScreen();
-          alert("Renault sera bientôt disponible dans cette version.");
-          return;
-        }
-
         localStorage.setItem(brandKey, brand);
         refreshScreen();
       }
@@ -447,11 +460,6 @@
 
           if (!selectedBrand) {
             alert("Merci de sélectionner une marque avant d’ouvrir une brique.");
-            return;
-          }
-
-          if (selectedBrand === "renault") {
-            alert("L’univers Renault n’est pas encore disponible.");
           }
         }
       }
@@ -466,11 +474,16 @@
         const selectedBrand = getSelectedBrand();
 
         if (selectedBrand === "dacia") {
-          window.location.href = "learning.html";
+          window.location.href = "learning-dacia.html";
           return;
         }
 
-        alert("Merci de sélectionner un univers actif.");
+        if (selectedBrand === "renault") {
+          window.location.href = "learning-renault.html";
+          return;
+        }
+
+        alert("Merci de sélectionner une marque.");
       });
 
       trainingLearningLink.addEventListener("click", handleTrainingBlocked);
