@@ -59,6 +59,53 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
+              <div class="journey-kicker">Vendeur actif</div>
+              <h2>Identité du vendeur pour la session</h2>
+            </div>
+            <div class="journey-side-badge" id="sellerStatusBadge">Non renseigné</div>
+          </div>
+
+          <div class="seller-entry-grid">
+            <div class="seller-form-card">
+              <div class="seller-form-row">
+                <label class="seller-label" for="sellerFirstName">Prénom</label>
+                <input id="sellerFirstName" class="seller-input" type="text" placeholder="Prénom du vendeur" />
+              </div>
+
+              <div class="seller-form-row">
+                <label class="seller-label" for="sellerLastName">Nom</label>
+                <input id="sellerLastName" class="seller-input" type="text" placeholder="Nom du vendeur" />
+              </div>
+
+              <div class="seller-form-row">
+                <label class="seller-label" for="sellerEmail">Email</label>
+                <input id="sellerEmail" class="seller-input" type="email" placeholder="email@entreprise.com" />
+              </div>
+
+              <div class="hero-cta-row">
+                <button id="saveSellerBtn" class="btn btn-primary btn-xl" type="button">Enregistrer le vendeur</button>
+                <button id="resetSellerBtn" class="btn btn-secondary btn-xl" type="button">Réinitialiser le vendeur</button>
+              </div>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">ID</span>
+                <span class="step-tag">Session locale</span>
+              </div>
+              <h3>Résumé vendeur</h3>
+              <p id="sellerSummaryText">
+                Aucun vendeur actif pour le moment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
               <div class="journey-kicker">Parcours vendeur</div>
               <h2>Choisissez votre prochaine brique de progression</h2>
             </div>
@@ -179,6 +226,116 @@
       </section>
     </section>
   </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sellerFirstName = document.getElementById("sellerFirstName");
+      const sellerLastName = document.getElementById("sellerLastName");
+      const sellerEmail = document.getElementById("sellerEmail");
+      const saveSellerBtn = document.getElementById("saveSellerBtn");
+      const resetSellerBtn = document.getElementById("resetSellerBtn");
+      const sellerSummaryText = document.getElementById("sellerSummaryText");
+      const sellerStatusBadge = document.getElementById("sellerStatusBadge");
+
+      const sellerKeys = [
+        "seller_first_name",
+        "seller_last_name",
+        "seller_email"
+      ];
+
+      const sellerScoreKeys = [
+        "qcm_dacia_score",
+        "qcm_dacia_total",
+        "qcm_dacia_percent",
+        "simulator_last_score",
+        "simulator_best_score"
+      ];
+
+      function getStoredSeller() {
+        return {
+          firstName: (localStorage.getItem("seller_first_name") || "").trim(),
+          lastName: (localStorage.getItem("seller_last_name") || "").trim(),
+          email: (localStorage.getItem("seller_email") || "").trim()
+        };
+      }
+
+      function fillFormFromStorage() {
+        const seller = getStoredSeller();
+        sellerFirstName.value = seller.firstName;
+        sellerLastName.value = seller.lastName;
+        sellerEmail.value = seller.email;
+      }
+
+      function renderSellerSummary() {
+        const seller = getStoredSeller();
+        const hasSeller = seller.firstName && seller.lastName;
+
+        if (hasSeller) {
+          sellerSummaryText.textContent =
+            `Vendeur actif : ${seller.firstName} ${seller.lastName}${seller.email ? ` • ${seller.email}` : ""}. Les scores affichés dans la plateforme correspondent à ce vendeur courant sur ce navigateur.`;
+          sellerStatusBadge.textContent = "Vendeur enregistré";
+          sellerStatusBadge.classList.add("status-certified");
+          sellerStatusBadge.classList.remove("status-locked");
+        } else {
+          sellerSummaryText.textContent =
+            "Aucun vendeur actif pour le moment.";
+          sellerStatusBadge.textContent = "Non renseigné";
+          sellerStatusBadge.classList.add("status-locked");
+          sellerStatusBadge.classList.remove("status-certified");
+        }
+      }
+
+      function clearSellerScores() {
+        sellerScoreKeys.forEach((key) => localStorage.removeItem(key));
+      }
+
+      function saveSeller() {
+        const firstName = sellerFirstName.value.trim();
+        const lastName = sellerLastName.value.trim();
+        const email = sellerEmail.value.trim();
+
+        if (!firstName || !lastName) {
+          alert("Merci de renseigner au minimum le prénom et le nom du vendeur.");
+          return;
+        }
+
+        const previousSeller = getStoredSeller();
+        const sellerChanged =
+          previousSeller.firstName !== firstName ||
+          previousSeller.lastName !== lastName ||
+          previousSeller.email !== email;
+
+        if (sellerChanged) {
+          clearSellerScores();
+        }
+
+        localStorage.setItem("seller_first_name", firstName);
+        localStorage.setItem("seller_last_name", lastName);
+        localStorage.setItem("seller_email", email);
+
+        renderSellerSummary();
+        alert("Vendeur enregistré. Les scores affichés seront désormais ceux de ce vendeur.");
+      }
+
+      function resetSeller() {
+        sellerKeys.forEach((key) => localStorage.removeItem(key));
+        clearSellerScores();
+
+        sellerFirstName.value = "";
+        sellerLastName.value = "";
+        sellerEmail.value = "";
+
+        renderSellerSummary();
+        alert("Vendeur et scores réinitialisés sur ce navigateur.");
+      }
+
+      saveSellerBtn.addEventListener("click", saveSeller);
+      resetSellerBtn.addEventListener("click", resetSeller);
+
+      fillFormFromStorage();
+      renderSellerSummary();
+    });
+  </script>
 </body>
 </html>
 
