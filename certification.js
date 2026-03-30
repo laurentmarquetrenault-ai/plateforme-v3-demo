@@ -20,41 +20,76 @@ document.addEventListener("DOMContentLoaded", () => {
   const simLastRaw = localStorage.getItem("simulator_last_score");
   const simBestRaw = localStorage.getItem("simulator_best_score");
 
-  const sellerFirstName = localStorage.getItem("seller_first_name") || "Prénom";
-  const sellerLastName = localStorage.getItem("seller_last_name") || "Nom";
+  const sellerFirstName = (localStorage.getItem("seller_first_name") || "Prénom").trim();
+  const sellerLastName = (localStorage.getItem("seller_last_name") || "Nom").trim();
 
   const today = new Date();
   const formattedDate = today.toLocaleDateString("fr-FR");
 
-  certificateRecipient.textContent = `${sellerFirstName} ${sellerLastName}`;
-  certificateDateValue.textContent = formattedDate;
-
+  let qcmScore = null;
   let qcmPercent = null;
+  let qcmTotal = null;
   let simLast = null;
   let simBest = null;
 
-  if (qcmRaw && qcmPercentRaw && qcmTotalRaw) {
-    qcmPercent = Number(qcmPercentRaw);
-    qcmScoreText.textContent = `Score enregistré : ${qcmRaw}/${qcmTotalRaw} (${qcmPercent}%).`;
-    certificateQcmValue.textContent = `${qcmRaw}/${qcmTotalRaw}`;
+  function toNumber(value) {
+    if (value === null || value === undefined || value === "") {
+      return null;
+    }
+
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function formatPercent(value) {
+    if (value === null) return "--";
+    return `${Math.round(value)}%`;
+  }
+
+  function formatScoreOver100(value) {
+    if (value === null) return "--";
+    return `${Math.round(value)}/100`;
+  }
+
+  function setBadgeText(element, text) {
+    if (!element) return;
+    element.textContent = text;
+  }
+
+  function applyStatusClass(element, status) {
+    if (!element) return;
+    element.classList.remove("status-locked", "status-progress", "status-certified");
+    element.classList.add(status);
+  }
+
+  qcmScore = toNumber(qcmRaw);
+  qcmPercent = toNumber(qcmPercentRaw);
+  qcmTotal = toNumber(qcmTotalRaw);
+  simLast = toNumber(simLastRaw);
+  simBest = toNumber(simBestRaw);
+
+  certificateRecipient.textContent = `${sellerFirstName} ${sellerLastName}`;
+  certificateDateValue.textContent = formattedDate;
+
+  if (qcmScore !== null && qcmPercent !== null && qcmTotal !== null) {
+    qcmScoreText.textContent = `Score enregistré : ${qcmScore}/${qcmTotal} (${Math.round(qcmPercent)}%).`;
+    certificateQcmValue.textContent = `${qcmScore}/${qcmTotal}`;
   } else {
     qcmScoreText.textContent = "Aucun score QCM enregistré pour le moment.";
     certificateQcmValue.textContent = "--";
   }
 
-  if (simLastRaw) {
-    simLast = Number(simLastRaw);
-    simScoreText.textContent = `Dernier score simulateur enregistré : ${simLast}/100.`;
-    certificateSimValue.textContent = `${simLast}/100`;
+  if (simLast !== null) {
+    simScoreText.textContent = `Dernier score simulateur enregistré : ${Math.round(simLast)}/100.`;
+    certificateSimValue.textContent = formatScoreOver100(simLast);
   } else {
     simScoreText.textContent = "Aucun score simulateur enregistré pour le moment.";
     certificateSimValue.textContent = "--";
   }
 
-  if (simBestRaw) {
-    simBest = Number(simBestRaw);
-    bestSimScoreText.textContent = `Meilleur score simulateur enregistré : ${simBest}/100.`;
-    certificateBestSimValue.textContent = `${simBest}/100`;
+  if (simBest !== null) {
+    bestSimScoreText.textContent = `Meilleur score simulateur enregistré : ${Math.round(simBest)}/100.`;
+    certificateBestSimValue.textContent = formatScoreOver100(simBest);
   } else {
     bestSimScoreText.textContent = "Aucun meilleur score simulateur enregistré pour le moment.";
     certificateBestSimValue.textContent = "--";
@@ -62,22 +97,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const qcmValidated = qcmPercent !== null && qcmPercent >= 75;
   const simValidated = simBest !== null && simBest >= 75;
+  const hasAnyResult =
+    qcmScore !== null ||
+    qcmPercent !== null ||
+    qcmTotal !== null ||
+    simLast !== null ||
+    simBest !== null;
 
   if (qcmValidated && simValidated) {
-    certStatusText.textContent = "Certification débloquée. Les seuils de validation sont atteints.";
-    globalStatusBadge.textContent = "Débloquée";
-    certificateResultBadge.textContent = "VENDEUR CERTIFIÉ";
-  } else if (qcmPercent !== null || simBest !== null) {
-    certStatusText.textContent = "Certification en cours. Certaines briques sont renseignées, mais les seuils ne sont pas encore tous atteints.";
-    globalStatusBadge.textContent = "En cours";
-    certificateResultBadge.textContent = "EN COURS DE VALIDATION";
+    certStatusText.textContent =
+      "Certification débloquée. Les seuils de validation sont atteints sur le QCM et sur la simulation.";
+    setBadgeText(globalStatusBadge, "Débloquée");
+    setBadgeText(certificateResultBadge, "VENDEUR CERTIFIÉ");
+    applyStatusClass(globalStatusBadge, "status-certified");
+    applyStatusClass(certificateResultBadge, "status-certified");
+  } else if (hasAnyResult) {
+    const missingBlocks = [];
+
+    if (!qcmValidated) {
+      missingBlocks.push(`QCM insuffisant (${formatPercent(qcmPercent)})`);
+    }
+
+    if (!simValidated) {
+      missingBlocks.push(`simulation insuffisante (${formatScoreOver100(simBest)})`);
+    }
+
+    certStatusText.textContent =
+      `Certification en cours. Résultats partiellement renseignés ou seuils non atteints : ${missingBlocks.join(" • ")}.`;
+    setBadgeText(globalStatusBadge, "En cours");
+    setBadgeText(certificateResultBadge, "EN COURS DE VALIDATION");
+    applyStatusClass(globalStatusBadge, "status-progress");
+    applyStatusClass(certificateResultBadge, "status-progress");
   } else {
-    certStatusText.textContent = "Certification verrouillée. Aucun résultat exploitable n’est encore enregistré.";
-    globalStatusBadge.textContent = "Verrouillée";
-    certificateResultBadge.textContent = "NON DÉBLOQUÉE";
+    certStatusText.textContent =
+      "Certification verrouillée. Aucun résultat exploitable n’est encore enregistré.";
+    setBadgeText(globalStatusBadge, "Verrouillée");
+    setBadgeText(certificateResultBadge, "NON DÉBLOQUÉE");
+    applyStatusClass(globalStatusBadge, "status-locked");
+    applyStatusClass(certificateResultBadge, "status-locked");
   }
 
-  downloadPdfBtn.addEventListener("click", () => {
-    window.print();
-  });
+  if (downloadPdfBtn) {
+    downloadPdfBtn.addEventListener("click", () => {
+      window.print();
+    });
+  }
 });
