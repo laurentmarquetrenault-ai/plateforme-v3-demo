@@ -23,8 +23,10 @@
 
         <nav class="hero-nav">
           <a href="index.html" class="nav-link active">Accueil</a>
-          <a id="headerLearningLink" href="#" class="nav-link disabled-link" aria-disabled="true">Apprentissage</a>
-          <a id="headerSimulationLink" href="#" class="nav-link disabled-link" aria-disabled="true">Simulation</a>
+          <a href="learning-dacia.html" class="nav-link">Apprentissage Dacia</a>
+          <a href="simulateur-dacia.html" class="nav-link">Simulateur Dacia</a>
+          <a href="learning-renault.html" class="nav-link">Apprentissage Renault</a>
+          <a href="simulateur-renault.html" class="nav-link">Simulateur Renault</a>
           <a href="certification.html" class="nav-link">Certification</a>
         </nav>
       </header>
@@ -227,9 +229,6 @@
       const trainingSimulationLink = document.getElementById("trainingSimulationLink");
       const trainingCertificationLink = document.getElementById("trainingCertificationLink");
 
-      const headerLearningLink = document.getElementById("headerLearningLink");
-      const headerSimulationLink = document.getElementById("headerSimulationLink");
-
       const sellerKeys = [
         "seller_first_name",
         "seller_last_name",
@@ -284,69 +283,41 @@
         sellerScoreKeys.forEach((key) => localStorage.removeItem(key));
       }
 
-      function setLinkState(link, enabled, href = "#", label = "") {
-        if (!link) return;
-
-        link.href = enabled ? href : "#";
-        if (label) {
-          link.textContent = label;
-        }
-
-        if (enabled) {
-          link.classList.remove("disabled-link");
-          link.setAttribute("aria-disabled", "false");
-          link.tabIndex = 0;
-        } else {
-          link.classList.add("disabled-link");
-          link.setAttribute("aria-disabled", "true");
-          link.tabIndex = -1;
-        }
-      }
-
       function setTrainingLinksEnabled(enabled) {
-        const selectedBrand = getSelectedBrand();
+        const links = [
+          trainingLearningLink,
+          trainingSimulationLink,
+          trainingCertificationLink
+        ];
 
-        if (!enabled || !selectedBrand) {
-          setLinkState(trainingLearningLink, false, "#");
-          setLinkState(trainingSimulationLink, false, "#");
-          setLinkState(trainingCertificationLink, false, "certification.html");
-          return;
-        }
-
-        if (selectedBrand === "dacia") {
-          setLinkState(trainingLearningLink, true, "learning-dacia.html");
-          setLinkState(trainingSimulationLink, true, "simulateur-dacia.html");
-          setLinkState(trainingCertificationLink, true, "certification.html");
-          return;
-        }
-
-        if (selectedBrand === "renault") {
-          setLinkState(trainingLearningLink, true, "learning-renault.html");
-          setLinkState(trainingSimulationLink, true, "simulateur-renault.html");
-          setLinkState(trainingCertificationLink, true, "certification.html");
-        }
+        links.forEach((link) => {
+          if (enabled) {
+            link.classList.remove("disabled-link");
+            link.setAttribute("aria-disabled", "false");
+            link.tabIndex = 0;
+          } else {
+            link.classList.add("disabled-link");
+            link.setAttribute("aria-disabled", "true");
+            link.tabIndex = -1;
+          }
+        });
       }
 
-      function updateHeaderLinks() {
-        const sellerReady = hasSellerIdentity();
-        const selectedBrand = getSelectedBrand();
-
-        if (!sellerReady || !selectedBrand) {
-          setLinkState(headerLearningLink, false, "#", "Apprentissage");
-          setLinkState(headerSimulationLink, false, "#", "Simulation");
+      function updateLinksForBrand(brand) {
+        if (brand === "dacia") {
+          trainingLearningLink.href = "learning-dacia.html";
+          trainingSimulationLink.href = "simulateur-dacia.html";
           return;
         }
 
-        if (selectedBrand === "dacia") {
-          setLinkState(headerLearningLink, true, "learning-dacia.html", "Apprentissage Dacia");
-          setLinkState(headerSimulationLink, true, "simulateur-dacia.html", "Simulateur Dacia");
+        if (brand === "renault") {
+          trainingLearningLink.href = "learning-renault.html";
+          trainingSimulationLink.href = "simulateur-renault.html";
           return;
         }
 
-        if (selectedBrand === "renault") {
-          setLinkState(headerLearningLink, true, "learning-renault.html", "Apprentissage Renault");
-          setLinkState(headerSimulationLink, true, "simulateur-renault.html", "Simulateur Renault");
-        }
+        trainingLearningLink.href = "#";
+        trainingSimulationLink.href = "#";
       }
 
       function renderSellerSummary() {
@@ -386,6 +357,8 @@
         const sellerReady = hasSellerIdentity();
         const selectedBrand = getSelectedBrand();
         const sellerName = getSellerDisplayName();
+
+        updateLinksForBrand(selectedBrand);
 
         if (!sellerReady) {
           selectedBrandText.textContent =
@@ -427,7 +400,6 @@
         renderSellerSummary();
         renderBrandSelection();
         renderModeState();
-        updateHeaderLinks();
       }
 
       function saveSeller() {
@@ -481,20 +453,20 @@
         refreshScreen();
       }
 
-      function handleBlockedLink(event) {
-        if (!event.currentTarget.classList.contains("disabled-link")) {
-          return;
-        }
+      function handleTrainingBlocked(event) {
+        if (event.currentTarget.classList.contains("disabled-link")) {
+          event.preventDefault();
 
-        event.preventDefault();
+          if (!hasSellerIdentity()) {
+            alert("Merci d’enregistrer d’abord le vendeur.");
+            return;
+          }
 
-        if (!hasSellerIdentity()) {
-          alert("Merci d’enregistrer d’abord le vendeur.");
-          return;
-        }
+          const selectedBrand = getSelectedBrand();
 
-        if (!getSelectedBrand()) {
-          alert("Merci de sélectionner une marque avant d’ouvrir cette page.");
+          if (!selectedBrand) {
+            alert("Merci de sélectionner une marque avant d’ouvrir une brique.");
+          }
         }
       }
 
@@ -520,11 +492,9 @@
         alert("Merci de sélectionner une marque.");
       });
 
-      trainingLearningLink.addEventListener("click", handleBlockedLink);
-      trainingSimulationLink.addEventListener("click", handleBlockedLink);
-      trainingCertificationLink.addEventListener("click", handleBlockedLink);
-      headerLearningLink.addEventListener("click", handleBlockedLink);
-      headerSimulationLink.addEventListener("click", handleBlockedLink);
+      trainingLearningLink.addEventListener("click", handleTrainingBlocked);
+      trainingSimulationLink.addEventListener("click", handleTrainingBlocked);
+      trainingCertificationLink.addEventListener("click", handleTrainingBlocked);
 
       fillFormFromStorage();
       refreshScreen();
@@ -532,4 +502,3 @@
   </script>
 </body>
 </html>
-
