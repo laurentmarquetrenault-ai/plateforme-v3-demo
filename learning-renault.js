@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  localStorage.setItem("selected_brand", "renault");
+
   const questions = [
     {
       theme: "Valeur vs prix",
@@ -185,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return true;
     }
 
-    alert("Ce module correspond à l’univers Renault. Merci de revenir au portail pour sélectionner le bon environnement.");
+    alert("Ce module correspond à l’univers Renault. Merci de revenir sur le portail pour sélectionner le bon environnement.");
     window.location.href = "index.html";
     return false;
   }
