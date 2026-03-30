@@ -24,8 +24,6 @@ const endSubtitle = document.getElementById("endSubtitle");
 const modeBadge = document.getElementById("modeBadge");
 const helpRecommendation = document.getElementById("helpRecommendation");
 const helpAngle = document.getElementById("helpAngle");
-const cepPrice = document.getElementById("cepPrice");
-const ceppPrice = document.getElementById("ceppPrice");
 const briefText = document.getElementById("briefText");
 const toggleHelpBtn = document.getElementById("toggleHelpBtn");
 
@@ -51,23 +49,6 @@ const skillLabels = {
   closing: "Conclusion"
 };
 
-const priceMatrix = {
-  "1-5": {
-    ev: { cep: 29, cepp: 49 },
-    essence_gpl: { cep: 39, cepp: 69 },
-    hybrid: { cep: 49, cepp: 69 },
-    diesel: { cep: 49, cepp: 79 },
-    vu_thermique: { cep: 59, cepp: 89 }
-  },
-  "6-8": {
-    ev: { cep: 25, cepp: 39 },
-    essence_gpl: { cep: 35, cepp: 59 },
-    hybrid: { cep: 45, cepp: 59 },
-    diesel: { cep: 45, cepp: 69 },
-    vu_thermique: { cep: 55, cepp: 79 }
-  }
-};
-
 function getSellerIdentity() {
   const firstName = (localStorage.getItem("seller_first_name") || "").trim();
   const lastName = (localStorage.getItem("seller_last_name") || "").trim();
@@ -82,6 +63,10 @@ function getSellerIdentity() {
   };
 }
 
+function getSelectedBrand() {
+  return (localStorage.getItem("selected_brand") || "").trim().toLowerCase();
+}
+
 function ensureSellerIdentity() {
   const seller = getSellerIdentity();
 
@@ -94,6 +79,18 @@ function ensureSellerIdentity() {
   return false;
 }
 
+function ensureRenaultEnvironment() {
+  const selectedBrand = getSelectedBrand();
+
+  if (!selectedBrand || selectedBrand === "renault") {
+    return true;
+  }
+
+  alert("Cette simulation correspond à l’univers Renault. Merci de revenir au portail pour sélectionner l’environnement approprié.");
+  window.location.href = "index.html";
+  return false;
+}
+
 function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
@@ -101,6 +98,8 @@ function escapeHtml(text) {
 }
 
 function display(text, role = "client") {
+  if (!chat) return;
+
   const bubble = document.createElement("div");
   bubble.className = `bubble ${role}`;
 
@@ -115,11 +114,18 @@ function display(text, role = "client") {
 }
 
 function resetTrustUI() {
-  trustBar.style.width = `${trust}%`;
-  trustText.textContent = `${trust}%`;
+  if (trustBar) {
+    trustBar.style.width = `${trust}%`;
+  }
+
+  if (trustText) {
+    trustText.textContent = `${trust}%`;
+  }
 }
 
 function updateAvatar() {
+  if (!avatar) return;
+
   if (trust > 70) {
     avatar.src = avatarByState.happy;
   } else if (trust > 40) {
@@ -129,47 +135,27 @@ function updateAvatar() {
   }
 }
 
-function getAgeNumber() {
-  const raw = vehicleAgeSelect.value || "1 an";
-  const match = raw.match(/\d+/);
-  return match ? parseInt(match[0], 10) : 1;
-}
+function updateHelpContent() {
+  if (!helpRecommendation || !helpAngle) return;
 
-function getAgeBucket() {
-  return getAgeNumber() <= 5 ? "1-5" : "6-8";
-}
+  const scenario = scenarioSelect?.value || "revision";
+  const profil = profilSelect?.value || "convaincu";
 
-function getSelectedPrices() {
-  const bucket = getAgeBucket();
-  const energy = energyTypeSelect.value;
-  return priceMatrix[bucket][energy];
-}
+  let reco = "Commencez par découvrir l’usage et ce qui compte vraiment pour le client.";
+  let angle = "Reliez ensuite la solution à la tranquillité, à la visibilité budgétaire et au suivi dans le réseau.";
 
-function updateHelpPrices() {
-  const prices = getSelectedPrices();
-  const scenario = scenarioSelect.value;
-  const age = getAgeNumber();
-  const profil = profilSelect.value;
-  const energy = energyTypeSelect.value;
-
-  cepPrice.textContent = `${prices.cep}€ / mois`;
-  ceppPrice.textContent = `${prices.cepp}€ / mois`;
-
-  let reco = "Commencer si possible par Privilèges+ pour valoriser la couverture renforcée, puis ajuster selon le besoin réel du client.";
-  let angle = "Budget maîtrisé pendant 48 mois, assistance, entretien dans le réseau Renault, revente facilitée, tranquillité client.";
-
-  if (profil === "pro" || energy === "vu_thermique") {
-    reco = "Avec un client professionnel ou un utilitaire thermique, valorise d’abord la maîtrise du budget et la limitation des imprévus d’exploitation.";
-    angle = "Parle concret : budget fixe, limitation des immobilisations, continuité d’usage du véhicule, intérêt réel pour l’activité.";
-  } else if (scenario === "usure" || scenario === "facture") {
-    reco = "Privilèges+ recommandé : scénario usure ou facture élevée, la couverture renforcée a plus de sens.";
-    angle = "Mets l’accent sur les pièces d’usure, le contrôle technique, la tranquillité et l’évitement des grosses factures imprévues.";
-  } else if (scenario === "fin-garantie" && age >= 3) {
-    reco = "Pense à valoriser la fin de garantie constructeur et l’intérêt de sécuriser le véhicule avant l’arrivée des premiers gros coûts.";
-    angle = "Question utile : souhaitez-vous garder un budget prévisible et éviter qu’un imprévu hors garantie ne vous coûte bien plus cher ?";
-  } else if (scenario === "vo") {
-    reco = "Sur une livraison VO, pense à proposer la tranquillité dès le départ et à valoriser l’entretien réseau pour la revente.";
-    angle = "Le bon réflexe est d’installer la logique de protection dès l’achat du véhicule d’occasion.";
+  if (profil === "pro") {
+    reco = "Avec un client professionnel, parlez d’abord continuité d’usage, maîtrise budgétaire et limitation des immobilisations.";
+    angle = "L’angle clé est l’impact concret sur l’activité : moins d’imprévus, meilleure visibilité, véhicule plus facilement maintenu en usage.";
+  } else if (scenario === "facture") {
+    reco = "Transformez la facture subie en réflexion sur l’anticipation et la maîtrise des dépenses futures.";
+    angle = "Il faut relier la dépense actuelle à l’intérêt d’une solution plus lisible dans le temps.";
+  } else if (scenario === "fin-garantie") {
+    reco = "Mettez en avant la suite logique après la garantie et la sécurisation du véhicule dans la durée.";
+    angle = "Parlez sérénité, continuité de suivi et réduction du risque de mauvaises surprises après la fin de garantie.";
+  } else if (scenario === "usure") {
+    reco = "Faites parler le client sur son usage réel, puis reliez ce besoin à une logique d’anticipation.";
+    angle = "L’idée n’est pas de pousser un produit, mais de montrer le sens de la solution par rapport à l’usage.";
   }
 
   helpRecommendation.textContent = reco;
@@ -177,11 +163,25 @@ function updateHelpPrices() {
 }
 
 function updateModeUI() {
-  modeBadge.textContent = "Simulation vendeur Renault";
-  finishBtn.textContent = "Terminer la simulation";
-  newBtn.textContent = "Nouvelle simulation";
-  endTitle.textContent = "Fin de simulation";
-  endSubtitle.textContent = "La discussion est terminée. Lance maintenant l’évaluation.";
+  if (modeBadge) {
+    modeBadge.textContent = "Simulation vendeur";
+  }
+
+  if (finishBtn) {
+    finishBtn.textContent = "Terminer la simulation";
+  }
+
+  if (newBtn) {
+    newBtn.textContent = "Nouvelle simulation";
+  }
+
+  if (endTitle) {
+    endTitle.textContent = "Fin de simulation";
+  }
+
+  if (endSubtitle) {
+    endSubtitle.textContent = "La discussion est terminée. Lance maintenant l’évaluation.";
+  }
 }
 
 function renderSkills() {
@@ -199,6 +199,7 @@ function resetSkills() {
   Object.keys(skills).forEach((key) => {
     skills[key] = false;
   });
+
   renderSkills();
 }
 
@@ -267,26 +268,43 @@ function setControlsState({
   evalText = "Voir évaluation",
   inputDisabled = false
 } = {}) {
-  sendBtn.style.display = sendVisible ? "inline-flex" : "none";
-  sendBtn.disabled = sendDisabled;
+  if (sendBtn) {
+    sendBtn.style.display = sendVisible ? "inline-flex" : "none";
+    sendBtn.disabled = sendDisabled;
+  }
 
-  finishBtn.style.display = finishVisible ? "inline-flex" : "none";
-  finishBtn.disabled = finishDisabled;
+  if (finishBtn) {
+    finishBtn.style.display = finishVisible ? "inline-flex" : "none";
+    finishBtn.disabled = finishDisabled;
+  }
 
-  evalBtn.style.display = evalVisible ? "inline-flex" : "none";
-  evalBtn.disabled = evalDisabled;
-  evalBtn.textContent = evalText;
+  if (evalBtn) {
+    evalBtn.style.display = evalVisible ? "inline-flex" : "none";
+    evalBtn.disabled = evalDisabled;
+    evalBtn.textContent = evalText;
+  }
 
-  input.disabled = inputDisabled;
+  if (input) {
+    input.disabled = inputDisabled;
+  }
 }
 
 function showEndPanel(title, subtitle) {
+  if (!endMessage) return;
+
   endMessage.classList.remove("hidden");
-  endTitle.textContent = title;
-  endSubtitle.textContent = subtitle;
+
+  if (endTitle) {
+    endTitle.textContent = title;
+  }
+
+  if (endSubtitle) {
+    endSubtitle.textContent = subtitle;
+  }
 }
 
 function hideEndPanel() {
+  if (!endMessage) return;
   endMessage.classList.add("hidden");
 }
 
@@ -298,7 +316,7 @@ function buildFinalStatusMessage() {
   const qcmOk = qcm !== null && qcm >= 75;
   const simOk = sim !== null && sim >= 75;
 
-  let title = "Parcours Renault en cours";
+  let title = "Parcours en cours";
   let text = "La simulation est terminée. Vous pouvez relancer une nouvelle tentative ou revenir au portail vendeur.";
 
   if (!seller.isReady) {
@@ -308,14 +326,14 @@ function buildFinalStatusMessage() {
   }
 
   if (qcmOk && simOk) {
-    title = "Validation Renault réussie";
-    text = `Très bon travail ${seller.fullName}. QCM Renault : ${qcm}% • Simulation Renault : ${sim}/100. Les seuils de validation sont atteints. Vous pouvez consulter la certification ou poursuivre vos entraînements.`;
+    title = "Validation réussie";
+    text = `Très bon travail ${seller.fullName}. QCM : ${qcm}% • Simulation : ${sim}/100. Les seuils de validation sont atteints. Vous pouvez consulter la certification ou poursuivre vos entraînements.`;
   } else if (qcm !== null && sim !== null) {
-    title = "Nouvel essai Renault recommandé";
-    text = `${seller.fullName} — QCM Renault : ${qcm}% • Simulation Renault : ${sim}/100. La base est posée, mais un nouvel essai est conseillé pour consolider le parcours vendeur Renault.`;
+    title = "Nouvel essai recommandé";
+    text = `${seller.fullName} — QCM : ${qcm}% • Simulation : ${sim}/100. La base est posée, mais un nouvel essai est conseillé pour consolider le parcours vendeur.`;
   } else if (sim !== null) {
-    title = "Simulation Renault terminée";
-    text = `${seller.fullName} — Simulation Renault : ${sim}/100. Vous pouvez revenir au portail, faire le QCM Renault ou relancer une nouvelle simulation.`;
+    title = "Simulation terminée";
+    text = `${seller.fullName} — Simulation : ${sim}/100. Vous pouvez revenir au portail, faire le QCM Renault ou relancer une nouvelle simulation.`;
   }
 
   return { title, text };
@@ -338,12 +356,20 @@ function showPostEvaluationActions() {
 
   removePostEvaluationActions();
 
+  if (!endMessage) return;
+
   const actionsBox = document.createElement("div");
   actionsBox.id = "postEvalActions";
   actionsBox.style.display = "flex";
   actionsBox.style.gap = "12px";
   actionsBox.style.flexWrap = "wrap";
   actionsBox.style.marginTop = "14px";
+
+  const retryBtn = document.createElement("button");
+  retryBtn.type = "button";
+  retryBtn.className = "btn btn-secondary";
+  retryBtn.textContent = "Nouvelle simulation";
+  retryBtn.addEventListener("click", resetDemo);
 
   const certLink = document.createElement("a");
   certLink.href = "certification.html";
@@ -355,87 +381,66 @@ function showPostEvaluationActions() {
   homeLink.className = "btn btn-secondary";
   homeLink.textContent = "Retour au portail";
 
-  const retryLink = document.createElement("a");
-  retryLink.href = "learning-renault.html";
-  retryLink.className = "btn btn-secondary";
-  retryLink.textContent = "Voir QCM Renault";
-
+  actionsBox.appendChild(retryBtn);
   actionsBox.appendChild(certLink);
   actionsBox.appendChild(homeLink);
-  actionsBox.appendChild(retryLink);
   endMessage.appendChild(actionsBox);
 }
 
 function generateBrief() {
-  const scenario = scenarioSelect.value;
-  const age = vehicleAgeSelect.value;
-  const profil = profilSelect.value;
-  const energy = energyTypeSelect.value;
+  if (!briefText) return;
+
+  const scenario = scenarioSelect?.value || "revision";
+  const age = vehicleAgeSelect?.value || "1 an";
+  const profil = profilSelect?.value || "convaincu";
   const seller = getSellerIdentity();
 
-  let intro = seller.isReady ? `Vendeur actif : ${seller.fullName}.` : "";
-  let vehicleLabel = "Renault";
+  const intro = seller.isReady ? `Vendeur actif : ${seller.fullName}.` : "";
   let text = "";
 
-  if (energy === "ev") vehicleLabel = "Renault électrique";
-  if (energy === "hybrid") vehicleLabel = "Renault hybride";
-  if (energy === "diesel") vehicleLabel = "Renault diesel";
-  if (energy === "essence_gpl") vehicleLabel = "Renault essence / GPL";
-  if (energy === "vu_thermique") vehicleLabel = "Renault utilitaire thermique";
-
-  if (profil === "pro" || energy === "vu_thermique") {
+  if (profil === "pro") {
     if (scenario === "revision") {
       text = `${intro}
-Vous recevez un client professionnel pour une révision.
-Son véhicule (${vehicleLabel}, ${age}) est potentiellement éligible au Contrat Entretien Privilèges Renault.
-Vous serez évalué sur votre capacité à adapter votre discours à un usage professionnel et à la maîtrise du budget.`;
+Vous recevez un client professionnel pour une révision Renault.
+Le véhicule a ${age}.
+Vous serez évalué sur votre capacité à relier usage professionnel, maîtrise budgétaire et continuité d’usage.`;
     } else if (scenario === "facture") {
       text = `${intro}
 Vous recevez un client professionnel après une facture atelier élevée.
-Son véhicule (${vehicleLabel}, ${age}) est potentiellement éligible au contrat Renault.
-Vous serez évalué sur votre capacité à transformer une facture subie en argument de prévisibilité budgétaire.`;
+Le véhicule a ${age}.
+Vous serez évalué sur votre capacité à transformer une dépense subie en logique de valeur.`;
     } else if (scenario === "fin-garantie") {
       text = `${intro}
-Vous recevez un client professionnel dont le véhicule arrive en fin de garantie.
-Son véhicule (${vehicleLabel}, ${age}) peut entrer dans une logique de protection Renault.
-Vous serez évalué sur votre capacité à adapter votre recommandation au cadre professionnel.`;
+Vous recevez un client professionnel avec un véhicule en fin de garantie.
+Le véhicule a ${age}.
+Vous serez évalué sur votre capacité à sécuriser la suite du parcours client.`;
     } else if (scenario === "usure") {
       text = `${intro}
 Vous recevez un client professionnel pour un sujet d’usure.
-Son véhicule (${vehicleLabel}, ${age}) est potentiellement éligible au contrat Renault.
-Vous serez évalué sur votre capacité à orienter vers la bonne couverture selon l’usage professionnel.`;
-    } else if (scenario === "vo") {
-      text = `${intro}
-Vous accompagnez un client professionnel lors d’une livraison VO.
-Le véhicule (${vehicleLabel}, ${age}) peut être valorisé avec un contrat Renault.
-Vous serez évalué sur votre capacité à proposer tôt la bonne solution et à vendre la tranquillité dès la livraison.`;
+Le véhicule a ${age}.
+Vous serez évalué sur votre capacité à qualifier le besoin et à conclure proprement.`;
     }
   } else {
     if (scenario === "revision") {
       text = `${intro}
 Vous attendez un client Renault pour une révision.
-Son véhicule (${vehicleLabel}, ${age}) est potentiellement éligible au Contrat Entretien Privilèges.
-Votre objectif est de mener un échange complet, structuré et crédible.`;
+Le véhicule a ${age}.
+Votre objectif est de mener un échange commercial complet et structuré.`;
     } else if (scenario === "facture") {
       text = `${intro}
 Vous recevez un client après une facture atelier élevée.
-Son véhicule (${vehicleLabel}, ${age}) est potentiellement éligible au contrat Renault.
-Vous serez évalué sur votre capacité à rassurer, qualifier et argumenter.`;
+Le véhicule a ${age}.
+Vous serez évalué sur votre capacité à rassurer, découvrir et argumenter.`;
     } else if (scenario === "fin-garantie") {
       text = `${intro}
 Vous recevez un client dont le véhicule arrive en fin de garantie.
-Son véhicule (${vehicleLabel}, ${age}) peut entrer dans une logique de protection Renault.
+Le véhicule a ${age}.
 Vous serez évalué sur la découverte, l’argumentation et la conclusion.`;
     } else if (scenario === "usure") {
       text = `${intro}
 Vous recevez un client pour un sujet d’usure.
-Son véhicule (${vehicleLabel}, ${age}) est potentiellement éligible au contrat Renault.
+Le véhicule a ${age}.
 Vous serez évalué sur la pertinence de votre recommandation.`;
-    } else if (scenario === "vo") {
-      text = `${intro}
-Vous êtes en contexte de livraison VO Renault.
-Le véhicule (${vehicleLabel}, ${age}) peut être accompagné d’un contrat d’entretien Renault.
-Vous serez évalué sur votre capacité à proposer spontanément la bonne formule au bon moment.`;
     }
   }
 
@@ -450,7 +455,10 @@ function resetDemo() {
   evaluationInProgress = false;
   lastClientReply = "";
 
-  chat.innerHTML = "";
+  if (chat) {
+    chat.innerHTML = "";
+  }
+
   generateBrief();
 
   const firstMessage = "Bonjour";
@@ -463,7 +471,10 @@ function resetDemo() {
 
   lastClientReply = firstMessage;
 
-  input.value = "";
+  if (input) {
+    input.value = "";
+  }
+
   removePostEvaluationActions();
   hideEndPanel();
 
@@ -482,9 +493,11 @@ function resetDemo() {
   updateAvatar();
   resetSkills();
   updateModeUI();
-  updateHelpPrices();
+  updateHelpContent();
 
-  input.focus();
+  if (input) {
+    input.focus();
+  }
 }
 
 function toggleHelp() {
@@ -496,65 +509,57 @@ function toggleHelp() {
 
 function updateTrustFromSellerMessage(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
-  const energy = energyTypeSelect.value;
+  const profil = profilSelect?.value || "convaincu";
 
   let delta = -4;
 
   const goodSignals = [
     "budget",
-    "mensual",
-    "48 mois",
-    "garantie",
-    "assistance",
+    "maîtrise",
+    "maitrise",
+    "visibilité",
+    "visibilite",
+    "tranquillité",
+    "tranquillite",
     "révision",
     "entretien",
-    "usure",
-    "tranquille",
-    "tranquillité",
-    "revente",
+    "usage",
+    "besoin",
+    "garantie",
+    "anticiper",
     "protéger",
+    "proteger",
     "éviter",
-    "facture",
-    "privilèges",
-    "privilèges+",
-    "contrat entretien",
-    "contrat d'entretien",
-    "vous roulez",
-    "quel usage",
-    "kilométr",
+    "eviter",
     "devis",
-    "couverture",
-    "pièces d'usure",
-    "valeur de revente",
     "réseau",
-    "véhicule de remplacement",
-    "hors garantie",
-    "contrôle technique",
-    "particeep",
-    "fin de garantie"
+    "reseau",
+    "suivi",
+    "solution",
+    "valeur",
+    "revente",
+    "continuité",
+    "continuite"
   ];
 
   const proSignals = [
     "activité",
+    "activite",
     "professionnel",
     "professionnelle",
     "usage pro",
     "usage professionnel",
     "budget fixe",
-    "maîtrise du budget",
     "imprévu",
+    "imprevu",
     "imprévus",
+    "imprevus",
     "immobilisation",
-    "continuité",
     "continuité d'usage",
     "continuité d’usage",
-    "rentable",
-    "rentabilité",
-    "coût maîtrisé",
-    "coût fixe",
-    "outil de travail",
-    "véhicule de travail"
+    "continuite d'usage",
+    "continuite d’usage",
+    "outil de travail"
   ];
 
   const badSignals = [
@@ -570,7 +575,7 @@ function updateTrustFromSellerMessage(text) {
   const hasBad = badSignals.some((word) => t.includes(word));
 
   if (hasGood) delta = 8;
-  if ((profil === "pro" || energy === "vu_thermique") && hasProGood) delta += 4;
+  if (profil === "pro" && hasProGood) delta += 4;
   if (hasBad) delta = -12;
 
   trust += delta;
@@ -583,113 +588,62 @@ function updateTrustFromSellerMessage(text) {
 
 function sellerLooksLikeWelcome(text) {
   const t = text.toLowerCase();
-  const greeting = /(bonjour|bonsoir|madame|monsieur|bienvenue)/.test(t);
-  const context = /(rendez[- ]?vous|révision|atelier|véhicule|voiture|entretien|renault)/.test(t);
-  return greeting && context;
+  return /(bonjour|bonsoir|madame|monsieur|bienvenue)/.test(t);
 }
 
 function sellerLooksLikeDiscovery(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
-  const energy = energyTypeSelect.value;
 
   const discoverySignals = [
-    "combien de kilomètres",
-    "kilométr",
-    "vous roulez",
     "quel usage",
+    "vous roulez",
+    "combien de kilomètres",
+    "combien de kilometres",
     "vous gardez",
-    "depuis quand",
-    "autoroute",
-    "trajets courts",
-    "combien de temps",
     "vous comptez la garder",
     "qu'est-ce qui vous freine",
     "qu'est-ce qui vous fait hésiter",
-    "immatriculation",
-    "quelle utilisation",
-    "quel type de trajets",
-    "vous revendez quand",
-    "vous faites beaucoup de route"
-  ];
-
-  const proDiscoverySignals = [
-    "usage professionnel",
-    "usage pro",
-    "dans le cadre de votre activité",
+    "qu'est-ce qui vous fait hesiter",
     "pour votre activité",
+    "pour votre activite",
     "outil de travail",
-    "vous en servez pour travailler",
-    "si le véhicule est immobilisé",
-    "si la voiture est immobilisée",
-    "ça impacte votre activité",
-    "vous avez besoin du véhicule tous les jours"
+    "ce qui compte pour vous",
+    "quelles sont vos attentes"
   ];
 
-  const baseMatch = discoverySignals.some((q) => t.includes(q));
-  const proMatch = proDiscoverySignals.some((q) => t.includes(q));
-
-  if (profil === "pro" || energy === "vu_thermique") {
-    return baseMatch || proMatch;
-  }
-
-  return baseMatch;
+  return discoverySignals.some((q) => t.includes(q));
 }
 
 function sellerLooksLikeArgumentation(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
-  const energy = energyTypeSelect.value;
 
-  const mentionProduct =
-    t.includes("privilèges") ||
-    t.includes("privilèges+") ||
-    t.includes("contrat entretien") ||
-    t.includes("contrat d'entretien") ||
-    t.includes("cep") ||
-    t.includes("cep+");
-
-  const mentionBenefit = [
+  const argumentSignals = [
     "budget maîtrisé",
-    "mensual",
-    "assistance",
-    "24/24",
-    "24/7",
-    "revente",
+    "budget maitrise",
+    "visibilité",
+    "visibilite",
     "tranquillité",
-    "pièces d'usure",
-    "hors garantie",
-    "véhicule de remplacement",
-    "éviter une grosse facture",
-    "contrôle technique",
-    "réseau renault",
-    "entretien dans le réseau",
-    "liberté",
-    "cessible",
-    "résiliable"
-  ].some((item) => t.includes(item));
-
-  const proBenefit = [
-    "budget fixe",
-    "maîtrise du budget",
-    "imprévu",
-    "imprévus",
-    "immobilisation",
+    "tranquillite",
+    "réseau",
+    "reseau",
+    "entretien",
+    "suivi",
+    "anticiper",
+    "protéger",
+    "proteger",
+    "éviter",
+    "eviter",
+    "valeur",
     "continuité",
+    "continuite",
     "activité",
-    "outil de travail",
-    "rentable",
-    "rentabilité",
-    "véhicule de travail",
-    "continuité d'usage",
-    "continuité d’usage"
-  ].some((item) => t.includes(item));
+    "activite",
+    "immobilisation",
+    "maîtrise du budget",
+    "maitrise du budget"
+  ];
 
-  if (profil === "pro" || energy === "vu_thermique") {
-    return mentionProduct && (mentionBenefit || proBenefit);
-  }
-
-  return mentionProduct && mentionBenefit;
+  return argumentSignals.some((q) => t.includes(q));
 }
 
 function clientRaisedObjection(text) {
@@ -698,30 +652,19 @@ function clientRaisedObjection(text) {
   const objectionTerms = [
     "trop cher",
     "pas sûr",
-    "pas sûre",
-    "pas certain",
+    "pas sur",
     "pas convaincu",
-    "pas convaincue",
     "je vais réfléchir",
+    "je vais reflechir",
     "plus tard",
-    "je roule peu",
-    "pas nécessaire",
-    "je ne sais pas",
-    "ça vaut le coup",
-    "je préfère attendre",
     "j'hésite",
-    "je revends",
-    "avant de m'engager",
-    "avec mon partenaire",
-    "est-ce rentable",
-    "ce que j'y gagne",
-    "qu'est-ce que j'y gagne",
-    "ça m'apporte quoi",
-    "ça m’évite quoi",
-    "ça m'évite quoi",
-    "est-ce adapté à mon activité",
-    "ça vaut vraiment le coup pour mon activité",
-    "je ne veux pas payer pour rien"
+    "j'hesite",
+    "ça vaut le coup",
+    "ca vaut le coup",
+    "je préfère attendre",
+    "je prefere attendre",
+    "pas nécessaire",
+    "pas necessaire"
   ];
 
   return objectionTerms.some((item) => t.includes(item));
@@ -729,8 +672,6 @@ function clientRaisedObjection(text) {
 
 function sellerLooksLikeObjectionHandling(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
-  const energy = energyTypeSelect.value;
 
   const reassuringTerms = [
     "je comprends",
@@ -739,68 +680,39 @@ function sellerLooksLikeObjectionHandling(text) {
     "le but",
     "cela permet",
     "ça permet",
+    "ca permet",
     "éviter",
-    "hors garantie",
-    "coûter bien plus",
-    "lié au temps",
-    "valeur de revente",
-    "tout est couvert",
+    "eviter",
+    "maîtriser",
+    "maitriser",
+    "visibilité",
+    "visibilite",
     "tranquillité",
-    "vous protéger",
-    "révision déjà faite",
-    "pas seulement aux kilomètres",
-    "cessible",
-    "résiliable",
-    "liberté",
-    "même en roulant peu",
-    "imprévu non couvert"
-  ];
-
-  const proReassuringTerms = [
-    "maîtriser votre budget",
-    "budget fixe",
-    "éviter l'immobilisation",
-    "éviter une immobilisation",
-    "limiter les imprévus",
+    "tranquillite",
     "continuité",
-    "continuité d'usage",
-    "continuité d’usage",
+    "continuite",
     "activité",
-    "outil de travail",
-    "rentable",
-    "rentabilité"
+    "activite"
   ];
 
-  const baseMatch = reassuringTerms.some((item) => t.includes(item));
-  const proMatch = proReassuringTerms.some((item) => t.includes(item));
-
-  if (profil === "pro" || energy === "vu_thermique") {
-    return baseMatch || proMatch;
-  }
-
-  return baseMatch;
+  return reassuringTerms.some((item) => t.includes(item));
 }
 
 function sellerLooksLikeClosing(text) {
   const t = text.toLowerCase();
+
   const closingTerms = [
     "on le met en place",
     "on part dessus",
-    "je vous le mets",
     "je vous prépare le devis",
+    "je vous prepare le devis",
     "je vous fais le devis",
-    "est-ce qu'on le met en place",
-    "est-ce qu'on part dessus",
     "souhaitez-vous",
     "vous souhaitez qu'on",
     "on valide",
     "on lance",
-    "on souscrit",
-    "on l'ajoute",
-    "on fait le contrat",
     "je peux vous l'intégrer",
-    "on peut le mettre sur le véhicule",
-    "je peux vous éditer le devis"
+    "je peux vous l'integrer"
   ];
 
   return closingTerms.some((item) => t.includes(item));
@@ -840,7 +752,7 @@ function finishSession() {
     "Fin de simulation",
     !seller.isReady || !saved
       ? "La discussion est terminée, mais aucun vendeur actif n’est correctement renseigné. Revenez au portail pour enregistrer le vendeur avant de poursuivre."
-      : `La discussion est terminée. Score simulé Renault enregistré pour ${seller.fullName} : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
+      : `La discussion est terminée. Score simulé enregistré pour ${seller.fullName} : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
   );
 
   setControlsState({
@@ -858,7 +770,7 @@ function finishSession() {
 async function send() {
   if (finished || evaluationInProgress) return;
 
-  const val = input.value.trim();
+  const val = input?.value.trim();
   if (!val) return;
 
   input.value = "";
@@ -876,10 +788,10 @@ async function send() {
 
   const payload = {
     messages,
-    profil: profilSelect.value,
-    scenario: scenarioSelect.value,
-    vehicleAge: vehicleAgeSelect.value,
-    energyType: energyTypeSelect.value,
+    profil: profilSelect?.value || "convaincu",
+    scenario: scenarioSelect?.value || "revision",
+    vehicleAge: vehicleAgeSelect?.value || "1 an",
+    energyType: energyTypeSelect?.value || "essence",
     liveSkills: skills,
     trust,
     validatedSkillsCount,
@@ -941,7 +853,10 @@ async function send() {
         evalText: "Voir évaluation",
         inputDisabled: false
       });
-      input.focus();
+
+      if (input) {
+        input.focus();
+      }
     }
   }
 }
@@ -954,6 +869,7 @@ async function evaluate() {
   if (evaluationShown || evaluationInProgress) return;
 
   const seller = getSellerIdentity();
+
   if (!seller.isReady) {
     alert("Aucun vendeur actif n’est enregistré. Revenez au portail pour renseigner le vendeur avant de lancer l’évaluation.");
     window.location.href = "index.html";
@@ -987,10 +903,10 @@ async function evaluate() {
       body: JSON.stringify({
         conversation: messages,
         trust,
-        profil: profilSelect.value,
-        scenario: scenarioSelect.value,
-        vehicleAge: vehicleAgeSelect.value,
-        energyType: energyTypeSelect.value,
+        profil: profilSelect?.value || "convaincu",
+        scenario: scenarioSelect?.value || "revision",
+        vehicleAge: vehicleAgeSelect?.value || "1 an",
+        energyType: energyTypeSelect?.value || "essence",
         liveSkills: skills,
         sellerFirstName: seller.firstName,
         sellerLastName: seller.lastName,
@@ -1022,6 +938,7 @@ async function evaluate() {
 
     hideEndPanel();
     display(data.evaluation, "coach");
+
     evaluationInProgress = false;
     showPostEvaluationActions();
   } catch (err) {
@@ -1048,25 +965,56 @@ function onSettingsChange() {
   resetDemo();
 }
 
-profilSelect.addEventListener("change", onSettingsChange);
-scenarioSelect.addEventListener("change", onSettingsChange);
-vehicleAgeSelect.addEventListener("change", onSettingsChange);
-energyTypeSelect.addEventListener("change", onSettingsChange);
+if (profilSelect) {
+  profilSelect.addEventListener("change", onSettingsChange);
+}
 
-sendBtn.addEventListener("click", send);
-finishBtn.addEventListener("click", finishDemo);
-newBtn.addEventListener("click", resetDemo);
-evalBtn.addEventListener("click", evaluate);
-toggleHelpBtn.addEventListener("click", toggleHelp);
+if (scenarioSelect) {
+  scenarioSelect.addEventListener("change", onSettingsChange);
+}
 
-input.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    send();
-  }
-});
+if (vehicleAgeSelect) {
+  vehicleAgeSelect.addEventListener("change", onSettingsChange);
+}
+
+if (energyTypeSelect) {
+  energyTypeSelect.addEventListener("change", onSettingsChange);
+}
+
+if (sendBtn) {
+  sendBtn.addEventListener("click", send);
+}
+
+if (finishBtn) {
+  finishBtn.addEventListener("click", finishDemo);
+}
+
+if (newBtn) {
+  newBtn.addEventListener("click", resetDemo);
+}
+
+if (evalBtn) {
+  evalBtn.addEventListener("click", evaluate);
+}
+
+if (toggleHelpBtn) {
+  toggleHelpBtn.addEventListener("click", toggleHelp);
+}
+
+if (input) {
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      send();
+    }
+  });
+}
 
 if (!ensureSellerIdentity()) {
   throw new Error("Vendeur actif manquant");
+}
+
+if (!ensureRenaultEnvironment()) {
+  throw new Error("Univers Renault non sélectionné");
 }
 
 resetDemo();
