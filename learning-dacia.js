@@ -375,6 +375,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderQuestion();
 });
-
-  renderQuestion();
-});
