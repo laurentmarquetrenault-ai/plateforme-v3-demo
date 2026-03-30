@@ -67,6 +67,32 @@ const priceMatrix = {
   }
 };
 
+function getSellerIdentity() {
+  const firstName = (localStorage.getItem("seller_first_name") || "").trim();
+  const lastName = (localStorage.getItem("seller_last_name") || "").trim();
+  const email = (localStorage.getItem("seller_email") || "").trim();
+
+  return {
+    firstName,
+    lastName,
+    email,
+    fullName: `${firstName} ${lastName}`.trim(),
+    isReady: Boolean(firstName && lastName)
+  };
+}
+
+function ensureSellerIdentity() {
+  const seller = getSellerIdentity();
+
+  if (seller.isReady) {
+    return true;
+  }
+
+  alert("Aucun vendeur actif n’est enregistré. Merci de revenir sur le portail pour renseigner le prénom et le nom du vendeur avant de lancer une simulation.");
+  window.location.href = "index.html";
+  return false;
+}
+
 function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
@@ -195,7 +221,13 @@ function computeSimulationScore() {
 }
 
 function saveSimulationScore() {
+  const seller = getSellerIdentity();
   const score = computeSimulationScore();
+
+  if (!seller.isReady) {
+    return { score, saved: false };
+  }
+
   const previousBest = Number(localStorage.getItem("simulator_best_score") || "0");
 
   localStorage.setItem("simulator_last_score", String(score));
@@ -204,7 +236,7 @@ function saveSimulationScore() {
     localStorage.setItem("simulator_best_score", String(score));
   }
 
-  return score;
+  return { score, saved: true };
 }
 
 function getQcmPercent() {
@@ -258,6 +290,7 @@ function hideEndPanel() {
 }
 
 function buildFinalStatusMessage() {
+  const seller = getSellerIdentity();
   const qcm = getQcmPercent();
   const sim = getSimulationLastScore();
 
@@ -267,15 +300,21 @@ function buildFinalStatusMessage() {
   let title = "Parcours en cours";
   let text = "La simulation est terminée. Vous pouvez relancer une nouvelle tentative ou revenir au portail vendeur.";
 
+  if (!seller.isReady) {
+    title = "Identité vendeur manquante";
+    text = "La simulation est terminée, mais aucun vendeur actif n’est enregistré. Revenez au portail pour renseigner le vendeur avant de poursuivre.";
+    return { title, text };
+  }
+
   if (qcmOk && simOk) {
     title = "Validation réussie";
-    text = `Très bon travail. QCM : ${qcm}% • Simulation : ${sim}/100. Les seuils de validation sont atteints. Vous pouvez consulter la certification ou poursuivre vos entraînements.`;
+    text = `Très bon travail ${seller.fullName}. QCM : ${qcm}% • Simulation : ${sim}/100. Les seuils de validation sont atteints. Vous pouvez consulter la certification ou poursuivre vos entraînements.`;
   } else if (qcm !== null && sim !== null) {
     title = "Nouvel essai recommandé";
-    text = `QCM : ${qcm}% • Simulation : ${sim}/100. La base est posée, mais un nouvel essai est conseillé pour consolider le parcours vendeur.`;
+    text = `${seller.fullName} — QCM : ${qcm}% • Simulation : ${sim}/100. La base est posée, mais un nouvel essai est conseillé pour consolider le parcours vendeur.`;
   } else if (sim !== null) {
     title = "Simulation terminée";
-    text = `Simulation : ${sim}/100. Vous pouvez revenir au portail, faire le QCM Dacia ou relancer une nouvelle simulation.`;
+    text = `${seller.fullName} — Simulation : ${sim}/100. Vous pouvez revenir au portail, faire le QCM Dacia ou relancer une nouvelle simulation.`;
   }
 
   return { title, text };
@@ -326,42 +365,52 @@ function generateBrief() {
   const mode = modeSelect.value;
   const isEval = mode === "eval";
   const profil = profilSelect.value;
+  const seller = getSellerIdentity();
 
+  let intro = seller.isReady ? `Vendeur actif : ${seller.fullName}.` : "";
   let text = "";
 
   if (profil === "pro") {
     if (scenario === "revision") {
-      text = `Vous recevez un client professionnel pour une révision.
+      text = `${intro}
+Vous recevez un client professionnel pour une révision.
 Son véhicule (${age}) est éligible au Contrat Entretien Privilèges.
 ${isEval ? "Vous serez évalué sur votre capacité à adapter votre discours à un usage professionnel." : "À vous de proposer une solution crédible avec des arguments concrets : budget, imprévus, continuité d’usage."}`;
     } else if (scenario === "facture") {
-      text = `Vous recevez un client professionnel après une facture atelier élevée.
+      text = `${intro}
+Vous recevez un client professionnel après une facture atelier élevée.
 Son véhicule (${age}) est éligible au contrat d’entretien.
 ${isEval ? "Vous serez évalué sur votre capacité à transformer une facture subie en argument de maîtrise budgétaire." : "À vous de montrer l’intérêt concret du contrat pour limiter les imprévus et sécuriser l’activité."}`;
     } else if (scenario === "fin-garantie") {
-      text = `Vous recevez un client professionnel dont le véhicule arrive en fin de garantie.
+      text = `${intro}
+Vous recevez un client professionnel dont le véhicule arrive en fin de garantie.
 Son véhicule (${age}) est éligible à une solution de protection.
 ${isEval ? "Vous serez évalué sur votre capacité à adapter votre recommandation au cadre professionnel." : "À vous de valoriser la continuité d’usage, la visibilité budgétaire et la cohérence économique."}`;
     } else if (scenario === "usure") {
-      text = `Vous recevez un client professionnel pour un sujet d’usure.
+      text = `${intro}
+Vous recevez un client professionnel pour un sujet d’usure.
 Son véhicule (${age}) est éligible au contrat d’entretien.
 ${isEval ? "Vous serez évalué sur votre capacité à orienter vers la bonne couverture selon l’usage professionnel." : "À vous d’amener la solution la plus pertinente pour réduire les immobilisations et les dépenses imprévues."}`;
     }
   } else {
     if (scenario === "revision") {
-      text = `Vous attendez Madame Dubois pour une révision.
+      text = `${intro}
+Vous attendez Madame Dubois pour une révision.
 Son véhicule (${age}) est éligible au Contrat Entretien Privilèges.
 ${isEval ? "Votre objectif est de mener un échange complet et structuré." : "À vous de mener l’échange et de proposer la solution adaptée."}`;
     } else if (scenario === "facture") {
-      text = `Vous recevez une cliente après une facture atelier élevée.
+      text = `${intro}
+Vous recevez une cliente après une facture atelier élevée.
 Son véhicule (${age}) est éligible au contrat d’entretien.
 ${isEval ? "Vous serez évalué sur votre capacité à rassurer et argumenter." : "À vous de sécuriser votre argumentation."}`;
     } else if (scenario === "fin-garantie") {
-      text = `Vous recevez une cliente dont le véhicule arrive en fin de garantie.
+      text = `${intro}
+Vous recevez une cliente dont le véhicule arrive en fin de garantie.
 Son véhicule (${age}) est éligible à une solution de protection.
 ${isEval ? "Vous serez évalué sur la découverte, l’argumentation et la conclusion." : "À vous de jouer."}`;
     } else if (scenario === "usure") {
-      text = `Vous recevez une cliente pour un sujet d’usure.
+      text = `${intro}
+Vous recevez une cliente pour un sujet d’usure.
 Son véhicule (${age}) est éligible au contrat d’entretien.
 ${isEval ? "Vous serez évalué sur la pertinence de votre recommandation." : "À vous d’amener la bonne couverture."}`;
     }
@@ -712,13 +761,17 @@ function finishSession() {
   if (finished) return;
 
   finished = true;
-  const score = saveSimulationScore();
+
+  const seller = getSellerIdentity();
+  const { score, saved } = saveSimulationScore();
 
   showEndPanel(
     modeSelect.value === "eval" ? "Fin de simulation" : "Fin de démo",
-    modeSelect.value === "eval"
-      ? `La discussion est terminée. Score simulé enregistré : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
-      : `La discussion est terminée. Score simulé enregistré : ${score}/100. Tu peux consulter l’évaluation ou relancer une nouvelle démo.`
+    !seller.isReady || !saved
+      ? "La discussion est terminée, mais aucun vendeur actif n’est correctement renseigné. Revenez au portail pour enregistrer le vendeur avant de poursuivre."
+      : modeSelect.value === "eval"
+        ? `La discussion est terminée. Score simulé enregistré pour ${seller.fullName} : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
+        : `La discussion est terminée. Score simulé enregistré pour ${seller.fullName} : ${score}/100. Tu peux consulter l’évaluation ou relancer une nouvelle démo.`
   );
 
   setControlsState({
@@ -727,7 +780,7 @@ function finishSession() {
     finishVisible: false,
     finishDisabled: true,
     evalVisible: true,
-    evalDisabled: false,
+    evalDisabled: !seller.isReady,
     evalText: "Voir évaluation",
     inputDisabled: true
   });
@@ -831,6 +884,13 @@ function finishDemo() {
 async function evaluate() {
   if (evaluationShown || evaluationInProgress) return;
 
+  const seller = getSellerIdentity();
+  if (!seller.isReady) {
+    alert("Aucun vendeur actif n’est enregistré. Revenez au portail pour renseigner le vendeur avant de lancer l’évaluation.");
+    window.location.href = "index.html";
+    return;
+  }
+
   if (!finished) {
     finishSession();
   }
@@ -863,7 +923,10 @@ async function evaluate() {
         scenario: scenarioSelect.value,
         vehicleAge: vehicleAgeSelect.value,
         energyType: energyTypeSelect.value,
-        liveSkills: skills
+        liveSkills: skills,
+        sellerFirstName: seller.firstName,
+        sellerLastName: seller.lastName,
+        sellerEmail: seller.email
       })
     });
 
@@ -933,6 +996,10 @@ input.addEventListener("keydown", (event) => {
     send();
   }
 });
+
+if (!ensureSellerIdentity()) {
+  throw new Error("Vendeur actif manquant");
+}
 
 resetDemo();
 
