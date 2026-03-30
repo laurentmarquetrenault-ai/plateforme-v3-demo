@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
     !scoreBadge ||
     !restartBtn
   ) {
-    console.error("Un ou plusieurs éléments du QCM sont introuvables dans learning.html");
+    console.error("Un ou plusieurs éléments du QCM sont introuvables dans learning-dacia.html");
     return;
   }
 
@@ -372,6 +372,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!ensureDaciaEnvironment()) {
     return;
   }
+
+  renderQuestion();
+});
 
   renderQuestion();
 });
