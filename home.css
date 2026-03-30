@@ -533,14 +533,6 @@ input {
   position: relative;
 }
 
-.brand-card-disabled {
-  opacity: 0.78;
-}
-
-.brand-card-disabled:hover {
-  transform: translateY(-1px);
-}
-
 .selected-brand {
   border-color: rgba(214, 179, 106, 0.42) !important;
   background: linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.03) 100%) !important;
@@ -587,28 +579,6 @@ input {
   background: rgba(255,255,255,0.035);
 }
 
-.status-certified {
-  background: var(--success-soft) !important;
-  border-color: rgba(79, 209, 139, 0.28) !important;
-  color: #b5f3cf !important;
-}
-
-.status-progress {
-  background: var(--warning-soft) !important;
-  border-color: rgba(240, 195, 106, 0.28) !important;
-  color: #f7ddb0 !important;
-}
-
-.status-locked {
-  background: var(--danger-soft) !important;
-  border-color: rgba(255, 124, 124, 0.28) !important;
-  color: #ffc0c0 !important;
-}
-
-/* =========================
-   CERTIFICAT
-========================= */
-
 .certificate-wrapper {
   display: flex;
   justify-content: center;
@@ -620,8 +590,7 @@ input {
 }
 
 .certificate-frame {
-  background:
-    linear-gradient(180deg, #f8f1df 0%, #f2e7ca 100%);
+  background: linear-gradient(180deg, #f8f1df 0%, #f2e7ca 100%);
   border-radius: 24px;
   padding: 22px;
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.26);
@@ -641,8 +610,7 @@ input {
   border: 2px solid rgba(125, 94, 31, 0.34);
   border-radius: 18px;
   padding: 42px 44px 34px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.24) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.24) 100%);
   color: #2b2416;
   text-align: center;
   min-height: 600px;
@@ -843,6 +811,24 @@ input {
   font-size: 0.95rem;
 }
 
+.status-certified {
+  background: var(--success-soft) !important;
+  border-color: rgba(79, 209, 139, 0.28) !important;
+  color: #b5f3cf !important;
+}
+
+.status-progress {
+  background: var(--warning-soft) !important;
+  border-color: rgba(240, 195, 106, 0.28) !important;
+  color: #f7ddb0 !important;
+}
+
+.status-locked {
+  background: var(--danger-soft) !important;
+  border-color: rgba(255, 124, 124, 0.28) !important;
+  color: #ffc0c0 !important;
+}
+
 @media (max-width: 1100px) {
   .journey-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -882,17 +868,10 @@ input {
     white-space: normal;
   }
 
-  .certificate-score-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .certificate-score-grid + .certificate-score-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .certificate-score-grid,
+  .certificate-score-grid + .certificate-score-grid,
   .certificate-footer-row {
     grid-template-columns: 1fr;
-    align-items: stretch;
   }
 
   .certificate-date-block,
@@ -1024,65 +1003,5 @@ input {
   .journey-section:not(.certification-certificate-section),
   .journey-card > .journey-head {
     display: none !important;
-  }
-
-  .certificate-title {
-    font-size: 21pt !important;
-  }
-
-  .certificate-recipient {
-    font-size: 28pt !important;
-  }
-
-  .certificate-email {
-    font-size: 10.5pt !important;
-  }
-
-  .certificate-body-text {
-    font-size: 11pt !important;
-    line-height: 1.7 !important;
-    max-width: 100% !important;
-  }
-
-  .certificate-score-grid {
-    gap: 8pt !important;
-    margin-top: 10pt !important;
-  }
-
-  .certificate-score-grid + .certificate-score-grid {
-    margin-top: 8pt !important;
-  }
-
-  .certificate-score-box {
-    min-height: 62pt !important;
-    padding: 9pt 8pt !important;
-  }
-
-  .certificate-score-label {
-    font-size: 8.2pt !important;
-  }
-
-  .certificate-score-value {
-    font-size: 13.5pt !important;
-  }
-
-  .certificate-score-grid + .certificate-score-grid .certificate-score-box:last-child .certificate-score-value {
-    font-size: 16pt !important;
-  }
-
-  .certificate-result-badge {
-    font-size: 10.5pt !important;
-    margin-top: 16pt !important;
-    margin-bottom: 18pt !important;
-  }
-
-  .certificate-topline,
-  .certificate-signature-text,
-  .certificate-date-label,
-  .certificate-date-value,
-  .certificate-center-note-label,
-  .certificate-center-note-value,
-  .certificate-subline {
-    font-size: 9.5pt !important;
   }
 }
