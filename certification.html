@@ -8,7 +8,7 @@
 </head>
 <body>
   <main class="home-page">
-    <section class="hero" style="min-height: 100vh;">
+    <section class="hero certification-page">
       <div class="hero-bg"></div>
       <div class="hero-overlay"></div>
 
@@ -25,11 +25,11 @@
           <a href="index.html" class="nav-link">Accueil</a>
           <a href="learning.html" class="nav-link">Apprentissage</a>
           <a href="simulateur.html" class="nav-link">Simulateur</a>
-          <a href="certification.html" class="nav-link">Certification</a>
+          <a href="certification.html" class="nav-link active">Certification</a>
         </nav>
       </header>
 
-      <div class="hero-content" style="max-width: 980px; margin-bottom: 30px;">
+      <div class="hero-content certification-hero-content">
         <div class="hero-kicker">Finalité du parcours</div>
 
         <h1>
@@ -100,7 +100,7 @@
         </div>
       </section>
 
-      <section class="journey-section" style="margin-top: 22px;">
+      <section class="journey-section certification-certificate-section">
         <div class="journey-card">
           <div class="journey-head">
             <div>
@@ -110,7 +110,7 @@
             <div class="journey-side-badge">Export PDF</div>
           </div>
 
-          <div style="display:flex; justify-content:center;">
+          <div class="certificate-wrapper">
             <div id="certificatePrintable" class="certificate-printable">
               <div class="certificate-frame">
                 <div class="certificate-inner">
@@ -146,7 +146,9 @@
                     </div>
                   </div>
 
-                  <div class="certificate-result-badge" id="certificateResultBadge">EN COURS DE VALIDATION</div>
+                  <div class="certificate-result-badge" id="certificateResultBadge">
+                    EN COURS DE VALIDATION
+                  </div>
 
                   <div class="certificate-footer-row">
                     <div class="certificate-signature-block">
@@ -163,8 +165,10 @@
             </div>
           </div>
 
-          <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:22px;">
-            <button id="downloadPdfBtn" class="btn btn-primary btn-xl" type="button">Télécharger en PDF</button>
+          <div class="certification-actions">
+            <button id="downloadPdfBtn" class="btn btn-primary btn-xl" type="button">
+              Télécharger en PDF
+            </button>
             <a href="simulateur.html" class="btn btn-secondary btn-xl">Accéder au simulateur</a>
             <a href="index.html" class="btn btn-secondary btn-xl">Retour au portail</a>
           </div>
