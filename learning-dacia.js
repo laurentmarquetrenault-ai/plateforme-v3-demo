@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  localStorage.setItem("selected_brand", "dacia");
+
   const questions = [
     {
       theme: "Éligibilité",
