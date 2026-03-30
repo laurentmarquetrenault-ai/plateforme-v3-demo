@@ -2,99 +2,107 @@ document.addEventListener("DOMContentLoaded", () => {
   const questions = [
     {
       theme: "Éligibilité",
-      question: "Cliente : « Mon véhicule a déjà 200 000 km, je peux quand même prendre ce contrat ? »",
+      question: "Cliente : « Mon véhicule a 8 ans et 4 mois et 118 000 km. Je peux encore souscrire ? »",
       options: [
-        "Oui, ce n’est pas gênant si le véhicule roule encore bien.",
-        "Il faut d’abord vérifier le cadre d’éligibilité, car on ne propose pas un contrat hors conditions.",
-        "Oui, mais seulement si vous prenez directement la formule la plus complète."
+        "Non, dès que le véhicule a plus de 8 ans, la souscription est impossible.",
+        "Oui, car l’éligibilité va jusqu’à 8 ans + 6 mois de souplesse, avec un maximum de 120 000 km à la souscription.",
+        "Oui, mais uniquement sur la formule CEP+.",
+        "Non, parce qu’à partir de 8 ans il faut moins de 100 000 km."
       ],
       correct: 1,
       explanation:
-        "Le bon réflexe vendeur est de rester dans le cadre produit. On ne promet jamais un contrat sans vérifier l’éligibilité du véhicule."
+        "La souscription est possible de 1 à 8 ans + 6 mois de souplesse, avec un maximum de 120 000 km à la souscription. Ici, le véhicule reste donc éligible."
     },
     {
-      theme: "Réflexe métier",
-      question: "Cliente : « Avant de me parler du contrat, qu’est-ce que vous devez vérifier sur mon véhicule ? »",
+      theme: "Résiliation",
+      question: "Cliente : « Si je résilie mon contrat plus tard, je récupère simplement ce qu’il reste à payer, sans frais ? »",
       options: [
-        "L’année, le kilométrage, l’absence éventuelle de contrat existant et la faisabilité du dossier.",
-        "Seulement la motorisation.",
-        "Seulement le prix de la prochaine révision."
+        "Oui, la résiliation est toujours gratuite.",
+        "Non, il existe un calcul au prorata des mensualités réglées et du montant des factures atelier, avec 38 € de frais de résiliation hors rachat du véhicule dans le réseau.",
+        "Non, un contrat signé ne peut jamais être résilié.",
+        "Oui, mais seulement si aucune révision n’a encore été faite."
+      ],
+      correct: 1,
+      explanation:
+        "Le contrat est résiliable, mais pas sans condition. La résiliation se fait au prorata des mensualités réglées et du montant des factures atelier, avec 38 € de frais, hors cas de rachat du véhicule dans le réseau."
+    },
+    {
+      theme: "Cessibilité",
+      question: "Cliente : « Si je revends mon véhicule, mon contrat est perdu automatiquement ? »",
+      options: [
+        "Oui, en cas de revente le contrat disparaît forcément.",
+        "Non, le contrat peut être cessible ou résiliable selon le cas.",
+        "Oui, sauf si le repreneur est un professionnel.",
+        "Non, mais seulement sur CEP+, pas sur CEP."
+      ],
+      correct: 1,
+      explanation:
+        "Le contrat est bien cessible ou résiliable. Le vendeur doit donc connaître cette souplesse et ne jamais présenter le contrat comme automatiquement perdu en cas de revente."
+    },
+    {
+      theme: "Dacia Zen",
+      question: "Cliente : « J’ai une Dacia de 6 ans, 90 000 km. Avec Dacia Zen, l’écran multimédia est couvert lui aussi ? »",
+      options: [
+        "Oui, Dacia Zen couvre tout ce qui est mécanique, électrique, électronique et multimédia.",
+        "Oui, à condition de choisir la formule Essentielle +.",
+        "Non, car le multimédia fait partie des exclusions de Dacia Zen.",
+        "Non, car Dacia Zen ne peut plus s’appliquer à partir de 6 ans."
+      ],
+      correct: 2,
+      explanation:
+        "Dacia Zen couvre des pièces mécaniques, électriques et électroniques, mais exclut notamment le multimédia, la carrosserie, les rétros électriques et les réseaux dégivrants."
+    },
+    {
+      theme: "Conditions Dacia Zen",
+      question: "Cliente : « Ma voiture a 7 ans et 155 000 km. Je roule peu maintenant, donc pour Dacia Zen c’est encore possible ? »",
+      options: [
+        "Oui, car seule l’ancienneté compte.",
+        "Oui, si le véhicule est encore bien entretenu dans le réseau.",
+        "Non, car Dacia Zen est plafonnée à 150 000 km maximum de couverture constructeur.",
+        "Non, car Dacia Zen s’arrête obligatoirement à 5 ans."
+      ],
+      correct: 2,
+      explanation:
+        "Pour Dacia Zen, le véhicule doit être entre 3 et 7 ans maximum, avec une couverture constructeur allant jusqu’à 150 000 km maximum et 30 000 km maximum par an. À 155 000 km, ce n’est plus dans le cadre."
+    },
+    {
+      theme: "CEP vs CEP+",
+      question: "Cliente : « Concrètement, quelle est la différence entre CEP et CEP+ ? »",
+      options: [
+        "Il n’y en a pas vraiment, CEP et CEP+ couvrent la même chose.",
+        "CEP couvre l’entretien, l’assistance, le véhicule de remplacement et l’extension de garantie ; CEP+ ajoute notamment les pièces d’usure et le contrôle technique.",
+        "CEP couvre seulement l’assistance ; CEP+ couvre seulement l’entretien.",
+        "CEP inclut les amortisseurs, mais CEP+ non."
+      ],
+      correct: 1,
+      explanation:
+        "Le CEP couvre assistance, entretien, véhicule de remplacement et extension de garantie. Le CEP+ ajoute notamment les pièces d’usure, le contrôle technique, MyCheckUp et la contre-visite."
+    },
+    {
+      theme: "Client professionnel",
+      question: "Cliente : « Je suis gérante d’une SARL avec 6 véhicules. Je peux souscrire ce contrat sur mon parc ? »",
+      options: [
+        "Oui, car la flotte est inférieure à 10 véhicules.",
+        "Oui, mais seulement sur CEP et pas sur CEP+.",
+        "Non, car les sociétés de type SARL sont exclues.",
+        "Non, car les clients professionnels sont tous exclus."
+      ],
+      correct: 2,
+      explanation:
+        "L’offre est disponible pour les artisans, commerçants et professions libérales agissant en nom propre avec une flotte de moins de 10 véhicules. Les formes juridiques de type société, comme la SARL, sont exclues."
+    },
+    {
+      theme: "Fin de contrat",
+      question: "Cliente : « Si je souscris tard, jusqu’où peut aller mon contrat au maximum ? »",
+      options: [
+        "La couverture peut aller jusqu’à 48 mois maximum, avec une fin de contrat possible jusqu’à 200 000 km et jusqu’à 12 ans et demi maximum selon l’âge de départ.",
+        "Le contrat peut durer sans vraie limite tant que le client paie.",
+        "Le contrat s’arrête forcément au 8e anniversaire du véhicule.",
+        "La seule limite, c’est de rester sous 150 000 km."
       ],
       correct: 0,
       explanation:
-        "Avant toute proposition, le vendeur doit avoir un réflexe complet de vérification : âge, kilométrage, contrat existant et faisabilité."
-    },
-    {
-      theme: "Argumentaire",
-      question: "Cliente : « Je ne vois pas trop pourquoi je prendrais ce type de contrat, vous me le présentez comment ? »",
-      options: [
-        "Je commence directement par la mensualité pour aller vite.",
-        "Je vous le présente comme une solution de tranquillité avec budget maîtrisé et entretien encadré dans le réseau.",
-        "Je vous le propose surtout parce que beaucoup de clients le prennent."
-      ],
-      correct: 1,
-      explanation:
-        "Le bon angle d’introduction part de la valeur pour le client : sérénité, maîtrise du budget, entretien suivi et couverture."
-    },
-    {
-      theme: "Objection prix",
-      question: "Cliente : « Franchement, votre contrat, ça me paraît cher pour ce que c’est. »",
-      options: [
-        "Je comprends, mais une panne ou une intervention hors cadre peut coûter bien plus cher qu’une mensualité maîtrisée.",
-        "Si c’est trop cher, on peut laisser tomber.",
-        "De toute façon, c’est le tarif fixé, je ne peux rien faire."
-      ],
-      correct: 0,
-      explanation:
-        "La bonne réponse remet en avant la logique de valeur et de protection, sans abandonner ni se réfugier derrière un tarif."
-    },
-    {
-      theme: "Objection usage",
-      question: "Cliente : « Moi je roule très peu, donc je ne suis pas sûre que ce soit utile. »",
-      options: [
-        "Si vous roulez peu, le contrat n’a effectivement pas beaucoup d’intérêt.",
-        "Même avec peu de kilomètres, l’intérêt peut rester fort car la tranquillité, le temps et la couverture comptent aussi.",
-        "Dans ce cas, il faut seulement attendre une panne."
-      ],
-      correct: 1,
-      explanation:
-        "Le vendeur doit montrer que la valeur d’un contrat ne dépend pas uniquement du kilométrage, mais aussi du temps, du budget et de la sérénité."
-    },
-    {
-      theme: "Closing",
-      question: "Cliente : « Je préfère réfléchir et voir plus tard. »",
-      options: [
-        "D’accord, on laisse ça de côté sans approfondir.",
-        "Je peux comprendre, mais plus tard certaines opportunités ne seront plus dans le même cadre ; si c’est pertinent pour vous, on peut le poser maintenant.",
-        "Ce n’est pas grave, on en reparlera peut-être un jour."
-      ],
-      correct: 1,
-      explanation:
-        "Le vendeur doit savoir relancer intelligemment, sans forcer, en donnant une raison concrète d’agir maintenant."
-    },
-    {
-      theme: "Valeur revente",
-      question: "Cliente : « Et si je revends mon véhicule, mon contrat ne sert plus à rien ? »",
-      options: [
-        "Oui, dans ce cas tout est perdu.",
-        "Pas forcément : un véhicule suivi, entretenu et couvert peut aussi rassurer et soutenir la valeur perçue à la revente.",
-        "Ce point n’a aucun intérêt pour un acheteur."
-      ],
-      correct: 1,
-      explanation:
-        "Le contrat peut devenir un argument de valeur, car il renforce la crédibilité de l’entretien et rassure un futur acheteur."
-    },
-    {
-      theme: "Proposition finale",
-      question: "Cliente : « Bon… au final, qu’est-ce que vous me conseillez concrètement ? »",
-      options: [
-        "Je vous conseille de ne rien décider aujourd’hui.",
-        "Je vous fais une recommandation claire, adaptée à votre situation, avec une vraie proposition concrète.",
-        "Je vous laisse comparer seule et revenir plus tard."
-      ],
-      correct: 1,
-      explanation:
-        "La simulation attend une vraie proposition. Le vendeur doit assumer une recommandation claire et guider la décision."
+        "Le cadre global à maîtriser est le suivant : 48 mois de couverture maximum, avec une fin de contrat plafonnée à 200 000 km et jusqu’à 12 ans et demi maximum selon l’âge du véhicule au départ."
     }
   ];
 
@@ -295,13 +303,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "Résultat calculé localement, mais non enregistré car aucun vendeur actif n’est défini. Revenez au portail pour renseigner le vendeur.";
     } else if (percent >= 75) {
       finalScoreText.textContent =
-        `Très bon résultat pour ${seller.fullName}. Vous avez les bons réflexes pour aborder le simulateur Dacia dans de bonnes conditions.`;
+        `Très bon résultat pour ${seller.fullName}. Vous maîtrisez les points techniques clés du produit Dacia avant la mise en situation simulateur.`;
     } else if (percent >= 50) {
       finalScoreText.textContent =
-        `Résultat correct pour ${seller.fullName}, mais certains réflexes commerciaux et métier méritent encore d’être consolidés avant la simulation.`;
+        `Résultat correct pour ${seller.fullName}, mais plusieurs règles produit doivent encore être consolidées avant la simulation de vente.`;
     } else {
       finalScoreText.textContent =
-        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux maîtriser les fondamentaux avant la mise en situation.`;
+        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux maîtriser les règles d’éligibilité, de couverture et de traitement client avant la mise en situation.`;
     }
 
     resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
