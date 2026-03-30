@@ -176,6 +176,10 @@ input {
   margin-bottom: 42px;
 }
 
+.hero-content-simple {
+  max-width: 860px;
+}
+
 .certification-hero-content {
   max-width: 980px;
   margin-bottom: 30px;
@@ -222,16 +226,25 @@ input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   border-radius: 999px;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
 }
 
 .btn-xl {
   min-height: 54px;
   padding: 0 22px;
   font-size: 1rem;
+}
+
+.btn-block {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 18px;
+  margin-top: 18px;
+  font-size: 0.98rem;
 }
 
 .btn-primary {
@@ -243,6 +256,13 @@ input {
 .btn-primary:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 24px rgba(207, 163, 92, 0.24);
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-secondary {
@@ -340,7 +360,7 @@ input {
   border: 1px solid rgba(255,255,255,0.07);
   background: linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.02) 100%);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
 }
 
 .step-card:hover {
@@ -491,6 +511,98 @@ input {
   border-color: rgba(214, 179, 106, 0.34);
   background: rgba(255,255,255,0.06);
   box-shadow: 0 0 0 4px rgba(214, 179, 106, 0.08);
+}
+
+.compact-summary-card {
+  min-height: 100%;
+}
+
+.brand-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.brand-card {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.brand-card-active {
+  position: relative;
+}
+
+.brand-card-disabled {
+  opacity: 0.78;
+}
+
+.brand-card-disabled:hover {
+  transform: translateY(-1px);
+}
+
+.selected-brand {
+  border-color: rgba(214, 179, 106, 0.42) !important;
+  background: linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.03) 100%) !important;
+  box-shadow: 0 12px 28px rgba(207, 163, 92, 0.12);
+}
+
+.mode-intro-box {
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+
+.mode-intro-box p {
+  margin: 0;
+  color: #d8e2f2;
+  line-height: 1.7;
+}
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.training-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.training-link {
+  min-height: 52px;
+}
+
+.disabled-link {
+  pointer-events: auto;
+  opacity: 0.52;
+}
+
+.disabled-link:hover {
+  transform: none;
+  background: rgba(255,255,255,0.035);
+}
+
+.status-certified {
+  background: var(--success-soft) !important;
+  border-color: rgba(79, 209, 139, 0.28) !important;
+  color: #b5f3cf !important;
+}
+
+.status-progress {
+  background: var(--warning-soft) !important;
+  border-color: rgba(240, 195, 106, 0.28) !important;
+  color: #f7ddb0 !important;
+}
+
+.status-locked {
+  background: var(--danger-soft) !important;
+  border-color: rgba(255, 124, 124, 0.28) !important;
+  color: #ffc0c0 !important;
 }
 
 /* =========================
@@ -731,30 +843,14 @@ input {
   font-size: 0.95rem;
 }
 
-.status-certified {
-  background: var(--success-soft) !important;
-  border-color: rgba(79, 209, 139, 0.28) !important;
-  color: #b5f3cf !important;
-}
-
-.status-progress {
-  background: var(--warning-soft) !important;
-  border-color: rgba(240, 195, 106, 0.28) !important;
-  color: #f7ddb0 !important;
-}
-
-.status-locked {
-  background: var(--danger-soft) !important;
-  border-color: rgba(255, 124, 124, 0.28) !important;
-  color: #ffc0c0 !important;
-}
-
 @media (max-width: 1100px) {
   .journey-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .seller-entry-grid {
+  .seller-entry-grid,
+  .brand-selection-grid,
+  .mode-grid {
     grid-template-columns: 1fr;
   }
 
