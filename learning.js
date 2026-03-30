@@ -205,7 +205,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showResults() {
     const percent = Math.round((score / questions.length) * 100);
-
+localStorage.setItem("qcm_dacia_score", String(score));
+localStorage.setItem("qcm_dacia_total", String(questions.length));
+localStorage.setItem("qcm_dacia_percent", String(percent));
     resultsCard.style.display = "block";
     finalScoreValue.textContent = `${score}/${questions.length}`;
     finalScorePercent.textContent = `${percent}%`;
