@@ -80,6 +80,10 @@ function getSellerIdentity() {
   };
 }
 
+function getSelectedBrand() {
+  return (localStorage.getItem("selected_brand") || "").trim().toLowerCase();
+}
+
 function ensureSellerIdentity() {
   const seller = getSellerIdentity();
 
@@ -92,6 +96,18 @@ function ensureSellerIdentity() {
   return false;
 }
 
+function ensureDaciaEnvironment() {
+  const selectedBrand = getSelectedBrand();
+
+  if (!selectedBrand || selectedBrand === "dacia") {
+    return true;
+  }
+
+  alert("Cette simulation correspond à l’univers Dacia. Merci de revenir au portail pour sélectionner l’environnement approprié.");
+  window.location.href = "index.html";
+  return false;
+}
+
 function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
@@ -99,6 +115,8 @@ function escapeHtml(text) {
 }
 
 function display(text, role = "client") {
+  if (!chat) return;
+
   const bubble = document.createElement("div");
   bubble.className = `bubble ${role}`;
 
@@ -113,11 +131,18 @@ function display(text, role = "client") {
 }
 
 function resetTrustUI() {
-  trustBar.style.width = `${trust}%`;
-  trustText.textContent = `${trust}%`;
+  if (trustBar) {
+    trustBar.style.width = `${trust}%`;
+  }
+
+  if (trustText) {
+    trustText.textContent = `${trust}%`;
+  }
 }
 
 function updateAvatar() {
+  if (!avatar) return;
+
   if (trust > 70) {
     avatar.src = avatarByState.happy;
   } else if (trust > 40) {
@@ -128,7 +153,7 @@ function updateAvatar() {
 }
 
 function getAgeNumber() {
-  const raw = vehicleAgeSelect.value || "1 an";
+  const raw = vehicleAgeSelect?.value || "1 an";
   const match = raw.match(/\d+/);
   return match ? parseInt(match[0], 10) : 1;
 }
@@ -139,15 +164,17 @@ function getAgeBucket() {
 
 function getSelectedPrices() {
   const bucket = getAgeBucket();
-  const energy = energyTypeSelect.value;
+  const energy = energyTypeSelect?.value || "essence_gpl";
   return priceMatrix[bucket][energy];
 }
 
 function updateHelpPrices() {
+  if (!cepPrice || !ceppPrice || !helpRecommendation || !helpAngle) return;
+
   const prices = getSelectedPrices();
-  const scenario = scenarioSelect.value;
+  const scenario = scenarioSelect?.value || "revision";
   const age = getAgeNumber();
-  const profil = profilSelect.value;
+  const profil = profilSelect?.value || "particulier";
 
   cepPrice.textContent = `${prices.cep}€ / mois`;
   ceppPrice.textContent = `${prices.cepp}€ / mois`;
@@ -171,11 +198,25 @@ function updateHelpPrices() {
 }
 
 function updateModeUI() {
-  modeBadge.textContent = "Simulation vendeur";
-  finishBtn.textContent = "Terminer la simulation";
-  newBtn.textContent = "Nouvelle simulation";
-  endTitle.textContent = "Fin de simulation";
-  endSubtitle.textContent = "La discussion est terminée. Lance maintenant l’évaluation.";
+  if (modeBadge) {
+    modeBadge.textContent = "Simulation vendeur";
+  }
+
+  if (finishBtn) {
+    finishBtn.textContent = "Terminer la simulation";
+  }
+
+  if (newBtn) {
+    newBtn.textContent = "Nouvelle simulation";
+  }
+
+  if (endTitle) {
+    endTitle.textContent = "Fin de simulation";
+  }
+
+  if (endSubtitle) {
+    endSubtitle.textContent = "La discussion est terminée. Lance maintenant l’évaluation.";
+  }
 }
 
 function renderSkills() {
@@ -193,6 +234,7 @@ function resetSkills() {
   Object.keys(skills).forEach((key) => {
     skills[key] = false;
   });
+
   renderSkills();
 }
 
@@ -261,26 +303,43 @@ function setControlsState({
   evalText = "Voir évaluation",
   inputDisabled = false
 } = {}) {
-  sendBtn.style.display = sendVisible ? "inline-flex" : "none";
-  sendBtn.disabled = sendDisabled;
+  if (sendBtn) {
+    sendBtn.style.display = sendVisible ? "inline-flex" : "none";
+    sendBtn.disabled = sendDisabled;
+  }
 
-  finishBtn.style.display = finishVisible ? "inline-flex" : "none";
-  finishBtn.disabled = finishDisabled;
+  if (finishBtn) {
+    finishBtn.style.display = finishVisible ? "inline-flex" : "none";
+    finishBtn.disabled = finishDisabled;
+  }
 
-  evalBtn.style.display = evalVisible ? "inline-flex" : "none";
-  evalBtn.disabled = evalDisabled;
-  evalBtn.textContent = evalText;
+  if (evalBtn) {
+    evalBtn.style.display = evalVisible ? "inline-flex" : "none";
+    evalBtn.disabled = evalDisabled;
+    evalBtn.textContent = evalText;
+  }
 
-  input.disabled = inputDisabled;
+  if (input) {
+    input.disabled = inputDisabled;
+  }
 }
 
 function showEndPanel(title, subtitle) {
+  if (!endMessage) return;
+
   endMessage.classList.remove("hidden");
-  endTitle.textContent = title;
-  endSubtitle.textContent = subtitle;
+
+  if (endTitle) {
+    endTitle.textContent = title;
+  }
+
+  if (endSubtitle) {
+    endSubtitle.textContent = subtitle;
+  }
 }
 
 function hideEndPanel() {
+  if (!endMessage) return;
   endMessage.classList.add("hidden");
 }
 
@@ -332,12 +391,20 @@ function showPostEvaluationActions() {
 
   removePostEvaluationActions();
 
+  if (!endMessage) return;
+
   const actionsBox = document.createElement("div");
   actionsBox.id = "postEvalActions";
   actionsBox.style.display = "flex";
   actionsBox.style.gap = "12px";
   actionsBox.style.flexWrap = "wrap";
   actionsBox.style.marginTop = "14px";
+
+  const retryBtn = document.createElement("button");
+  retryBtn.type = "button";
+  retryBtn.className = "btn btn-secondary";
+  retryBtn.textContent = "Nouvelle simulation";
+  retryBtn.addEventListener("click", resetDemo);
 
   const certLink = document.createElement("a");
   certLink.href = "certification.html";
@@ -349,18 +416,21 @@ function showPostEvaluationActions() {
   homeLink.className = "btn btn-secondary";
   homeLink.textContent = "Retour au portail";
 
+  actionsBox.appendChild(retryBtn);
   actionsBox.appendChild(certLink);
   actionsBox.appendChild(homeLink);
   endMessage.appendChild(actionsBox);
 }
 
 function generateBrief() {
-  const scenario = scenarioSelect.value;
-  const age = vehicleAgeSelect.value;
-  const profil = profilSelect.value;
+  if (!briefText) return;
+
+  const scenario = scenarioSelect?.value || "revision";
+  const age = vehicleAgeSelect?.value || "1 an";
+  const profil = profilSelect?.value || "particulier";
   const seller = getSellerIdentity();
 
-  let intro = seller.isReady ? `Vendeur actif : ${seller.fullName}.` : "";
+  const intro = seller.isReady ? `Vendeur actif : ${seller.fullName}.` : "";
   let text = "";
 
   if (profil === "pro") {
@@ -420,7 +490,10 @@ function resetDemo() {
   evaluationInProgress = false;
   lastClientReply = "";
 
-  chat.innerHTML = "";
+  if (chat) {
+    chat.innerHTML = "";
+  }
+
   generateBrief();
 
   const firstMessage = "Bonjour";
@@ -433,7 +506,10 @@ function resetDemo() {
 
   lastClientReply = firstMessage;
 
-  input.value = "";
+  if (input) {
+    input.value = "";
+  }
+
   removePostEvaluationActions();
   hideEndPanel();
 
@@ -454,7 +530,9 @@ function resetDemo() {
   updateModeUI();
   updateHelpPrices();
 
-  input.focus();
+  if (input) {
+    input.focus();
+  }
 }
 
 function toggleHelp() {
@@ -466,7 +544,7 @@ function toggleHelp() {
 
 function updateTrustFromSellerMessage(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
+  const profil = profilSelect?.value || "particulier";
 
   let delta = -4;
 
@@ -534,7 +612,7 @@ function sellerLooksLikeWelcome(text) {
 
 function sellerLooksLikeDiscovery(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
+  const profil = profilSelect?.value || "particulier";
 
   const discoverySignals = [
     "combien de kilomètres",
@@ -578,7 +656,7 @@ function sellerLooksLikeDiscovery(text) {
 
 function sellerLooksLikeArgumentation(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
+  const profil = profilSelect?.value || "particulier";
 
   const mentionProduct =
     t.includes("cep") ||
@@ -659,7 +737,7 @@ function clientRaisedObjection(text) {
 
 function sellerLooksLikeObjectionHandling(text) {
   const t = text.toLowerCase();
-  const profil = profilSelect.value;
+  const profil = profilSelect?.value || "particulier";
 
   const reassuringTerms = [
     "je comprends",
@@ -780,7 +858,7 @@ function finishSession() {
 async function send() {
   if (finished || evaluationInProgress) return;
 
-  const val = input.value.trim();
+  const val = input?.value.trim();
   if (!val) return;
 
   input.value = "";
@@ -798,10 +876,10 @@ async function send() {
 
   const payload = {
     messages,
-    profil: profilSelect.value,
-    scenario: scenarioSelect.value,
-    vehicleAge: vehicleAgeSelect.value,
-    energyType: energyTypeSelect.value,
+    profil: profilSelect?.value || "particulier",
+    scenario: scenarioSelect?.value || "revision",
+    vehicleAge: vehicleAgeSelect?.value || "1 an",
+    energyType: energyTypeSelect?.value || "essence_gpl",
     liveSkills: skills,
     trust,
     validatedSkillsCount
@@ -862,7 +940,10 @@ async function send() {
         evalText: "Voir évaluation",
         inputDisabled: false
       });
-      input.focus();
+
+      if (input) {
+        input.focus();
+      }
     }
   }
 }
@@ -875,6 +956,7 @@ async function evaluate() {
   if (evaluationShown || evaluationInProgress) return;
 
   const seller = getSellerIdentity();
+
   if (!seller.isReady) {
     alert("Aucun vendeur actif n’est enregistré. Revenez au portail pour renseigner le vendeur avant de lancer l’évaluation.");
     window.location.href = "index.html";
@@ -908,10 +990,10 @@ async function evaluate() {
       body: JSON.stringify({
         conversation: messages,
         trust,
-        profil: profilSelect.value,
-        scenario: scenarioSelect.value,
-        vehicleAge: vehicleAgeSelect.value,
-        energyType: energyTypeSelect.value,
+        profil: profilSelect?.value || "particulier",
+        scenario: scenarioSelect?.value || "revision",
+        vehicleAge: vehicleAgeSelect?.value || "1 an",
+        energyType: energyTypeSelect?.value || "essence_gpl",
         liveSkills: skills,
         sellerFirstName: seller.firstName,
         sellerLastName: seller.lastName,
@@ -942,6 +1024,7 @@ async function evaluate() {
 
     hideEndPanel();
     display(data.evaluation, "coach");
+
     evaluationInProgress = false;
     showPostEvaluationActions();
   } catch (err) {
@@ -968,25 +1051,56 @@ function onSettingsChange() {
   resetDemo();
 }
 
-profilSelect.addEventListener("change", onSettingsChange);
-scenarioSelect.addEventListener("change", onSettingsChange);
-vehicleAgeSelect.addEventListener("change", onSettingsChange);
-energyTypeSelect.addEventListener("change", onSettingsChange);
+if (profilSelect) {
+  profilSelect.addEventListener("change", onSettingsChange);
+}
 
-sendBtn.addEventListener("click", send);
-finishBtn.addEventListener("click", finishDemo);
-newBtn.addEventListener("click", resetDemo);
-evalBtn.addEventListener("click", evaluate);
-toggleHelpBtn.addEventListener("click", toggleHelp);
+if (scenarioSelect) {
+  scenarioSelect.addEventListener("change", onSettingsChange);
+}
 
-input.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    send();
-  }
-});
+if (vehicleAgeSelect) {
+  vehicleAgeSelect.addEventListener("change", onSettingsChange);
+}
+
+if (energyTypeSelect) {
+  energyTypeSelect.addEventListener("change", onSettingsChange);
+}
+
+if (sendBtn) {
+  sendBtn.addEventListener("click", send);
+}
+
+if (finishBtn) {
+  finishBtn.addEventListener("click", finishDemo);
+}
+
+if (newBtn) {
+  newBtn.addEventListener("click", resetDemo);
+}
+
+if (evalBtn) {
+  evalBtn.addEventListener("click", evaluate);
+}
+
+if (toggleHelpBtn) {
+  toggleHelpBtn.addEventListener("click", toggleHelp);
+}
+
+if (input) {
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      send();
+    }
+  });
+}
 
 if (!ensureSellerIdentity()) {
   throw new Error("Vendeur actif manquant");
+}
+
+if (!ensureDaciaEnvironment()) {
+  throw new Error("Univers Dacia non sélectionné");
 }
 
 resetDemo();
