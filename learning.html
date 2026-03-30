@@ -8,7 +8,7 @@
 </head>
 <body>
   <main class="home-page">
-    <section class="hero" style="min-height: 100vh;">
+    <section class="hero learning-page">
       <div class="hero-bg"></div>
       <div class="hero-overlay"></div>
 
@@ -23,13 +23,13 @@
 
         <nav class="hero-nav">
           <a href="index.html" class="nav-link">Accueil</a>
-          <a href="learning.html" class="nav-link">Apprentissage</a>
+          <a href="learning.html" class="nav-link active">Apprentissage</a>
           <a href="simulateur.html" class="nav-link">Simulateur</a>
           <a href="certification.html" class="nav-link">Certification</a>
         </nav>
       </header>
 
-      <div class="hero-content" style="max-width: 980px; margin-bottom: 30px;">
+      <div class="hero-content certification-hero-content">
         <div class="hero-kicker">Brique de training</div>
 
         <h1>
@@ -62,31 +62,39 @@
           </div>
 
           <div class="journey-grid">
-            <div class="step-card premium-step" style="border-color: rgba(214, 179, 106, 0.28);">
+            <div class="step-card premium-step step-card-featured">
               <div class="step-top">
                 <span class="step-number">01</span>
                 <span class="step-tag">Disponible</span>
               </div>
               <h3>Dacia</h3>
-              <p>Module actif dans cette V3.0. Questions métier conçues pour préparer directement le simulateur atelier.</p>
+              <p>
+                Module actif dans cette V3.0. Questions métier conçues pour préparer
+                directement le simulateur atelier.
+              </p>
             </div>
 
-            <div class="step-card premium-step" style="opacity: 0.72;">
+            <div class="step-card premium-step step-card-disabled">
               <div class="step-top">
                 <span class="step-number">02</span>
                 <span class="step-tag">À venir</span>
               </div>
               <h3>Renault VL</h3>
-              <p>Univers visible dans la plateforme mais non encore activé dans cette version de démonstration.</p>
+              <p>
+                Univers visible dans la plateforme mais non encore activé dans cette
+                version de démonstration.
+              </p>
             </div>
 
-            <div class="step-card premium-step" style="opacity: 0.72;">
+            <div class="step-card premium-step step-card-disabled">
               <div class="step-top">
                 <span class="step-number">03</span>
                 <span class="step-tag">À venir</span>
               </div>
               <h3>Renault Utilitaires</h3>
-              <p>Univers prévu pour la suite, avec logique de modules et de simulation dédiée.</p>
+              <p>
+                Univers prévu pour la suite, avec logique de modules et de simulation dédiée.
+              </p>
             </div>
 
             <div class="step-card premium-step">
@@ -95,13 +103,16 @@
                 <span class="step-tag">Objectif</span>
               </div>
               <h3>Préparer la simulation</h3>
-              <p>Le but du module est de renforcer les bons réflexes avant la mise en situation commerciale.</p>
+              <p>
+                Le but du module est de renforcer les bons réflexes avant la mise en
+                situation commerciale.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="journey-section" style="margin-top: 22px;">
+      <section class="journey-section">
         <div class="journey-card">
           <div class="journey-head">
             <div>
@@ -111,37 +122,41 @@
             <div class="journey-side-badge">8 questions</div>
           </div>
 
-          <div style="margin-bottom: 22px;">
-            <div class="proof-pill active" style="display:inline-flex;">Univers actif : Dacia</div>
+          <div class="learning-active-universe">
+            <div class="proof-pill active">Univers actif : Dacia</div>
           </div>
 
-          <div class="step-card premium-step" style="min-height: unset;">
-            <div class="step-top" style="margin-bottom: 12px;">
+          <div class="step-card premium-step learning-question-card">
+            <div class="step-top learning-question-top">
               <span class="step-number" id="questionNumber">Question 1 / 8</span>
               <span class="step-tag" id="questionTheme">Éligibilité</span>
             </div>
 
-            <h3 id="questionText" style="margin-bottom: 18px;">
+            <h3 id="questionText" class="learning-question-title">
               Chargement de la question...
             </h3>
 
-            <div id="answersBox" style="display:grid; gap:12px;"></div>
+            <div id="answersBox" class="learning-answers-box"></div>
 
-            <div id="feedbackBox" style="display:none; margin-top:18px; padding:16px; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);">
-              <div id="feedbackTitle" style="font-weight:700; margin-bottom:8px;"></div>
-              <div id="feedbackText" style="color: var(--muted); line-height:1.7;"></div>
+            <div id="feedbackBox" class="learning-feedback-box" style="display: none;">
+              <div id="feedbackTitle" class="learning-feedback-title"></div>
+              <div id="feedbackText" class="learning-feedback-text"></div>
             </div>
 
-            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px;">
-              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">Valider ma réponse</button>
-              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display:none;">Question suivante</button>
+            <div class="learning-actions-row">
+              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">
+                Valider ma réponse
+              </button>
+              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display: none;">
+                Question suivante
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="journey-section" style="margin-top: 22px;">
-        <div class="journey-card" id="resultsCard" style="display:none;">
+      <section class="journey-section">
+        <div class="journey-card" id="resultsCard" style="display: none;">
           <div class="journey-head">
             <div>
               <div class="journey-kicker">Résultat</div>
@@ -178,7 +193,7 @@
               <p>Revenez au hub central pour lancer une autre brique du parcours.</p>
             </a>
 
-            <button id="restartBtn" class="step-card premium-step" type="button" style="text-align:left; cursor:pointer;">
+            <button id="restartBtn" class="step-card premium-step step-card-button" type="button">
               <div class="step-top">
                 <span class="step-number">C</span>
                 <span class="step-tag">Rejouer</span>
