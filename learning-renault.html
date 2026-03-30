@@ -3,242 +3,190 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simulation Renault - Contrats de services</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Apprentissage Renault - Contrats de services</title>
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
-  <div class="app">
-    <div class="topbar">
-      <div class="title-wrap">
-        <h1>Simulation Atelier Renault</h1>
-        <p>Entraînement commercial Renault orienté découverte, valeur client, objections et closing.</p>
-      </div>
-      <div class="badge" id="modeBadge">Simulation vendeur</div>
-    </div>
+  <main class="home-page">
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
 
-    <section class="panel" style="margin-bottom: 18px;">
-      <div class="panel-inner">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;">
-          <div style="max-width:760px;">
-            <div class="badge" style="margin-bottom:10px;">Univers Renault</div>
-            <h2 style="margin:0 0 10px;">Mise en situation commerciale</h2>
-            <p class="sub" style="font-size:15px; line-height:1.6; margin:0;">
-              Le vendeur travaille ici la découverte client, la logique de valeur,
-              le traitement des objections et la conclusion commerciale Renault.
+      <header class="hero-header">
+        <div class="brand">
+          <div class="brand-mark">CS</div>
+          <div>
+            <div class="brand-name">Contrats de Services Academy</div>
+            <div class="brand-sub">Apprentissage Renault • V3.0</div>
+          </div>
+        </div>
+
+        <nav class="hero-nav">
+          <a href="index.html" class="nav-link">Accueil</a>
+          <a href="learning-dacia.html" class="nav-link">Apprentissage Dacia</a>
+          <a href="simulateur-dacia.html" class="nav-link">Simulateur Dacia</a>
+          <a href="learning-renault.html" class="nav-link active">Apprentissage Renault</a>
+          <a href="simulateur-renault.html" class="nav-link">Simulateur Renault</a>
+          <a href="certification.html" class="nav-link">Certification</a>
+        </nav>
+      </header>
+
+      <div class="hero-content hero-content-simple">
+        <div class="hero-kicker">Module Renault</div>
+
+        <h1>
+          Travaillez votre posture vendeur Renault face à une offre plus chère, sans perdre la logique de valeur.
+        </h1>
+
+        <p class="hero-subtitle">
+          Ce module de 8 questions vous entraîne à défendre la valeur d’une offre Renault,
+          à sortir d’une lecture purement prix, à mieux traiter l’objection tarifaire
+          et à conclure avec plus de solidité.
+        </p>
+
+        <div class="hero-proof">
+          <span class="proof-pill active">8 questions Renault</span>
+          <span class="proof-pill active">Résultat enregistré</span>
+          <span class="proof-pill">Préparation simulation + certification</span>
+        </div>
+      </div>
+
+      <section class="journey-section learning-active-universe">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Univers actif</div>
+              <h2>Apprentissage Renault</h2>
+            </div>
+            <div class="journey-side-badge status-progress">QCM vendeur</div>
+          </div>
+
+          <div class="mode-intro-box">
+            <p>
+              Objectif : mieux valoriser une offre Renault plus chère en la reliant à la tranquillité,
+              à la cohérence d’usage, à la maîtrise budgétaire et à la protection du client.
             </p>
           </div>
 
-          <div style="min-width:260px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-            <a href="learning-renault.html" class="btn btn-secondary">Reprendre l’apprentissage</a>
-            <a href="certification.html" class="btn btn-secondary">Voir certification</a>
-            <a href="index.html" class="btn btn-secondary">Retour portail</a>
+          <div class="learning-actions-row">
+            <a href="simulateur-renault.html" class="btn btn-secondary btn-xl">Aller au simulateur Renault</a>
+            <a href="certification.html" class="btn btn-secondary btn-xl">Voir certification</a>
+            <a href="index.html" class="btn btn-secondary btn-xl">Retour portail</a>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker" id="questionNumber">Question 1 / 8</div>
+              <h2 id="questionTheme">Thème</h2>
+            </div>
+            <div class="journey-side-badge" id="scoreBadge">Score en cours</div>
+          </div>
+
+          <div class="step-card premium-step learning-question-card">
+            <div class="step-top learning-question-top">
+              <span class="step-number">QCM</span>
+              <span class="step-tag">Renault</span>
+            </div>
+
+            <h3 id="questionText" class="learning-question-title">
+              Chargement de la question...
+            </h3>
+
+            <div id="answersBox" class="learning-answers-box"></div>
+
+            <div id="feedbackBox" class="learning-feedback-box" style="display: none;">
+              <div id="feedbackTitle" class="learning-feedback-title"></div>
+              <div id="feedbackText" class="learning-feedback-text"></div>
+            </div>
+
+            <div class="learning-actions-row">
+              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">
+                Valider la réponse
+              </button>
+              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display: none;">
+                Question suivante
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div id="resultsCard" class="journey-card" style="display: none;">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Résultat final</div>
+              <h2>Fin du module Renault</h2>
+            </div>
+            <div class="journey-side-badge status-certified">Score calculé</div>
+          </div>
+
+          <div class="mode-intro-box" style="margin-bottom: 20px;">
+            <p id="finalScoreText">
+              Résultat en cours de calcul.
+            </p>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number" id="finalScoreValue">0/8</span>
+                <span class="step-tag">Bonnes réponses</span>
+              </div>
+              <h3>Score brut</h3>
+              <p>Nombre de bonnes réponses sur l’ensemble du module Renault.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number" id="finalScorePercent">0%</span>
+                <span class="step-tag">Performance</span>
+              </div>
+              <h3>Score final</h3>
+              <p>Pourcentage obtenu sur les 8 questions du QCM Renault.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">SIM</span>
+                <span class="step-tag">Étape suivante</span>
+              </div>
+              <h3>Passage recommandé</h3>
+              <p>
+                Après ce module, l’étape logique est de tester la posture Renault
+                dans une simulation commerciale complète.
+              </p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">V3</span>
+                <span class="step-tag">Enregistrement local</span>
+              </div>
+              <h3>Suivi vendeur</h3>
+              <p>
+                Le score Renault est enregistré localement sur ce navigateur pour alimenter la certification.
+              </p>
+            </div>
+          </div>
+
+          <div class="learning-actions-row">
+            <button id="restartBtn" class="btn btn-primary btn-xl" type="button">
+              Refaire le QCM Renault
+            </button>
+            <a href="simulateur-renault.html" class="btn btn-secondary btn-xl">Lancer la simulation Renault</a>
+            <a href="certification.html" class="btn btn-secondary btn-xl">Voir certification</a>
+            <a href="index.html" class="btn btn-secondary btn-xl">Retour portail</a>
+          </div>
+        </div>
+      </section>
     </section>
+  </main>
 
-    <div class="layout">
-      <section class="panel">
-        <div class="panel-inner">
-          <div class="panel-title">
-            <h2>Client</h2>
-            <span class="sub">Réaction en direct</span>
-          </div>
-
-          <div class="client-card">
-            <div class="avatar-box">
-              <img id="avatar" src="/images/neutral.jpg" alt="Client" />
-            </div>
-
-            <div>
-              <div class="trust-label">
-                <span>Niveau de confiance</span>
-                <span id="trustText">50%</span>
-              </div>
-              <div class="trust-shell">
-                <div id="trust"></div>
-              </div>
-            </div>
-
-            <div class="skills-box">
-              <div class="skills-title">Blocs de compétences validés</div>
-              <div class="skills-row">
-                <div class="skill-star" id="skill-welcome" aria-checked="false">★<span>Accueil</span></div>
-                <div class="skill-star" id="skill-discovery" aria-checked="false">★<span>Découverte</span></div>
-                <div class="skill-star" id="skill-argumentation" aria-checked="false">★<span>Argumentation</span></div>
-                <div class="skill-star" id="skill-objection" aria-checked="false">★<span>Objections</span></div>
-                <div class="skill-star" id="skill-closing" aria-checked="false">★<span>Conclusion</span></div>
-              </div>
-            </div>
-
-            <div class="chips">
-              <span class="chip">Découverte</span>
-              <span class="chip">Valeur client</span>
-              <span class="chip">Objections</span>
-              <span class="chip">Closing</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-inner">
-          <div class="panel-title">
-            <h2>Simulation</h2>
-            <span class="sub">Atelier Renault</span>
-          </div>
-
-          <div class="sim-header">
-            <div class="field">
-              <label for="profil">Profil client</label>
-              <select id="profil">
-                <option value="convaincu">Convaincu</option>
-                <option value="hesitant">Hésitant</option>
-                <option value="mefiant">Méfiant</option>
-                <option value="prix">Orienté prix</option>
-                <option value="sceptique">Sceptique</option>
-                <option value="pro">Client professionnel</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="scenario">Scénario atelier</label>
-              <select id="scenario">
-                <option value="revision">Révision</option>
-                <option value="facture">Facture élevée</option>
-                <option value="fin-garantie">Fin garantie</option>
-                <option value="usure">Usure</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="vehicleAge">Âge véhicule</label>
-              <select id="vehicleAge">
-                <option value="1 an">1 an</option>
-                <option value="2 ans">2 ans</option>
-                <option value="3 ans">3 ans</option>
-                <option value="4 ans">4 ans</option>
-                <option value="5 ans">5 ans</option>
-                <option value="6 ans">6 ans</option>
-                <option value="7 ans">7 ans</option>
-                <option value="8 ans">8 ans</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="energyType">Motorisation</label>
-              <select id="energyType">
-                <option value="essence">Essence</option>
-                <option value="diesel">Diesel</option>
-                <option value="hybrid">Hybride</option>
-                <option value="ev">Électrique</option>
-                <option value="vu">Utilitaire thermique</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="briefBox" class="brief-box">
-            <div class="brief-title">Situation client</div>
-            <div id="briefText"></div>
-          </div>
-
-          <div id="chat"></div>
-
-          <div class="chat-footer">
-            <input id="input" placeholder="Votre réponse..." />
-            <button class="btn btn-primary" id="sendBtn">Envoyer</button>
-            <button class="btn btn-secondary" id="finishDemoBtn">Terminer la simulation</button>
-            <button class="btn btn-secondary" id="newDemoBtn">Nouvelle simulation</button>
-          </div>
-
-          <div id="endMessage" class="hidden">
-            <h3 id="endTitle">Fin de simulation</h3>
-            <div class="sub" id="endSubtitle" style="margin-bottom:10px;">
-              La discussion est terminée. Lance maintenant l’évaluation.
-            </div>
-            <button class="btn btn-primary" id="evalBtn">Voir évaluation</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-inner">
-          <div class="help-head">
-            <div>
-              <h2 style="margin:0 0 4px;">Aide vendeur</h2>
-              <div class="sub">Pense-bête discret</div>
-            </div>
-            <span class="mini-tag">Renault</span>
-          </div>
-
-          <button class="btn btn-secondary" id="toggleHelpBtn">Afficher aide</button>
-
-          <div id="helpBox" class="hidden">
-            <div class="help-section">
-              <h4>Angle conseillé</h4>
-              <ul class="help-list">
-                <li id="helpRecommendation">Commencez par découvrir l’usage et ce qui compte vraiment pour le client.</li>
-                <li id="helpAngle">Reliez ensuite la solution à la tranquillité, à la visibilité budgétaire et au suivi dans le réseau.</li>
-              </ul>
-            </div>
-
-            <div class="help-section">
-              <h4>Offre recommandée</h4>
-              <ul class="help-list">
-                <li id="helpOffer">CEP+ à proposer en premier si le besoin le justifie.</li>
-                <li id="helpEligibility">Éligibilité : 1 à 8 ans + 6 mois et moins de 120 000 km à la souscription.</li>
-                <li id="helpContractEnd">Fin de contrat : jusqu’à 48 mois, avec maximum 200 000 km et jusqu’à 12 ans et demi selon âge de départ.</li>
-              </ul>
-            </div>
-
-            <div class="help-section">
-              <h4>Mensualités Renault</h4>
-              <ul class="help-list">
-                <li id="helpPriceLine1">CEP : —</li>
-                <li id="helpPriceLine2">CEP+ : —</li>
-                <li id="helpPriceLine3">Base tarifaire : —</li>
-              </ul>
-            </div>
-
-            <div class="help-section">
-              <h4>Arguments clés</h4>
-              <ul class="help-list">
-                <li id="helpArg1">Budget maîtrisé : mensualités fixes pendant 4 ans.</li>
-                <li id="helpArg2">Suivi du programme d’entretien dans le réseau Renault.</li>
-                <li id="helpArg3">Assistance, tranquillité et véhicule plus facile à revendre.</li>
-              </ul>
-            </div>
-
-            <div class="help-section">
-              <h4>Objection à travailler</h4>
-              <ul class="help-list">
-                <li id="helpObjection">“C’est trop cher” → “Le contrat coûte souvent moins cher qu’un imprévu non couvert.”</li>
-              </ul>
-            </div>
-
-            <div class="help-section">
-              <h4>Rappel closing</h4>
-              <ul class="help-list">
-                <li>Faire une proposition claire</li>
-                <li>Demander une décision</li>
-                <li>Une note solide demande une vraie tentative de conclusion</li>
-              </ul>
-            </div>
-
-            <div class="help-section">
-              <h4>Posture</h4>
-              <ul class="help-list">
-                <li>Découvrir avant de proposer</li>
-                <li>Reformuler l’objection avant d’argumenter</li>
-                <li>Adapter le discours à l’usage réel du client</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <script src="app-renault.js"></script>
+  <script src="learning-renault.js"></script>
 </body>
 </html>
