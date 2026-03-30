@@ -10,7 +10,6 @@ const trustBar = document.getElementById("trust");
 const trustText = document.getElementById("trustText");
 const avatar = document.getElementById("avatar");
 const input = document.getElementById("input");
-const modeSelect = document.getElementById("mode");
 const profilSelect = document.getElementById("profil");
 const scenarioSelect = document.getElementById("scenario");
 const vehicleAgeSelect = document.getElementById("vehicleAge");
@@ -172,15 +171,11 @@ function updateHelpPrices() {
 }
 
 function updateModeUI() {
-  const isEval = modeSelect.value === "eval";
-
-  modeBadge.textContent = isEval ? "Mode Évaluation" : "Mode Démo";
-  finishBtn.textContent = isEval ? "Terminer la simulation" : "Terminer la démo";
-  newBtn.textContent = isEval ? "Nouvelle simulation" : "Nouvelle démo";
-  endTitle.textContent = isEval ? "Fin de simulation" : "Fin de démo";
-  endSubtitle.textContent = isEval
-    ? "La discussion est terminée. Lance maintenant l’évaluation."
-    : "La discussion est terminée. Tu peux consulter l’évaluation si tu veux.";
+  modeBadge.textContent = "Simulation vendeur";
+  finishBtn.textContent = "Terminer la simulation";
+  newBtn.textContent = "Nouvelle simulation";
+  endTitle.textContent = "Fin de simulation";
+  endSubtitle.textContent = "La discussion est terminée. Lance maintenant l’évaluation.";
 }
 
 function renderSkills() {
@@ -362,8 +357,6 @@ function showPostEvaluationActions() {
 function generateBrief() {
   const scenario = scenarioSelect.value;
   const age = vehicleAgeSelect.value;
-  const mode = modeSelect.value;
-  const isEval = mode === "eval";
   const profil = profilSelect.value;
   const seller = getSellerIdentity();
 
@@ -375,44 +368,44 @@ function generateBrief() {
       text = `${intro}
 Vous recevez un client professionnel pour une révision.
 Son véhicule (${age}) est éligible au Contrat Entretien Privilèges.
-${isEval ? "Vous serez évalué sur votre capacité à adapter votre discours à un usage professionnel." : "À vous de proposer une solution crédible avec des arguments concrets : budget, imprévus, continuité d’usage."}`;
+Vous serez évalué sur votre capacité à adapter votre discours à un usage professionnel.`;
     } else if (scenario === "facture") {
       text = `${intro}
 Vous recevez un client professionnel après une facture atelier élevée.
 Son véhicule (${age}) est éligible au contrat d’entretien.
-${isEval ? "Vous serez évalué sur votre capacité à transformer une facture subie en argument de maîtrise budgétaire." : "À vous de montrer l’intérêt concret du contrat pour limiter les imprévus et sécuriser l’activité."}`;
+Vous serez évalué sur votre capacité à transformer une facture subie en argument de maîtrise budgétaire.`;
     } else if (scenario === "fin-garantie") {
       text = `${intro}
 Vous recevez un client professionnel dont le véhicule arrive en fin de garantie.
 Son véhicule (${age}) est éligible à une solution de protection.
-${isEval ? "Vous serez évalué sur votre capacité à adapter votre recommandation au cadre professionnel." : "À vous de valoriser la continuité d’usage, la visibilité budgétaire et la cohérence économique."}`;
+Vous serez évalué sur votre capacité à adapter votre recommandation au cadre professionnel.`;
     } else if (scenario === "usure") {
       text = `${intro}
 Vous recevez un client professionnel pour un sujet d’usure.
 Son véhicule (${age}) est éligible au contrat d’entretien.
-${isEval ? "Vous serez évalué sur votre capacité à orienter vers la bonne couverture selon l’usage professionnel." : "À vous d’amener la solution la plus pertinente pour réduire les immobilisations et les dépenses imprévues."}`;
+Vous serez évalué sur votre capacité à orienter vers la bonne couverture selon l’usage professionnel.`;
     }
   } else {
     if (scenario === "revision") {
       text = `${intro}
 Vous attendez Madame Dubois pour une révision.
 Son véhicule (${age}) est éligible au Contrat Entretien Privilèges.
-${isEval ? "Votre objectif est de mener un échange complet et structuré." : "À vous de mener l’échange et de proposer la solution adaptée."}`;
+Votre objectif est de mener un échange complet et structuré.`;
     } else if (scenario === "facture") {
       text = `${intro}
 Vous recevez une cliente après une facture atelier élevée.
 Son véhicule (${age}) est éligible au contrat d’entretien.
-${isEval ? "Vous serez évalué sur votre capacité à rassurer et argumenter." : "À vous de sécuriser votre argumentation."}`;
+Vous serez évalué sur votre capacité à rassurer et argumenter.`;
     } else if (scenario === "fin-garantie") {
       text = `${intro}
 Vous recevez une cliente dont le véhicule arrive en fin de garantie.
 Son véhicule (${age}) est éligible à une solution de protection.
-${isEval ? "Vous serez évalué sur la découverte, l’argumentation et la conclusion." : "À vous de jouer."}`;
+Vous serez évalué sur la découverte, l’argumentation et la conclusion.`;
     } else if (scenario === "usure") {
       text = `${intro}
 Vous recevez une cliente pour un sujet d’usure.
 Son véhicule (${age}) est éligible au contrat d’entretien.
-${isEval ? "Vous serez évalué sur la pertinence de votre recommandation." : "À vous d’amener la bonne couverture."}`;
+Vous serez évalué sur la pertinence de votre recommandation.`;
     }
   }
 
@@ -766,12 +759,10 @@ function finishSession() {
   const { score, saved } = saveSimulationScore();
 
   showEndPanel(
-    modeSelect.value === "eval" ? "Fin de simulation" : "Fin de démo",
+    "Fin de simulation",
     !seller.isReady || !saved
       ? "La discussion est terminée, mais aucun vendeur actif n’est correctement renseigné. Revenez au portail pour enregistrer le vendeur avant de poursuivre."
-      : modeSelect.value === "eval"
-        ? `La discussion est terminée. Score simulé enregistré pour ${seller.fullName} : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
-        : `La discussion est terminée. Score simulé enregistré pour ${seller.fullName} : ${score}/100. Tu peux consulter l’évaluation ou relancer une nouvelle démo.`
+      : `La discussion est terminée. Score simulé enregistré pour ${seller.fullName} : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
   );
 
   setControlsState({
@@ -809,7 +800,6 @@ async function send() {
     messages,
     profil: profilSelect.value,
     scenario: scenarioSelect.value,
-    mode: modeSelect.value,
     vehicleAge: vehicleAgeSelect.value,
     energyType: energyTypeSelect.value,
     liveSkills: skills,
@@ -918,7 +908,6 @@ async function evaluate() {
       body: JSON.stringify({
         conversation: messages,
         trust,
-        mode: modeSelect.value,
         profil: profilSelect.value,
         scenario: scenarioSelect.value,
         vehicleAge: vehicleAgeSelect.value,
@@ -979,7 +968,6 @@ function onSettingsChange() {
   resetDemo();
 }
 
-modeSelect.addEventListener("change", onSettingsChange);
 profilSelect.addEventListener("change", onSettingsChange);
 scenarioSelect.addEventListener("change", onSettingsChange);
 vehicleAgeSelect.addEventListener("change", onSettingsChange);
