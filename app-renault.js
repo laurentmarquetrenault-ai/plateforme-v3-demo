@@ -1,3 +1,5 @@
+localStorage.setItem("selected_brand", "renault");
+
 let messages = [];
 let trust = 50;
 let finished = false;
