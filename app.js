@@ -2,6 +2,7 @@ let messages = [];
 let trust = 50;
 let finished = false;
 let evaluationShown = false;
+let evaluationInProgress = false;
 let lastClientReply = "";
 
 const chat = document.getElementById("chat");
@@ -216,6 +217,46 @@ function getSimulationLastScore() {
   return raw ? Number(raw) : null;
 }
 
+function removePostEvaluationActions() {
+  const actionsBox = document.getElementById("postEvalActions");
+  if (actionsBox) {
+    actionsBox.remove();
+  }
+}
+
+function setControlsState({
+  sendVisible = true,
+  sendDisabled = false,
+  finishVisible = true,
+  finishDisabled = false,
+  evalVisible = true,
+  evalDisabled = false,
+  evalText = "Voir évaluation",
+  inputDisabled = false
+} = {}) {
+  sendBtn.style.display = sendVisible ? "inline-flex" : "none";
+  sendBtn.disabled = sendDisabled;
+
+  finishBtn.style.display = finishVisible ? "inline-flex" : "none";
+  finishBtn.disabled = finishDisabled;
+
+  evalBtn.style.display = evalVisible ? "inline-flex" : "none";
+  evalBtn.disabled = evalDisabled;
+  evalBtn.textContent = evalText;
+
+  input.disabled = inputDisabled;
+}
+
+function showEndPanel(title, subtitle) {
+  endMessage.classList.remove("hidden");
+  endTitle.textContent = title;
+  endSubtitle.textContent = subtitle;
+}
+
+function hideEndPanel() {
+  endMessage.classList.add("hidden");
+}
+
 function buildFinalStatusMessage() {
   const qcm = getQcmPercent();
   const sim = getSimulationLastScore();
@@ -243,41 +284,40 @@ function buildFinalStatusMessage() {
 function showPostEvaluationActions() {
   const { title, text } = buildFinalStatusMessage();
 
-  input.disabled = true;
-  sendBtn.disabled = true;
-  sendBtn.style.display = "none";
-  finishBtn.disabled = true;
-  finishBtn.style.display = "none";
-  evalBtn.disabled = true;
-  evalBtn.style.display = "none";
+  showEndPanel(title, text);
 
-  endMessage.classList.remove("hidden");
-  endTitle.textContent = title;
-  endSubtitle.textContent = text;
+  setControlsState({
+    sendVisible: false,
+    sendDisabled: true,
+    finishVisible: false,
+    finishDisabled: true,
+    evalVisible: false,
+    evalDisabled: true,
+    inputDisabled: true
+  });
 
-  let actionsBox = document.getElementById("postEvalActions");
-  if (!actionsBox) {
-    actionsBox = document.createElement("div");
-    actionsBox.id = "postEvalActions";
-    actionsBox.style.display = "flex";
-    actionsBox.style.gap = "12px";
-    actionsBox.style.flexWrap = "wrap";
-    actionsBox.style.marginTop = "14px";
+  removePostEvaluationActions();
 
-    const homeLink = document.createElement("a");
-    homeLink.href = "index.html";
-    homeLink.className = "btn btn-secondary";
-    homeLink.textContent = "Retour au portail";
+  const actionsBox = document.createElement("div");
+  actionsBox.id = "postEvalActions";
+  actionsBox.style.display = "flex";
+  actionsBox.style.gap = "12px";
+  actionsBox.style.flexWrap = "wrap";
+  actionsBox.style.marginTop = "14px";
 
-    const certLink = document.createElement("a");
-    certLink.href = "certification.html";
-    certLink.className = "btn btn-secondary";
-    certLink.textContent = "Voir certification";
+  const certLink = document.createElement("a");
+  certLink.href = "certification.html";
+  certLink.className = "btn btn-secondary";
+  certLink.textContent = "Voir certification";
 
-    actionsBox.appendChild(homeLink);
-    actionsBox.appendChild(certLink);
-    endMessage.appendChild(actionsBox);
-  }
+  const homeLink = document.createElement("a");
+  homeLink.href = "index.html";
+  homeLink.className = "btn btn-secondary";
+  homeLink.textContent = "Retour au portail";
+
+  actionsBox.appendChild(certLink);
+  actionsBox.appendChild(homeLink);
+  endMessage.appendChild(actionsBox);
 }
 
 function generateBrief() {
@@ -335,6 +375,7 @@ function resetDemo() {
   trust = 50;
   finished = false;
   evaluationShown = false;
+  evaluationInProgress = false;
   lastClientReply = "";
 
   chat.innerHTML = "";
@@ -350,21 +391,20 @@ function resetDemo() {
 
   lastClientReply = firstMessage;
 
-  input.disabled = false;
-  sendBtn.disabled = false;
   input.value = "";
-  endMessage.classList.add("hidden");
+  removePostEvaluationActions();
+  hideEndPanel();
 
-  sendBtn.style.display = "inline-flex";
-  finishBtn.style.display = "inline-flex";
-  evalBtn.style.display = "inline-flex";
-  evalBtn.disabled = false;
-  evalBtn.textContent = "Voir évaluation";
-
-  const actionsBox = document.getElementById("postEvalActions");
-  if (actionsBox) {
-    actionsBox.remove();
-  }
+  setControlsState({
+    sendVisible: true,
+    sendDisabled: false,
+    finishVisible: true,
+    finishDisabled: false,
+    evalVisible: true,
+    evalDisabled: false,
+    evalText: "Voir évaluation",
+    inputDisabled: false
+  });
 
   resetTrustUI();
   updateAvatar();
@@ -377,7 +417,9 @@ function resetDemo() {
 
 function toggleHelp() {
   const helpBox = document.getElementById("helpBox");
-  if (helpBox) helpBox.classList.toggle("hidden");
+  if (helpBox) {
+    helpBox.classList.toggle("hidden");
+  }
 }
 
 function updateTrustFromSellerMessage(text) {
@@ -667,17 +709,32 @@ function updateSkillsFromSellerMessage(text) {
 }
 
 function finishSession() {
-  finished = true;
-  input.disabled = true;
-  sendBtn.disabled = true;
-  endMessage.classList.remove("hidden");
+  if (finished) return;
 
+  finished = true;
   const score = saveSimulationScore();
-  console.log("Score simulation enregistré :", score);
+
+  showEndPanel(
+    modeSelect.value === "eval" ? "Fin de simulation" : "Fin de démo",
+    modeSelect.value === "eval"
+      ? `La discussion est terminée. Score simulé enregistré : ${score}/100. Lance maintenant l’évaluation pour obtenir le retour final.`
+      : `La discussion est terminée. Score simulé enregistré : ${score}/100. Tu peux consulter l’évaluation ou relancer une nouvelle démo.`
+  );
+
+  setControlsState({
+    sendVisible: false,
+    sendDisabled: true,
+    finishVisible: false,
+    finishDisabled: true,
+    evalVisible: true,
+    evalDisabled: false,
+    evalText: "Voir évaluation",
+    inputDisabled: true
+  });
 }
 
 async function send() {
-  if (finished) return;
+  if (finished || evaluationInProgress) return;
 
   const val = input.value.trim();
   if (!val) return;
@@ -708,6 +765,17 @@ async function send() {
   };
 
   try {
+    setControlsState({
+      sendVisible: true,
+      sendDisabled: true,
+      finishVisible: true,
+      finishDisabled: true,
+      evalVisible: true,
+      evalDisabled: true,
+      evalText: "Voir évaluation",
+      inputDisabled: true
+    });
+
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -739,6 +807,20 @@ async function send() {
   } catch (err) {
     console.error(err);
     display("Erreur réseau ou serveur.", "client");
+  } finally {
+    if (!finished && !evaluationInProgress) {
+      setControlsState({
+        sendVisible: true,
+        sendDisabled: false,
+        finishVisible: true,
+        finishDisabled: false,
+        evalVisible: true,
+        evalDisabled: false,
+        evalText: "Voir évaluation",
+        inputDisabled: false
+      });
+      input.focus();
+    }
   }
 }
 
@@ -747,11 +829,25 @@ function finishDemo() {
 }
 
 async function evaluate() {
-  if (evaluationShown) return;
+  if (evaluationShown || evaluationInProgress) return;
 
+  if (!finished) {
+    finishSession();
+  }
+
+  evaluationInProgress = true;
   evaluationShown = true;
-  evalBtn.disabled = true;
-  evalBtn.textContent = "Évaluation en cours...";
+
+  setControlsState({
+    sendVisible: false,
+    sendDisabled: true,
+    finishVisible: false,
+    finishDisabled: true,
+    evalVisible: true,
+    evalDisabled: true,
+    evalText: "Évaluation en cours...",
+    inputDisabled: true
+  });
 
   try {
     const res = await fetch("/api/evaluate", {
@@ -775,20 +871,43 @@ async function evaluate() {
 
     if (!res.ok || !data.evaluation) {
       evaluationShown = false;
-      evalBtn.disabled = false;
-      evalBtn.textContent = "Voir évaluation";
+      evaluationInProgress = false;
+
+      setControlsState({
+        sendVisible: false,
+        sendDisabled: true,
+        finishVisible: false,
+        finishDisabled: true,
+        evalVisible: true,
+        evalDisabled: false,
+        evalText: "Voir évaluation",
+        inputDisabled: true
+      });
+
       display(data.error || "Erreur : évaluation invalide.", "coach");
       return;
     }
 
-    endMessage.classList.add("hidden");
+    hideEndPanel();
     display(data.evaluation, "coach");
+    evaluationInProgress = false;
     showPostEvaluationActions();
   } catch (err) {
     console.error(err);
     evaluationShown = false;
-    evalBtn.disabled = false;
-    evalBtn.textContent = "Voir évaluation";
+    evaluationInProgress = false;
+
+    setControlsState({
+      sendVisible: false,
+      sendDisabled: true,
+      finishVisible: false,
+      finishDisabled: true,
+      evalVisible: true,
+      evalDisabled: false,
+      evalText: "Voir évaluation",
+      inputDisabled: true
+    });
+
     display("Erreur pendant l’évaluation.", "coach");
   }
 }
