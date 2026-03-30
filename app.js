@@ -181,6 +181,34 @@ function setSkill(key) {
   }
 }
 
+function getValidatedSkillsCount() {
+  return Object.values(skills).filter(Boolean).length;
+}
+
+function computeSimulationScore() {
+  const skillsCount = getValidatedSkillsCount();
+
+  // Score V3.0 : 60% confiance finale + 40% compétences validées
+  const trustPart = trust * 0.6;
+  const skillsPart = (skillsCount / 5) * 40;
+  const total = Math.round(trustPart + skillsPart);
+
+  return Math.max(0, Math.min(100, total));
+}
+
+function saveSimulationScore() {
+  const score = computeSimulationScore();
+  const previousBest = Number(localStorage.getItem("simulator_best_score") || "0");
+
+  localStorage.setItem("simulator_last_score", String(score));
+
+  if (score > previousBest) {
+    localStorage.setItem("simulator_best_score", String(score));
+  }
+
+  return score;
+}
+
 function generateBrief() {
   const scenario = scenarioSelect.value;
   const age = vehicleAgeSelect.value;
@@ -561,6 +589,9 @@ function finishSession() {
   input.disabled = true;
   sendBtn.disabled = true;
   endMessage.classList.remove("hidden");
+
+  const score = saveSimulationScore();
+  console.log("Score simulation enregistré :", score);
 }
 
 async function send() {
@@ -580,7 +611,7 @@ async function send() {
   updateTrustFromSellerMessage(val);
   updateSkillsFromSellerMessage(val);
 
-  const validatedSkillsCount = Object.values(skills).filter(Boolean).length;
+  const validatedSkillsCount = getValidatedSkillsCount();
 
   const payload = {
     messages,
