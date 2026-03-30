@@ -47,9 +47,9 @@
     <div class="topbar">
       <div class="title-wrap">
         <h1>Simulation Atelier Dacia</h1>
-        <p>Entraînement commercial CEP / CEP+ avec mode démo et mode évaluation.</p>
+        <p>Entraînement commercial CEP / CEP+ orienté évaluation et validation vendeur.</p>
       </div>
-      <div class="badge" id="modeBadge">Mode Démo</div>
+      <div class="badge" id="modeBadge">Simulation vendeur</div>
     </div>
 
     <div class="layout">
@@ -104,14 +104,6 @@
           </div>
 
           <div class="sim-header">
-            <div class="field">
-              <label for="mode">Mode</label>
-              <select id="mode">
-                <option value="demo">Mode Démo</option>
-                <option value="eval">Mode Évaluation</option>
-              </select>
-            </div>
-
             <div class="field">
               <label for="profil">Profil client</label>
               <select id="profil">
@@ -169,14 +161,14 @@
           <div class="chat-footer">
             <input id="input" placeholder="Votre réponse..." />
             <button class="btn btn-primary" id="sendBtn">Envoyer</button>
-            <button class="btn btn-secondary" id="finishDemoBtn">Terminer la démo</button>
-            <button class="btn btn-secondary" id="newDemoBtn">Nouvelle démo</button>
+            <button class="btn btn-secondary" id="finishDemoBtn">Terminer la simulation</button>
+            <button class="btn btn-secondary" id="newDemoBtn">Nouvelle simulation</button>
           </div>
 
           <div id="endMessage" class="hidden">
             <h3 id="endTitle">Fin de simulation</h3>
             <div class="sub" id="endSubtitle" style="margin-bottom:10px;">
-              La discussion est terminée. Lance maintenant l’évaluation.
+              La discussion est terminée. Consulte maintenant l’évaluation.
             </div>
             <button class="btn btn-primary" id="evalBtn">Voir évaluation</button>
           </div>
@@ -223,7 +215,7 @@
               <ul class="help-list">
                 <li>Faire une proposition claire</li>
                 <li>Demander une décision</li>
-                <li>En évaluation : pas de note solide sans vraie tentative de conclusion</li>
+                <li>Une note solide demande une vraie tentative de conclusion</li>
               </ul>
             </div>
 
