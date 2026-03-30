@@ -44,14 +44,14 @@
         </p>
 
         <div class="hero-cta-row">
-          <a href="learning.html" class="btn btn-primary btn-xl">Lancer le module apprentissage</a>
-          <a href="simulateur.html" class="btn btn-secondary btn-xl">Accéder au simulateur</a>
+          <a href="#univers-marques" class="btn btn-primary btn-xl">Choisir une marque</a>
+          <a href="certification.html" class="btn btn-secondary btn-xl">Voir la certification</a>
         </div>
 
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
-          <span class="proof-pill">Renault VL à venir</span>
-          <span class="proof-pill">Renault Utilitaires à venir</span>
+          <span class="proof-pill">Renault en préparation</span>
+          <span class="proof-pill">Architecture multi-marques</span>
         </div>
       </div>
 
@@ -120,8 +120,8 @@
               </div>
               <h3>Apprentissage</h3>
               <p>
-                Travaillez les fondamentaux métier, les repères produit et les objections
-                fréquentes avant la mise en situation.
+                Accédez aux modules d’apprentissage par marque pour maîtriser les fondamentaux
+                produit, l’éligibilité et les objections commerciales.
               </p>
             </a>
 
@@ -132,8 +132,8 @@
               </div>
               <h3>Simulateur</h3>
               <p>
-                Entraînez-vous avec des profils clients variés, une logique de confiance
-                et des compétences à valider.
+                Entraînez-vous dans des mises en situation par marque avec une logique de confiance,
+                de qualification client et de compétences à valider.
               </p>
             </a>
 
@@ -144,8 +144,8 @@
               </div>
               <h3>Validation</h3>
               <p>
-                Mesurez votre niveau sur l’argumentation, le traitement des objections,
-                le closing et la qualité de la proposition.
+                Mesurez votre niveau sur chaque univers marque : argumentation, traitement des
+                objections, qualité de proposition et closing.
               </p>
             </a>
 
@@ -156,15 +156,15 @@
               </div>
               <h3>Certification</h3>
               <p>
-                Visualisez votre progression globale, vos scores et la logique de
-                reconnaissance vendeur sur la plateforme.
+                Visualisez votre progression globale sur la plateforme et la synthèse de vos
+                résultats Dacia, Renault et certification vendeur.
               </p>
             </a>
           </div>
         </div>
       </section>
 
-      <section class="journey-section">
+      <section class="journey-section" id="univers-marques">
         <div class="journey-card">
           <div class="journey-head">
             <div>
@@ -176,51 +176,51 @@
           <div class="journey-grid">
             <a href="learning.html" class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">A</span>
-                <span class="step-tag">QCM</span>
+                <span class="step-number">DA</span>
+                <span class="step-tag">Actif</span>
               </div>
-              <h3>Module apprentissage</h3>
+              <h3>Univers Dacia</h3>
               <p>
-                Préparez votre discours commercial avec une première brique de montée
-                en compétence structurée.
+                Accédez au module d’apprentissage puis au simulateur Dacia pour travailler
+                le discours commercial et les mises en situation de la marque.
               </p>
             </a>
 
-            <a href="simulateur.html" class="step-card premium-step">
+            <a href="learning-renault.html" class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">B</span>
-                <span class="step-tag">Atelier</span>
+                <span class="step-number">RE</span>
+                <span class="step-tag">À ouvrir</span>
               </div>
-              <h3>Training libre</h3>
+              <h3>Univers Renault</h3>
               <p>
-                Accédez directement au simulateur pour vous entraîner librement selon
-                le profil client et le scénario choisis.
-              </p>
-            </a>
-
-            <a href="simulateur.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">C</span>
-                <span class="step-tag">Mode éval</span>
-              </div>
-              <h3>Évaluation commerciale</h3>
-              <p>
-                Utilisez la mise en situation comme brique d’évaluation pour tester la
-                qualité réelle de l’échange vendeur.
+                Préparez la future brique Renault sur la même logique que Dacia :
+                apprentissage, simulation, validation et progression dédiée.
               </p>
             </a>
 
             <a href="certification.html" class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">D</span>
-                <span class="step-tag">Vision cible</span>
+                <span class="step-number">CM</span>
+                <span class="step-tag">Synthèse</span>
               </div>
-              <h3>Vue certification</h3>
+              <h3>Certification multi-marques</h3>
               <p>
-                Donnez une finalité claire au parcours avec une logique de progression,
-                de validation et de certificat exportable.
+                Consultez la consolidation des résultats de formation, des simulations et
+                de la progression vendeur sur l’ensemble de la plateforme.
               </p>
             </a>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">+</span>
+                <span class="step-tag">Évolutif</span>
+              </div>
+              <h3>Autres univers à venir</h3>
+              <p>
+                La plateforme est pensée pour accueillir d’autres briques marque sans
+                perturber les modules déjà déployés.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -248,7 +248,12 @@
         "qcm_dacia_total",
         "qcm_dacia_percent",
         "simulator_last_score",
-        "simulator_best_score"
+        "simulator_best_score",
+        "qcm_renault_score",
+        "qcm_renault_total",
+        "qcm_renault_percent",
+        "simulator_renault_last_score",
+        "simulator_renault_best_score"
       ];
 
       function getStoredSeller() {
