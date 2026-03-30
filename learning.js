@@ -140,6 +140,32 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  function getSellerIdentity() {
+    const firstName = (localStorage.getItem("seller_first_name") || "").trim();
+    const lastName = (localStorage.getItem("seller_last_name") || "").trim();
+    const email = (localStorage.getItem("seller_email") || "").trim();
+
+    return {
+      firstName,
+      lastName,
+      email,
+      fullName: `${firstName} ${lastName}`.trim(),
+      isReady: Boolean(firstName && lastName)
+    };
+  }
+
+  function ensureSellerIdentity() {
+    const seller = getSellerIdentity();
+
+    if (seller.isReady) {
+      return true;
+    }
+
+    alert("Aucun vendeur actif n’est enregistré. Merci de revenir sur le portail pour renseigner le prénom et le nom du vendeur avant de lancer le module.");
+    window.location.href = "index.html";
+    return false;
+  }
+
   function createAnswerCard(optionText, index) {
     const button = document.createElement("button");
     button.type = "button";
@@ -241,29 +267,41 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveResults(percent) {
+    const seller = getSellerIdentity();
+
+    if (!seller.isReady) {
+      return false;
+    }
+
     localStorage.setItem("qcm_dacia_score", String(score));
     localStorage.setItem("qcm_dacia_total", String(questions.length));
     localStorage.setItem("qcm_dacia_percent", String(percent));
+
+    return true;
   }
 
   function showResults() {
+    const seller = getSellerIdentity();
     const percent = Math.round((score / questions.length) * 100);
-    saveResults(percent);
+    const saved = saveResults(percent);
 
     resultsCard.style.display = "block";
     finalScoreValue.textContent = `${score}/${questions.length}`;
     finalScorePercent.textContent = `${percent}%`;
     scoreBadge.textContent = `Score ${percent}%`;
 
-    if (percent >= 75) {
+    if (!seller.isReady || !saved) {
       finalScoreText.textContent =
-        "Très bon résultat. Vous avez les bons réflexes pour aborder le simulateur Dacia dans de bonnes conditions.";
+        "Résultat calculé localement, mais non enregistré car aucun vendeur actif n’est défini. Revenez au portail pour renseigner le vendeur.";
+    } else if (percent >= 75) {
+      finalScoreText.textContent =
+        `Très bon résultat pour ${seller.fullName}. Vous avez les bons réflexes pour aborder le simulateur Dacia dans de bonnes conditions.`;
     } else if (percent >= 50) {
       finalScoreText.textContent =
-        "Résultat correct, mais certains réflexes commerciaux et métier méritent encore d’être consolidés avant la simulation.";
+        `Résultat correct pour ${seller.fullName}, mais certains réflexes commerciaux et métier méritent encore d’être consolidés avant la simulation.`;
     } else {
       finalScoreText.textContent =
-        "Le module est à retravailler. L’objectif est de mieux maîtriser les fondamentaux avant la mise en situation.";
+        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux maîtriser les fondamentaux avant la mise en situation.`;
     }
 
     resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -302,6 +340,10 @@ document.addEventListener("DOMContentLoaded", () => {
   validateBtn.addEventListener("click", validateAnswer);
   nextBtn.addEventListener("click", nextQuestion);
   restartBtn.addEventListener("click", restartQuiz);
+
+  if (!ensureSellerIdentity()) {
+    return;
+  }
 
   renderQuestion();
 });
