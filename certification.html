@@ -39,15 +39,14 @@
         </h1>
 
         <p class="hero-subtitle">
-          Cette brique donne une finalité claire au parcours vendeur. Elle valorise
-          l’apprentissage, la mise en situation et la montée en compétence progressive
-          avant l’obtention du statut certifié.
+          Cette page centralise les validations du vendeur, affiche ses résultats
+          et donne accès à un certificat exportable en PDF.
         </p>
 
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
-          <span class="proof-pill">Certification en structuration</span>
-          <span class="proof-pill">Vision multi-univers</span>
+          <span class="proof-pill">PDF exportable</span>
+          <span class="proof-pill">Meilleur score conservé</span>
         </div>
       </div>
 
@@ -55,97 +54,47 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Logique de validation</div>
-              <h2>Les étapes à franchir pour accéder à la certification</h2>
+              <div class="journey-kicker">Validation</div>
+              <h2>Résultats vendeur</h2>
             </div>
-            <div class="journey-side-badge">Parcours vendeur</div>
+            <div class="journey-side-badge" id="globalStatusBadge">En cours</div>
           </div>
 
           <div class="journey-grid">
             <div class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">01</span>
-                <span class="step-tag">Pré-requis</span>
+                <span class="step-number">Q</span>
+                <span class="step-tag">QCM Dacia</span>
               </div>
-              <h3>Apprentissage</h3>
-              <p>Le vendeur doit d’abord maîtriser les fondamentaux produit, les réflexes métier et les objections clés.</p>
+              <h3>Score apprentissage</h3>
+              <p id="qcmScoreText">Aucun score enregistré pour le moment.</p>
             </div>
 
             <div class="step-card premium-step">
               <div class="step-top">
-                <span class="step-number">02</span>
-                <span class="step-tag">Mise en situation</span>
+                <span class="step-number">S</span>
+                <span class="step-tag">Simulation</span>
               </div>
-              <h3>Simulation</h3>
-              <p>Le vendeur doit ensuite démontrer sa capacité à conduire un échange commercial cohérent en atelier.</p>
+              <h3>Dernier score simulateur</h3>
+              <p id="simScoreText">Aucun score enregistré pour le moment.</p>
             </div>
 
             <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">03</span>
-                <span class="step-tag">Validation</span>
-              </div>
-              <h3>Évaluation</h3>
-              <p>La certification s’appuie sur la qualité de l’argumentation, le traitement des objections et la conclusion.</p>
-            </div>
-
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">04</span>
-                <span class="step-tag">Reconnaissance</span>
-              </div>
-              <h3>Certification</h3>
-              <p>Une fois les briques validées, le vendeur peut accéder à une reconnaissance claire de son niveau.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="journey-section" style="margin-top: 22px;">
-        <div class="journey-card">
-          <div class="journey-head">
-            <div>
-              <div class="journey-kicker">Statut actuel</div>
-              <h2>État d’avancement vendeur</h2>
-            </div>
-            <div class="journey-side-badge">Version démonstration</div>
-          </div>
-
-          <div class="journey-grid">
-            <div class="step-card premium-step" style="border-color: rgba(214, 179, 106, 0.22);">
-              <div class="step-top">
-                <span class="step-number">A</span>
-                <span class="step-tag">En cours</span>
-              </div>
-              <h3>Module apprentissage</h3>
-              <p>Le module Dacia constitue la première brique active de la plateforme. Il prépare directement la simulation.</p>
-            </div>
-
-            <div class="step-card premium-step" style="border-color: rgba(214, 179, 106, 0.22);">
               <div class="step-top">
                 <span class="step-number">B</span>
-                <span class="step-tag">Disponible</span>
+                <span class="step-tag">Meilleur essai</span>
               </div>
-              <h3>Simulateur commercial</h3>
-              <p>Le vendeur peut déjà accéder à la mise en situation atelier pour travailler son discours, ses objections et son closing.</p>
+              <h3>Meilleur score simulateur</h3>
+              <p id="bestSimScoreText">Aucun meilleur score enregistré pour le moment.</p>
             </div>
 
             <div class="step-card premium-step">
               <div class="step-top">
                 <span class="step-number">C</span>
-                <span class="step-tag">À structurer</span>
+                <span class="step-tag">Statut</span>
               </div>
-              <h3>Score de validation</h3>
-              <p>La logique de score vendeur, de seuil de réussite et d’obtention automatique sera intégrée dans l’étape suivante.</p>
-            </div>
-
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">D</span>
-                <span class="step-tag">Vision cible</span>
-              </div>
-              <h3>Certifié</h3>
-              <p>La V3 prépare la montée vers un vrai statut certifié, valorisant pour le vendeur comme pour le management.</p>
+              <h3>Certification</h3>
+              <p id="certStatusText">Certification verrouillée.</p>
             </div>
           </div>
         </div>
@@ -155,110 +104,75 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Projection visuelle</div>
-              <h2>Certificat vendeur — aperçu</h2>
+              <div class="journey-kicker">Certificat exportable</div>
+              <h2>Aperçu du diplôme</h2>
             </div>
-            <div class="journey-side-badge">Maquette V3.0</div>
+            <div class="journey-side-badge">Export PDF</div>
           </div>
 
           <div style="display:flex; justify-content:center;">
-            <div class="step-card premium-step" style="max-width: 760px; width:100%; min-height: unset; padding: 34px; border-color: rgba(214, 179, 106, 0.24); background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(214,179,106,0.05) 100%);">
-              <div style="text-align:center; margin-bottom: 20px;">
-                <div class="hero-kicker" style="margin-bottom:14px;">Certificat de démonstration</div>
-                <h2 style="margin:0; font-size: 2rem;">Vendeur certifié contrats de services</h2>
-              </div>
+            <div id="certificatePrintable" class="certificate-printable">
+              <div class="certificate-frame">
+                <div class="certificate-inner">
+                  <div class="certificate-topline">CERTIFICATION VENDEUR</div>
+                  <div class="certificate-title">CONTRATS DE SERVICES APRÈS-VENTE</div>
 
-              <div style="display:grid; gap:18px;">
-                <div style="text-align:center;">
-                  <div style="color: var(--muted); font-size: 0.95rem; margin-bottom:8px;">Attribué à</div>
-                  <div style="font-size: 1.6rem; font-weight: 700; color: var(--text);">Prénom Nom</div>
-                </div>
-
-                <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px;">
-                  <span class="proof-pill active">Univers validé : Dacia</span>
-                  <span class="proof-pill">Parcours vendeur</span>
-                  <span class="proof-pill">Après-vente</span>
-                </div>
-
-                <div style="text-align:center; color: var(--muted); line-height:1.8; max-width: 620px; margin: 0 auto;">
-                  Ce certificat matérialise la validation du parcours vendeur sur les contrats de services
-                  après-vente, dans une logique de professionnalisation, de mise en situation et de montée en compétence.
-                </div>
-
-                <div style="display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:14px; margin-top:10px;">
-                  <div class="step-card premium-step" style="min-height: unset; padding:16px;">
-                    <div class="step-tag" style="display:inline-flex;">Module</div>
-                    <h3 style="margin-top:10px;">Apprentissage</h3>
-                    <p>Validé</p>
+                  <div class="certificate-seal-row">
+                    <div class="certificate-seal">CS</div>
                   </div>
 
-                  <div class="step-card premium-step" style="min-height: unset; padding:16px;">
-                    <div class="step-tag" style="display:inline-flex;">Bloc</div>
-                    <h3 style="margin-top:10px;">Simulation</h3>
-                    <p>Validée</p>
+                  <div class="certificate-subline">Ce certificat est attribué à</div>
+                  <div class="certificate-recipient" id="certificateRecipient">Prénom Nom</div>
+
+                  <div class="certificate-body-text">
+                    pour la validation du parcours vendeur sur l’univers
+                    <strong>Dacia</strong>, incluant l’apprentissage métier,
+                    la mise en situation commerciale et la logique de progression
+                    vers la certification.
                   </div>
 
-                  <div class="step-card premium-step" style="min-height: unset; padding:16px;">
-                    <div class="step-tag" style="display:inline-flex;">Statut</div>
-                    <h3 style="margin-top:10px;">Certification</h3>
-                    <p>Débloquée</p>
+                  <div class="certificate-score-grid">
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">QCM Dacia</div>
+                      <div class="certificate-score-value" id="certificateQcmValue">--</div>
+                    </div>
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">Dernier score simulation</div>
+                      <div class="certificate-score-value" id="certificateSimValue">--</div>
+                    </div>
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">Meilleur score simulation</div>
+                      <div class="certificate-score-value" id="certificateBestSimValue">--</div>
+                    </div>
+                  </div>
+
+                  <div class="certificate-result-badge" id="certificateResultBadge">EN COURS DE VALIDATION</div>
+
+                  <div class="certificate-footer-row">
+                    <div class="certificate-signature-block">
+                      <div class="certificate-signature-line"></div>
+                      <div class="certificate-signature-text">Signature plateforme</div>
+                    </div>
+                    <div class="certificate-date-block">
+                      <div class="certificate-date-label">Date</div>
+                      <div class="certificate-date-value" id="certificateDateValue">--/--/----</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="journey-section" style="margin-top: 22px;">
-        <div class="journey-card">
-          <div class="journey-head" style="margin-bottom: 18px;">
-            <div>
-              <div class="journey-kicker">Accès rapide</div>
-              <h2>Continuer le parcours vendeur</h2>
-            </div>
-          </div>
-
-          <div class="journey-grid">
-            <a href="learning.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">A</span>
-                <span class="step-tag">Réviser</span>
-              </div>
-              <h3>Retour au module apprentissage</h3>
-              <p>Revenir sur la brique théorique pour consolider les bons réflexes avant l’évaluation commerciale.</p>
-            </a>
-
-            <a href="simulateur.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">B</span>
-                <span class="step-tag">S’entraîner</span>
-              </div>
-              <h3>Accéder au simulateur</h3>
-              <p>Poursuivre le parcours par la mise en situation atelier et la pratique commerciale.</p>
-            </a>
-
-            <a href="index.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">C</span>
-                <span class="step-tag">Portail</span>
-              </div>
-              <h3>Retour au portail vendeur</h3>
-              <p>Revenir au hub central pour naviguer librement entre les différentes briques de la plateforme.</p>
-            </a>
-
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">D</span>
-                <span class="step-tag">V3.1</span>
-              </div>
-              <h3>Évolution future</h3>
-              <p>La prochaine étape pourra intégrer un vrai score global, des seuils de réussite et un certificat dynamique.</p>
-            </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:22px;">
+            <button id="downloadPdfBtn" class="btn btn-primary btn-xl" type="button">Télécharger en PDF</button>
+            <a href="simulateur.html" class="btn btn-secondary btn-xl">Accéder au simulateur</a>
+            <a href="index.html" class="btn btn-secondary btn-xl">Retour au portail</a>
           </div>
         </div>
       </section>
     </section>
   </main>
+
+  <script src="certification.js"></script>
 </body>
 </html>
