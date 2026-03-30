@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Oui, mais seulement si vous prenez directement la formule la plus complète."
       ],
       correct: 1,
-      explanation: "Le bon réflexe vendeur est de rester dans le cadre produit. On ne promet jamais un contrat sans vérifier l’éligibilité du véhicule."
+      explanation:
+        "Le bon réflexe vendeur est de rester dans le cadre produit. On ne promet jamais un contrat sans vérifier l’éligibilité du véhicule."
     },
     {
       theme: "Réflexe métier",
@@ -20,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Seulement le prix de la prochaine révision."
       ],
       correct: 0,
-      explanation: "Avant toute proposition, le vendeur doit avoir un réflexe complet de vérification : âge, kilométrage, contrat existant et faisabilité."
+      explanation:
+        "Avant toute proposition, le vendeur doit avoir un réflexe complet de vérification : âge, kilométrage, contrat existant et faisabilité."
     },
     {
       theme: "Argumentaire",
@@ -31,7 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Je vous le propose surtout parce que beaucoup de clients le prennent."
       ],
       correct: 1,
-      explanation: "Le bon angle d’introduction part de la valeur pour le client : sérénité, maîtrise du budget, entretien suivi et couverture."
+      explanation:
+        "Le bon angle d’introduction part de la valeur pour le client : sérénité, maîtrise du budget, entretien suivi et couverture."
     },
     {
       theme: "Objection prix",
@@ -42,7 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "De toute façon, c’est le tarif fixé, je ne peux rien faire."
       ],
       correct: 0,
-      explanation: "La bonne réponse remet en avant la logique de valeur et de protection, sans abandonner ni se réfugier derrière un tarif."
+      explanation:
+        "La bonne réponse remet en avant la logique de valeur et de protection, sans abandonner ni se réfugier derrière un tarif."
     },
     {
       theme: "Objection usage",
@@ -53,7 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Dans ce cas, il faut seulement attendre une panne."
       ],
       correct: 1,
-      explanation: "Le vendeur doit montrer que la valeur d’un contrat ne dépend pas uniquement du kilométrage, mais aussi du temps, du budget et de la sérénité."
+      explanation:
+        "Le vendeur doit montrer que la valeur d’un contrat ne dépend pas uniquement du kilométrage, mais aussi du temps, du budget et de la sérénité."
     },
     {
       theme: "Closing",
@@ -64,7 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Ce n’est pas grave, on en reparlera peut-être un jour."
       ],
       correct: 1,
-      explanation: "Le vendeur doit savoir relancer intelligemment, sans forcer, en donnant une raison concrète d’agir maintenant."
+      explanation:
+        "Le vendeur doit savoir relancer intelligemment, sans forcer, en donnant une raison concrète d’agir maintenant."
     },
     {
       theme: "Valeur revente",
@@ -75,7 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Ce point n’a aucun intérêt pour un acheteur."
       ],
       correct: 1,
-      explanation: "Le contrat peut devenir un argument de valeur, car il renforce la crédibilité de l’entretien et rassure un futur acheteur."
+      explanation:
+        "Le contrat peut devenir un argument de valeur, car il renforce la crédibilité de l’entretien et rassure un futur acheteur."
     },
     {
       theme: "Proposition finale",
@@ -86,7 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Je vous laisse comparer seule et revenir plus tard."
       ],
       correct: 1,
-      explanation: "La simulation attend une vraie proposition. Le vendeur doit assumer une recommandation claire et guider la décision."
+      explanation:
+        "La simulation attend une vraie proposition. Le vendeur doit assumer une recommandation claire et guider la décision."
     }
   ];
 
@@ -112,18 +120,68 @@ document.addEventListener("DOMContentLoaded", () => {
   const restartBtn = document.getElementById("restartBtn");
 
   if (
-    !questionNumber || !questionTheme || !questionText || !answersBox ||
-    !feedbackBox || !feedbackTitle || !feedbackText ||
-    !validateBtn || !nextBtn || !resultsCard ||
-    !finalScoreValue || !finalScorePercent || !finalScoreText ||
-    !scoreBadge || !restartBtn
+    !questionNumber ||
+    !questionTheme ||
+    !questionText ||
+    !answersBox ||
+    !feedbackBox ||
+    !feedbackTitle ||
+    !feedbackText ||
+    !validateBtn ||
+    !nextBtn ||
+    !resultsCard ||
+    !finalScoreValue ||
+    !finalScorePercent ||
+    !finalScoreText ||
+    !scoreBadge ||
+    !restartBtn
   ) {
     console.error("Un ou plusieurs éléments du QCM sont introuvables dans learning.html");
     return;
   }
 
+  function createAnswerCard(optionText, index) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "step-card premium-step step-card-button";
+    button.style.textAlign = "left";
+    button.style.cursor = "pointer";
+    button.style.minHeight = "unset";
+    button.style.padding = "18px";
+
+    button.innerHTML = `
+      <div class="step-top" style="margin-bottom: 10px;">
+        <span class="step-number">${String.fromCharCode(65 + index)}</span>
+        <span class="step-tag">Réponse</span>
+      </div>
+      <p style="margin: 0; color: var(--text); line-height: 1.7;">${optionText}</p>
+    `;
+
+    button.addEventListener("click", () => {
+      if (answered) return;
+
+      selectedAnswer = index;
+      resetAnswerStyles();
+
+      button.style.borderColor = "rgba(214, 179, 106, 0.45)";
+      button.style.background =
+        "linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.04) 100%)";
+    });
+
+    return button;
+  }
+
+  function resetAnswerStyles() {
+    [...answersBox.children].forEach((child) => {
+      child.style.borderColor = "rgba(255,255,255,0.07)";
+      child.style.background =
+        "linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.02) 100%)";
+    });
+  }
+
   function renderQuestion() {
     const q = questions[currentQuestion];
+
     selectedAnswer = null;
     answered = false;
 
@@ -132,46 +190,23 @@ document.addEventListener("DOMContentLoaded", () => {
     questionText.textContent = q.question;
 
     feedbackBox.style.display = "none";
-    nextBtn.style.display = "none";
+    feedbackTitle.textContent = "";
+    feedbackText.textContent = "";
+
     validateBtn.style.display = "inline-flex";
+    nextBtn.style.display = "none";
 
     answersBox.innerHTML = "";
 
     q.options.forEach((option, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "step-card premium-step";
-      button.style.textAlign = "left";
-      button.style.cursor = "pointer";
-      button.style.minHeight = "unset";
-      button.style.padding = "18px";
-      button.innerHTML = `
-        <div class="step-top" style="margin-bottom:10px;">
-          <span class="step-number">${String.fromCharCode(65 + index)}</span>
-          <span class="step-tag">Réponse</span>
-        </div>
-        <p style="margin:0; color: var(--text); line-height:1.7;">${option}</p>
-      `;
-
-      button.addEventListener("click", () => {
-        if (answered) return;
-        selectedAnswer = index;
-
-        [...answersBox.children].forEach((child) => {
-          child.style.borderColor = "rgba(255,255,255,0.08)";
-          child.style.background = "linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)";
-        });
-
-        button.style.borderColor = "rgba(214, 179, 106, 0.45)";
-        button.style.background = "linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.04) 100%)";
-      });
-
-      answersBox.appendChild(button);
+      answersBox.appendChild(createAnswerCard(option, index));
     });
   }
 
   function validateAnswer() {
-    if (selectedAnswer === null || answered) return;
+    if (selectedAnswer === null || answered) {
+      return;
+    }
 
     answered = true;
     const q = questions[currentQuestion];
@@ -192,10 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
     [...answersBox.children].forEach((child, index) => {
       if (index === q.correct) {
         child.style.borderColor = "rgba(214, 179, 106, 0.45)";
-        child.style.background = "linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.04) 100%)";
+        child.style.background =
+          "linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.04) 100%)";
       } else if (index === selectedAnswer && selectedAnswer !== q.correct) {
         child.style.borderColor = "rgba(255, 120, 120, 0.35)";
-        child.style.background = "linear-gradient(180deg, rgba(255, 120, 120, 0.10) 0%, rgba(255,255,255,0.03) 100%)";
+        child.style.background =
+          "linear-gradient(180deg, rgba(255, 120, 120, 0.10) 0%, rgba(255,255,255,0.03) 100%)";
       }
     });
 
@@ -203,22 +240,30 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn.style.display = "inline-flex";
   }
 
+  function saveResults(percent) {
+    localStorage.setItem("qcm_dacia_score", String(score));
+    localStorage.setItem("qcm_dacia_total", String(questions.length));
+    localStorage.setItem("qcm_dacia_percent", String(percent));
+  }
+
   function showResults() {
     const percent = Math.round((score / questions.length) * 100);
-localStorage.setItem("qcm_dacia_score", String(score));
-localStorage.setItem("qcm_dacia_total", String(questions.length));
-localStorage.setItem("qcm_dacia_percent", String(percent));
+    saveResults(percent);
+
     resultsCard.style.display = "block";
     finalScoreValue.textContent = `${score}/${questions.length}`;
     finalScorePercent.textContent = `${percent}%`;
     scoreBadge.textContent = `Score ${percent}%`;
 
     if (percent >= 75) {
-      finalScoreText.textContent = "Très bon résultat. Vous avez les bons réflexes pour aborder le simulateur Dacia dans de bonnes conditions.";
+      finalScoreText.textContent =
+        "Très bon résultat. Vous avez les bons réflexes pour aborder le simulateur Dacia dans de bonnes conditions.";
     } else if (percent >= 50) {
-      finalScoreText.textContent = "Résultat correct, mais certains réflexes commerciaux et métier méritent encore d’être consolidés avant la simulation.";
+      finalScoreText.textContent =
+        "Résultat correct, mais certains réflexes commerciaux et métier méritent encore d’être consolidés avant la simulation.";
     } else {
-      finalScoreText.textContent = "Le module est à retravailler. L’objectif est de mieux maîtriser les fondamentaux avant la mise en situation.";
+      finalScoreText.textContent =
+        "Le module est à retravailler. L’objectif est de mieux maîtriser les fondamentaux avant la mise en situation.";
     }
 
     resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -228,16 +273,18 @@ localStorage.setItem("qcm_dacia_percent", String(percent));
     if (currentQuestion < questions.length - 1) {
       currentQuestion += 1;
       renderQuestion();
-    } else {
-      questionNumber.textContent = "Module terminé";
-      questionTheme.textContent = "Résultat";
-      questionText.textContent = "Le module Dacia est terminé.";
-      answersBox.innerHTML = "";
-      feedbackBox.style.display = "none";
-      validateBtn.style.display = "none";
-      nextBtn.style.display = "none";
-      showResults();
+      return;
     }
+
+    questionNumber.textContent = "Module terminé";
+    questionTheme.textContent = "Résultat";
+    questionText.textContent = "Le module Dacia est terminé.";
+    answersBox.innerHTML = "";
+    feedbackBox.style.display = "none";
+    validateBtn.style.display = "none";
+    nextBtn.style.display = "none";
+
+    showResults();
   }
 
   function restartQuiz() {
@@ -245,8 +292,10 @@ localStorage.setItem("qcm_dacia_percent", String(percent));
     selectedAnswer = null;
     score = 0;
     answered = false;
+
     resultsCard.style.display = "none";
     renderQuestion();
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
