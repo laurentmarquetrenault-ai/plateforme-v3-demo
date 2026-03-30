@@ -1,197 +1,256 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module apprentissage - Contrats de services</title>
-  <link rel="stylesheet" href="home.css" />
-</head>
-<body>
-  <main class="home-page">
-    <section class="hero" style="min-height: 100vh;">
-      <div class="hero-bg"></div>
-      <div class="hero-overlay"></div>
+document.addEventListener("DOMContentLoaded", () => {
+  const questions = [
+    {
+      theme: "Éligibilité",
+      question: "Cliente : « Mon véhicule a déjà 200 000 km, je peux quand même prendre ce contrat ? »",
+      options: [
+        "Oui, ce n’est pas gênant si le véhicule roule encore bien.",
+        "Il faut d’abord vérifier le cadre d’éligibilité, car on ne propose pas un contrat hors conditions.",
+        "Oui, mais seulement si vous prenez directement la formule la plus complète."
+      ],
+      correct: 1,
+      explanation: "Le bon réflexe vendeur est de rester dans le cadre produit. On ne promet jamais un contrat sans vérifier l’éligibilité du véhicule."
+    },
+    {
+      theme: "Réflexe métier",
+      question: "Cliente : « Avant de me parler du contrat, qu’est-ce que vous devez vérifier sur mon véhicule ? »",
+      options: [
+        "L’année, le kilométrage, l’absence éventuelle de contrat existant et la faisabilité du dossier.",
+        "Seulement la motorisation.",
+        "Seulement le prix de la prochaine révision."
+      ],
+      correct: 0,
+      explanation: "Avant toute proposition, le vendeur doit avoir un réflexe complet de vérification : âge, kilométrage, contrat existant et faisabilité."
+    },
+    {
+      theme: "Argumentaire",
+      question: "Cliente : « Je ne vois pas trop pourquoi je prendrais ce type de contrat, vous me le présentez comment ? »",
+      options: [
+        "Je commence directement par la mensualité pour aller vite.",
+        "Je vous le présente comme une solution de tranquillité avec budget maîtrisé et entretien encadré dans le réseau.",
+        "Je vous le propose surtout parce que beaucoup de clients le prennent."
+      ],
+      correct: 1,
+      explanation: "Le bon angle d’introduction part de la valeur pour le client : sérénité, maîtrise du budget, entretien suivi et couverture."
+    },
+    {
+      theme: "Objection prix",
+      question: "Cliente : « Franchement, votre contrat, ça me paraît cher pour ce que c’est. »",
+      options: [
+        "Je comprends, mais une panne ou une intervention hors cadre peut coûter bien plus cher qu’une mensualité maîtrisée.",
+        "Si c’est trop cher, on peut laisser tomber.",
+        "De toute façon, c’est le tarif fixé, je ne peux rien faire."
+      ],
+      correct: 0,
+      explanation: "La bonne réponse remet en avant la logique de valeur et de protection, sans abandonner ni se réfugier derrière un tarif."
+    },
+    {
+      theme: "Objection usage",
+      question: "Cliente : « Moi je roule très peu, donc je ne suis pas sûre que ce soit utile. »",
+      options: [
+        "Si vous roulez peu, le contrat n’a effectivement pas beaucoup d’intérêt.",
+        "Même avec peu de kilomètres, l’intérêt peut rester fort car la tranquillité, le temps et la couverture comptent aussi.",
+        "Dans ce cas, il faut seulement attendre une panne."
+      ],
+      correct: 1,
+      explanation: "Le vendeur doit montrer que la valeur d’un contrat ne dépend pas uniquement du kilométrage, mais aussi du temps, du budget et de la sérénité."
+    },
+    {
+      theme: "Closing",
+      question: "Cliente : « Je préfère réfléchir et voir plus tard. »",
+      options: [
+        "D’accord, on laisse ça de côté sans approfondir.",
+        "Je peux comprendre, mais plus tard certaines opportunités ne seront plus dans le même cadre ; si c’est pertinent pour vous, on peut le poser maintenant.",
+        "Ce n’est pas grave, on en reparlera peut-être un jour."
+      ],
+      correct: 1,
+      explanation: "Le vendeur doit savoir relancer intelligemment, sans forcer, en donnant une raison concrète d’agir maintenant."
+    },
+    {
+      theme: "Valeur revente",
+      question: "Cliente : « Et si je revends mon véhicule, mon contrat ne sert plus à rien ? »",
+      options: [
+        "Oui, dans ce cas tout est perdu.",
+        "Pas forcément : un véhicule suivi, entretenu et couvert peut aussi rassurer et soutenir la valeur perçue à la revente.",
+        "Ce point n’a aucun intérêt pour un acheteur."
+      ],
+      correct: 1,
+      explanation: "Le contrat peut devenir un argument de valeur, car il renforce la crédibilité de l’entretien et rassure un futur acheteur."
+    },
+    {
+      theme: "Proposition finale",
+      question: "Cliente : « Bon… au final, qu’est-ce que vous me conseillez concrètement ? »",
+      options: [
+        "Je vous conseille de ne rien décider aujourd’hui.",
+        "Je vous fais une recommandation claire, adaptée à votre situation, avec une vraie proposition concrète.",
+        "Je vous laisse comparer seule et revenir plus tard."
+      ],
+      correct: 1,
+      explanation: "La simulation attend une vraie proposition. Le vendeur doit assumer une recommandation claire et guider la décision."
+    }
+  ];
 
-      <header class="hero-header">
-        <div class="brand">
-          <div class="brand-mark">CS</div>
-          <div>
-            <div class="brand-name">Contrats de Services Academy</div>
-            <div class="brand-sub">Module apprentissage • V3.0</div>
-          </div>
+  let currentQuestion = 0;
+  let selectedAnswer = null;
+  let score = 0;
+  let answered = false;
+
+  const questionNumber = document.getElementById("questionNumber");
+  const questionTheme = document.getElementById("questionTheme");
+  const questionText = document.getElementById("questionText");
+  const answersBox = document.getElementById("answersBox");
+  const feedbackBox = document.getElementById("feedbackBox");
+  const feedbackTitle = document.getElementById("feedbackTitle");
+  const feedbackText = document.getElementById("feedbackText");
+  const validateBtn = document.getElementById("validateBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const resultsCard = document.getElementById("resultsCard");
+  const finalScoreValue = document.getElementById("finalScoreValue");
+  const finalScorePercent = document.getElementById("finalScorePercent");
+  const finalScoreText = document.getElementById("finalScoreText");
+  const scoreBadge = document.getElementById("scoreBadge");
+  const restartBtn = document.getElementById("restartBtn");
+
+  if (
+    !questionNumber || !questionTheme || !questionText || !answersBox ||
+    !feedbackBox || !feedbackTitle || !feedbackText ||
+    !validateBtn || !nextBtn || !resultsCard ||
+    !finalScoreValue || !finalScorePercent || !finalScoreText ||
+    !scoreBadge || !restartBtn
+  ) {
+    console.error("Un ou plusieurs éléments du QCM sont introuvables dans learning.html");
+    return;
+  }
+
+  function renderQuestion() {
+    const q = questions[currentQuestion];
+    selectedAnswer = null;
+    answered = false;
+
+    questionNumber.textContent = `Question ${currentQuestion + 1} / ${questions.length}`;
+    questionTheme.textContent = q.theme;
+    questionText.textContent = q.question;
+
+    feedbackBox.style.display = "none";
+    nextBtn.style.display = "none";
+    validateBtn.style.display = "inline-flex";
+
+    answersBox.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "step-card premium-step";
+      button.style.textAlign = "left";
+      button.style.cursor = "pointer";
+      button.style.minHeight = "unset";
+      button.style.padding = "18px";
+      button.innerHTML = `
+        <div class="step-top" style="margin-bottom:10px;">
+          <span class="step-number">${String.fromCharCode(65 + index)}</span>
+          <span class="step-tag">Réponse</span>
         </div>
+        <p style="margin:0; color: var(--text); line-height:1.7;">${option}</p>
+      `;
 
-        <nav class="hero-nav">
-          <a href="index.html" class="nav-link">Accueil</a>
-          <a href="learning.html" class="nav-link">Apprentissage</a>
-          <a href="simulateur.html" class="nav-link">Simulateur</a>
-          <a href="certification.html" class="nav-link">Certification</a>
-        </nav>
-      </header>
+      button.addEventListener("click", () => {
+        if (answered) return;
+        selectedAnswer = index;
 
-      <div class="hero-content" style="max-width: 980px; margin-bottom: 30px;">
-        <div class="hero-kicker">Brique de training</div>
+        [...answersBox.children].forEach((child) => {
+          child.style.borderColor = "rgba(255,255,255,0.08)";
+          child.style.background = "linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)";
+        });
 
-        <h1>
-          Module apprentissage
-          <br />
-          Contrats de services après-vente
-        </h1>
+        button.style.borderColor = "rgba(214, 179, 106, 0.45)";
+        button.style.background = "linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.04) 100%)";
+      });
 
-        <p class="hero-subtitle">
-          Cette brique prépare le vendeur avant la mise en situation.
-          L’univers Dacia est actif dans cette V3.0. Les autres univers sont visibles
-          pour montrer la logique multi-marques de la plateforme.
-        </p>
+      answersBox.appendChild(button);
+    });
+  }
 
-        <div class="hero-proof">
-          <span class="proof-pill active">Dacia actif</span>
-          <span class="proof-pill">Renault VL à venir</span>
-          <span class="proof-pill">Renault Utilitaires à venir</span>
-        </div>
-      </div>
+  function validateAnswer() {
+    if (selectedAnswer === null || answered) return;
 
-      <section class="journey-section">
-        <div class="journey-card">
-          <div class="journey-head">
-            <div>
-              <div class="journey-kicker">Choix de l’univers</div>
-              <h2>Sélectionnez votre brique d’apprentissage</h2>
-            </div>
-            <div class="journey-side-badge">Multi-univers</div>
-          </div>
+    answered = true;
+    const q = questions[currentQuestion];
+    const isCorrect = selectedAnswer === q.correct;
 
-          <div class="journey-grid">
-            <div class="step-card premium-step" style="border-color: rgba(214, 179, 106, 0.28);">
-              <div class="step-top">
-                <span class="step-number">01</span>
-                <span class="step-tag">Disponible</span>
-              </div>
-              <h3>Dacia</h3>
-              <p>Module actif dans cette V3.0. Questions métier conçues pour préparer directement le simulateur atelier.</p>
-            </div>
+    if (isCorrect) {
+      score += 1;
+      feedbackTitle.textContent = "Bonne réponse";
+      feedbackTitle.style.color = "#ecd6a0";
+    } else {
+      feedbackTitle.textContent = "Réponse à retravailler";
+      feedbackTitle.style.color = "#ffb3b3";
+    }
 
-            <div class="step-card premium-step" style="opacity: 0.72;">
-              <div class="step-top">
-                <span class="step-number">02</span>
-                <span class="step-tag">À venir</span>
-              </div>
-              <h3>Renault VL</h3>
-              <p>Univers visible dans la plateforme mais non encore activé dans cette version de démonstration.</p>
-            </div>
+    feedbackText.textContent = q.explanation;
+    feedbackBox.style.display = "block";
 
-            <div class="step-card premium-step" style="opacity: 0.72;">
-              <div class="step-top">
-                <span class="step-number">03</span>
-                <span class="step-tag">À venir</span>
-              </div>
-              <h3>Renault Utilitaires</h3>
-              <p>Univers prévu pour la suite, avec logique de modules et de simulation dédiée.</p>
-            </div>
+    [...answersBox.children].forEach((child, index) => {
+      if (index === q.correct) {
+        child.style.borderColor = "rgba(214, 179, 106, 0.45)";
+        child.style.background = "linear-gradient(180deg, rgba(214, 179, 106, 0.12) 0%, rgba(255,255,255,0.04) 100%)";
+      } else if (index === selectedAnswer && selectedAnswer !== q.correct) {
+        child.style.borderColor = "rgba(255, 120, 120, 0.35)";
+        child.style.background = "linear-gradient(180deg, rgba(255, 120, 120, 0.10) 0%, rgba(255,255,255,0.03) 100%)";
+      }
+    });
 
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">04</span>
-                <span class="step-tag">Objectif</span>
-              </div>
-              <h3>Préparer la simulation</h3>
-              <p>Le but du module est de renforcer les bons réflexes avant la mise en situation commerciale.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    validateBtn.style.display = "none";
+    nextBtn.style.display = "inline-flex";
+  }
 
-      <section class="journey-section" style="margin-top: 22px;">
-        <div class="journey-card">
-          <div class="journey-head">
-            <div>
-              <div class="journey-kicker">Module Dacia</div>
-              <h2>QCM vendeur — préparation au simulateur</h2>
-            </div>
-            <div class="journey-side-badge">8 questions</div>
-          </div>
+  function showResults() {
+    const percent = Math.round((score / questions.length) * 100);
 
-          <div style="margin-bottom: 22px;">
-            <div class="proof-pill active" style="display:inline-flex;">Univers actif : Dacia</div>
-          </div>
+    resultsCard.style.display = "block";
+    finalScoreValue.textContent = `${score}/${questions.length}`;
+    finalScorePercent.textContent = `${percent}%`;
+    scoreBadge.textContent = `Score ${percent}%`;
 
-          <div class="step-card premium-step" style="min-height: unset;">
-            <div class="step-top" style="margin-bottom: 12px;">
-              <span class="step-number" id="questionNumber">Question 1 / 8</span>
-              <span class="step-tag" id="questionTheme">Éligibilité</span>
-            </div>
+    if (percent >= 75) {
+      finalScoreText.textContent = "Très bon résultat. Vous avez les bons réflexes pour aborder le simulateur Dacia dans de bonnes conditions.";
+    } else if (percent >= 50) {
+      finalScoreText.textContent = "Résultat correct, mais certains réflexes commerciaux et métier méritent encore d’être consolidés avant la simulation.";
+    } else {
+      finalScoreText.textContent = "Le module est à retravailler. L’objectif est de mieux maîtriser les fondamentaux avant la mise en situation.";
+    }
 
-            <h3 id="questionText" style="margin-bottom: 18px;">
-              Chargement de la question...
-            </h3>
+    resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
-            <div id="answersBox" style="display:grid; gap:12px;"></div>
+  function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion += 1;
+      renderQuestion();
+    } else {
+      questionNumber.textContent = "Module terminé";
+      questionTheme.textContent = "Résultat";
+      questionText.textContent = "Le module Dacia est terminé.";
+      answersBox.innerHTML = "";
+      feedbackBox.style.display = "none";
+      validateBtn.style.display = "none";
+      nextBtn.style.display = "none";
+      showResults();
+    }
+  }
 
-            <div id="feedbackBox" style="display:none; margin-top:18px; padding:16px; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);">
-              <div id="feedbackTitle" style="font-weight:700; margin-bottom:8px;"></div>
-              <div id="feedbackText" style="color: var(--muted); line-height:1.7;"></div>
-            </div>
+  function restartQuiz() {
+    currentQuestion = 0;
+    selectedAnswer = null;
+    score = 0;
+    answered = false;
+    resultsCard.style.display = "none";
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
-            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px;">
-              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">Valider ma réponse</button>
-              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display:none;">Question suivante</button>
-            </div>
-          </div>
-        </div>
-      </section>
+  validateBtn.addEventListener("click", validateAnswer);
+  nextBtn.addEventListener("click", nextQuestion);
+  restartBtn.addEventListener("click", restartQuiz);
 
-      <section class="journey-section" style="margin-top: 22px;">
-        <div class="journey-card" id="resultsCard" style="display:none;">
-          <div class="journey-head">
-            <div>
-              <div class="journey-kicker">Résultat</div>
-              <h2>Fin du module Dacia</h2>
-            </div>
-            <div class="journey-side-badge" id="scoreBadge">Score</div>
-          </div>
-
-          <div class="journey-grid">
-            <div class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number" id="finalScoreValue">0/8</span>
-                <span class="step-tag" id="finalScorePercent">0%</span>
-              </div>
-              <h3>Score final</h3>
-              <p id="finalScoreText">Résultat du module.</p>
-            </div>
-
-            <a href="simulateur.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">A</span>
-                <span class="step-tag">Étape suivante</span>
-              </div>
-              <h3>Accéder au simulateur</h3>
-              <p>Passez maintenant à la mise en situation commerciale en atelier.</p>
-            </a>
-
-            <a href="index.html" class="step-card premium-step">
-              <div class="step-top">
-                <span class="step-number">B</span>
-                <span class="step-tag">Portail</span>
-              </div>
-              <h3>Retour au portail vendeur</h3>
-              <p>Revenez au hub central pour lancer une autre brique du parcours.</p>
-            </a>
-
-            <button id="restartBtn" class="step-card premium-step" type="button" style="text-align:left; cursor:pointer;">
-              <div class="step-top">
-                <span class="step-number">C</span>
-                <span class="step-tag">Rejouer</span>
-              </div>
-              <h3>Refaire le module</h3>
-              <p>Relancez le QCM Dacia pour consolider vos réflexes avant la simulation.</p>
-            </button>
-          </div>
-        </div>
-      </section>
-    </section>
-  </main>
-
-  <script src="learning.js"></script>
-</body>
-</html>
+  renderQuestion();
+});
