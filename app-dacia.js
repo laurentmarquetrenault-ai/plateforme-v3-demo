@@ -997,7 +997,8 @@ async function evaluate() {
         liveSkills: skills,
         sellerFirstName: seller.firstName,
         sellerLastName: seller.lastName,
-        sellerEmail: seller.email
+        sellerEmail: seller.email,
+        brand: "dacia"
       })
     });
 
@@ -1104,4 +1105,6 @@ if (!ensureDaciaEnvironment()) {
 }
 
 resetDemo();
+
+
 
