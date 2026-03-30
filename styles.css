@@ -29,6 +29,11 @@ body{
     linear-gradient(180deg, #09101d 0%, #0d1524 100%);
 }
 
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
 .app{
   max-width:1480px;
   margin:0 auto;
@@ -52,9 +57,13 @@ body{
   margin:6px 0 0;
   color:var(--muted);
   font-size:14px;
+  line-height:1.55;
 }
 
 .badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   background:linear-gradient(180deg, rgba(255,212,121,.18), rgba(255,184,77,.08));
   border:1px solid rgba(255,212,121,.28);
   color:#ffe6b6;
@@ -85,6 +94,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:12px;
   margin-bottom:14px;
 }
 
@@ -125,6 +135,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:10px;
   margin-bottom:8px;
   font-size:14px;
 }
@@ -163,7 +174,7 @@ body{
 
 .sim-header{
   display:grid;
-  grid-template-columns:repeat(5, minmax(0, 1fr));
+  grid-template-columns:repeat(4, minmax(0, 1fr));
   gap:10px;
   margin-bottom:14px;
 }
@@ -218,7 +229,7 @@ input:focus{
   margin-bottom:14px;
   padding:14px 16px;
   border-radius:16px;
-  line-height:1.45;
+  line-height:1.5;
   white-space:pre-wrap;
   word-break:break-word;
 }
@@ -251,10 +262,10 @@ input:focus{
 
 .chat-footer{
   display:grid;
-  grid-template-columns:minmax(280px, 1fr) auto auto auto;
+  grid-template-columns:minmax(280px, 1fr) auto auto;
   justify-content:center;
   align-items:center;
-  gap:16px;
+  gap:12px;
   margin-top:14px;
 }
 
@@ -273,7 +284,7 @@ input:focus{
   border:none;
   border-radius:12px;
   cursor:pointer;
-  transition:transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+  transition:transform .12s ease, opacity .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -388,6 +399,7 @@ input:focus{
 
 .help-list li{
   margin-bottom:6px;
+  line-height:1.45;
 }
 
 .hidden{
@@ -464,12 +476,7 @@ input:focus{
   }
 
   .sim-header{
-    grid-template-columns:repeat(3, minmax(0, 1fr));
-  }
-
-  .chat-footer{
-    grid-template-columns:minmax(240px, 1fr) auto auto auto;
-    gap:12px;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -496,6 +503,10 @@ input:focus{
 }
 
 @media (max-width:700px){
+  .app{
+    padding:16px;
+  }
+
   .topbar{
     flex-direction:column;
     align-items:flex-start;
@@ -511,5 +522,13 @@ input:focus{
 
   .skills-row{
     grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
+  .price-grid{
+    grid-template-columns:1fr;
+  }
+
+  .title-wrap h1{
+    font-size:24px;
   }
 }
