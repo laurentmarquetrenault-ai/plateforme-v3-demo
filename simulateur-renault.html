@@ -3,54 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plateforme V3 - Formation et certification vendeur Renault</title>
+  <title>Simulation Renault - Contrats de services</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
+    <div class="topbar">
+      <div class="title-wrap">
+        <h1>Simulation Atelier Renault</h1>
+        <p>Entraînement commercial Renault orienté découverte, valeur client, objections et closing.</p>
+      </div>
+      <div class="badge" id="modeBadge">Simulation vendeur</div>
+    </div>
+
     <section class="panel" style="margin-bottom: 18px;">
       <div class="panel-inner">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;">
           <div style="max-width:760px;">
-            <div class="badge" style="margin-bottom:10px;">V3.0 • Parcours vendeur</div>
-            <h1 style="margin:0 0 10px;">Académie Après-Vente Renault</h1>
-            <p class="sub" style="font-size:15px; line-height:1.6; margin:0 0 16px;">
-              Plateforme de formation et de certification vendeurs contrats de services après-vente.
-              Cette version V3 structure le parcours commercial autour de l’apprentissage,
-              de l’entraînement, de la validation et de la certification.
+            <div class="badge" style="margin-bottom:10px;">Univers Renault</div>
+            <h2 style="margin:0 0 10px;">Mise en situation commerciale</h2>
+            <p class="sub" style="font-size:15px; line-height:1.6; margin:0;">
+              Le vendeur travaille ici la découverte client, la logique de valeur,
+              le traitement des objections et la conclusion commerciale Renault.
             </p>
-
-            <div class="chips" style="margin-bottom:10px;">
-              <span class="chip">Dacia actif</span>
-              <span class="chip">Renault actif</span>
-              <span class="chip">Architecture multi-marques</span>
-            </div>
           </div>
 
-          <div style="min-width:220px;">
-            <div class="panel-title" style="margin-bottom:10px;">
-              <h2 style="font-size:18px;">Parcours vendeur</h2>
-              <span class="sub">Structure V3</span>
-            </div>
-
-            <div class="chips" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start;">
-              <span class="chip">1. Apprendre</span>
-              <span class="chip">2. S’entraîner</span>
-              <span class="chip">3. Valider</span>
-              <span class="chip">4. Être certifié</span>
-            </div>
+          <div style="min-width:260px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+            <a href="learning-renault.html" class="btn btn-secondary">Reprendre l’apprentissage</a>
+            <a href="certification.html" class="btn btn-secondary">Voir certification</a>
+            <a href="index.html" class="btn btn-secondary">Retour portail</a>
           </div>
         </div>
       </div>
     </section>
-
-    <div class="topbar">
-      <div class="title-wrap">
-        <h1>Simulation Atelier Renault</h1>
-        <p>Entraînement commercial Contrat Entretien Privilèges / Privilèges+ orienté évaluation et validation vendeur.</p>
-      </div>
-      <div class="badge" id="modeBadge">Simulation vendeur Renault</div>
-    </div>
 
     <div class="layout">
       <section class="panel">
@@ -62,7 +47,7 @@
 
           <div class="client-card">
             <div class="avatar-box">
-              <img id="avatar" src="/images/neutral.jpg" alt="Client Renault" />
+              <img id="avatar" src="/images/neutral.jpg" alt="Client" />
             </div>
 
             <div>
@@ -87,7 +72,7 @@
             </div>
 
             <div class="chips">
-              <span class="chip">Proposition spontanée</span>
+              <span class="chip">Découverte</span>
               <span class="chip">Valeur client</span>
               <span class="chip">Objections</span>
               <span class="chip">Closing</span>
@@ -123,7 +108,6 @@
                 <option value="facture">Facture élevée</option>
                 <option value="fin-garantie">Fin garantie</option>
                 <option value="usure">Usure</option>
-                <option value="vo">Livraison VO</option>
               </select>
             </div>
 
@@ -144,11 +128,10 @@
             <div class="field">
               <label for="energyType">Motorisation</label>
               <select id="energyType">
-                <option value="essence_gpl">Essence / GPL</option>
+                <option value="essence">Essence</option>
                 <option value="diesel">Diesel</option>
                 <option value="hybrid">Hybride</option>
                 <option value="ev">Électrique</option>
-                <option value="vu_thermique">VU thermique</option>
               </select>
             </div>
           </div>
@@ -170,7 +153,7 @@
           <div id="endMessage" class="hidden">
             <h3 id="endTitle">Fin de simulation</h3>
             <div class="sub" id="endSubtitle" style="margin-bottom:10px;">
-              La discussion est terminée. Consulte maintenant l’évaluation.
+              La discussion est terminée. Lance maintenant l’évaluation.
             </div>
             <button class="btn btn-primary" id="evalBtn">Voir évaluation</button>
           </div>
@@ -184,31 +167,17 @@
               <h2 style="margin:0 0 4px;">Aide vendeur</h2>
               <div class="sub">Pense-bête discret</div>
             </div>
-            <span class="mini-tag">Privilèges / Privilèges+</span>
+            <span class="mini-tag">Renault</span>
           </div>
 
           <button class="btn btn-secondary" id="toggleHelpBtn">Afficher aide</button>
 
           <div id="helpBox" class="hidden">
             <div class="help-section">
-              <h4>Tarifs repères</h4>
-              <div class="price-grid">
-                <div class="price-card">
-                  <div class="name">Privilèges</div>
-                  <div class="value" id="cepPrice">39€ / mois</div>
-                </div>
-                <div class="price-card">
-                  <div class="name">Privilèges+</div>
-                  <div class="value" id="ceppPrice">69€ / mois</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="help-section">
               <h4>Angle conseillé</h4>
               <ul class="help-list">
-                <li id="helpRecommendation">Commencer si possible par Privilèges+ pour valoriser la couverture pièces d’usure et contrôle technique.</li>
-                <li id="helpAngle">Budget maîtrisé pendant 48 mois, assistance, entretien dans le réseau Renault, revente facilitée, tranquillité client.</li>
+                <li id="helpRecommendation">Commencez par découvrir l’usage et ce qui compte vraiment pour le client.</li>
+                <li id="helpAngle">Reliez ensuite la solution à la tranquillité, à la visibilité budgétaire et au suivi dans le réseau.</li>
               </ul>
             </div>
 
@@ -222,13 +191,11 @@
             </div>
 
             <div class="help-section">
-              <h4>Rappels métier</h4>
+              <h4>Posture</h4>
               <ul class="help-list">
-                <li>Souscription possible de 1 à 8 ans + 6 mois selon les cas, avec 120 000 km max à la souscription</li>
-                <li>Durée max 48 mois</li>
-                <li>Fin de contrat max 200 000 km</li>
-                <li>Pense à vérifier année, kilométrage, contrat existant et faisabilité Particeep</li>
-                <li>Contrat cessible ou résiliable avec frais de résiliation de 38 € hors rachat réseau</li>
+                <li>Découvrir avant de proposer</li>
+                <li>Reformuler l’objection avant d’argumenter</li>
+                <li>Adapter le discours à l’usage réel du client</li>
               </ul>
             </div>
           </div>
@@ -237,6 +204,6 @@
     </div>
   </div>
 
-  <script src="simulateur-renault.js"></script>
+  <script src="app-renault.js"></script>
 </body>
 </html>
