@@ -1,108 +1,108 @@
 document.addEventListener("DOMContentLoaded", () => {
   const questions = [
     {
-      theme: "Éligibilité",
-      question: "Client : « Ma Renault a 8 ans et 5 mois avec 119 000 km. Elle peut encore entrer dans le Contrat Entretien Privilèges ? »",
+      theme: "Découverte",
+      question: "Client : « Je viens pour ma révision, mais je ne veux pas qu’on me vende quelque chose d’inutile. » Quelle est la meilleure ouverture ?",
       options: [
-        "Oui, car elle reste dans la limite de 8 ans + 6 mois et sous 120 000 km à la souscription.",
-        "Non, car à partir de 8 ans aucun véhicule n’est plus éligible.",
-        "Oui, mais uniquement sur CEP et pas sur CEP+.",
-        "Non, car à partir de 100 000 km la souscription est impossible."
+        "Je comprends, je vais juste vous proposer le contrat directement.",
+        "Avant de vous proposer quoi que ce soit, je vais d’abord comprendre votre usage et vos attentes.",
+        "Sans contrat, vous risquez forcément une panne importante.",
+        "On verra ça à la fin si j’ai le temps."
+      ],
+      correct: 1,
+      explanation:
+        "Le bon réflexe commercial commence par la découverte : usage, attentes, contraintes et sens pour le client."
+    },
+    {
+      theme: "Budget",
+      question: "Client : « Ce qui m’intéresse surtout, c’est d’éviter les grosses dépenses imprévues. » Quel angle est le plus pertinent ?",
+      options: [
+        "Il faut surtout parler de design produit.",
+        "Il faut mettre en avant la logique de budget lissé et de meilleure visibilité dans le temps.",
+        "Il faut éviter de parler du prix mensuel.",
+        "Il faut répondre que ce n’est pas le sujet principal."
+      ],
+      correct: 1,
+      explanation:
+        "Quand le client veut éviter les imprévus, le bon angle est la maîtrise budgétaire et la lisibilité des coûts."
+    },
+    {
+      theme: "Valeur client",
+      question: "Quel argument a le plus de valeur si le client garde son véhicule plusieurs années ?",
+      options: [
+        "La tranquillité dans la durée et l’entretien suivi dans le réseau.",
+        "Le fait que le contrat soit obligatoire.",
+        "Le fait qu’il n’aura plus besoin de réfléchir à rien, quel que soit le cas.",
+        "La seule existence d’un badge premium."
       ],
       correct: 0,
       explanation:
-        "La souscription est possible de 1 à 8 ans + 6 mois maximum, avec un maximum de 120 000 km au compteur. Ici, l’âge et le kilométrage restent dans le cadre de souscription."
+        "Pour un client qui garde longtemps son véhicule, la logique d’entretien suivi, de sérénité et de visibilité est l’angle le plus crédible."
     },
     {
-      theme: "Éligibilité",
-      question: "Client : « Mon véhicule a 7 ans et 10 mois, mais il affiche 120 300 km. On peut quand même le passer ? »",
+      theme: "Objection",
+      question: "Client : « Je vais réfléchir, je ne suis pas sûr que ce soit rentable. » Quelle posture est la plus juste ?",
       options: [
-        "Oui, car l’âge est recevable et un léger dépassement kilométrique est toléré.",
-        "Oui, si le client choisit directement le CEP+.",
-        "Non, car même si l’âge est bon, le kilométrage dépasse la limite maximale de souscription fixée à 120 000 km.",
-        "Non, car à plus de 7 ans seuls les véhicules diesel sont éligibles."
+        "Le laisser partir sans rien creuser.",
+        "Lui répondre que tous les clients prennent cette solution.",
+        "Creuser son hésitation puis relier la solution à son usage réel et à son besoin de maîtrise.",
+        "Lui dire qu’il a tort de réfléchir."
       ],
       correct: 2,
       explanation:
-        "Les deux critères doivent être respectés à la souscription : âge et kilométrage. Ici, l’âge reste recevable, mais le véhicule dépasse les 120 000 km autorisés."
+        "Une objection n’est pas un refus sec : il faut comprendre ce qui bloque, reformuler et réancrer la valeur dans le concret."
     },
     {
-      theme: "Résiliation / Cessibilité",
-      question: "Client : « Si je revends ma voiture ou si j’arrête le contrat, je perds tout automatiquement ? »",
+      theme: "Usage professionnel",
+      question: "Avec un client professionnel, quel angle complémentaire est le plus pertinent ?",
       options: [
-        "Oui, un contrat signé est définitivement bloqué.",
-        "Non, car le contrat peut être cessible ou résiliable selon les conditions prévues, avec 38 € de frais de résiliation hors rachat réseau.",
-        "Oui, sauf si la voiture est revendue dans le réseau Renault.",
-        "Non, mais uniquement pendant les 6 premiers mois."
+        "L’esthétique du véhicule.",
+        "L’impact sur l’activité, la continuité d’usage et la réduction des immobilisations.",
+        "Le fait qu’il paiera toujours plus cher.",
+        "Le fait qu’il n’aura jamais d’aléa."
       ],
       correct: 1,
       explanation:
-        "Le contrat est cessible ou résiliable. En cas de résiliation, il existe des frais de 38 € hors cas de rachat du véhicule dans le réseau, avec une logique de calcul prévue dans les conditions."
+        "Avec un client pro, il faut parler activité, continuité d’usage, temps perdu évité et meilleure visibilité sur les charges."
     },
     {
-      theme: "CEP vs CEP+",
-      question: "Client : « Moi je veux une formule qui couvre aussi les amortisseurs, le freinage et le contrôle technique. Quelle offre correspond vraiment ? »",
+      theme: "Conclusion",
+      question: "Quelle formulation ressemble le plus à une vraie tentative de closing ?",
       options: [
-        "Le CEP, car il couvre déjà l’ensemble des pièces d’usure et le contrôle technique.",
-        "Le CEP+, car il ajoute notamment les pièces d’usure et le contrôle technique.",
-        "Le CEP, mais seulement pour les véhicules thermiques.",
-        "Les deux offres se valent sur ces éléments."
-      ],
-      correct: 1,
-      explanation:
-        "Le CEP couvre l’entretien, l’assistance et plusieurs opérations prévues au contrat. Le CEP+ ajoute notamment les pièces d’usure et le contrôle technique, ce qui correspond au besoin exprimé."
-    },
-    {
-      theme: "Mensualités",
-      question: "Client : « J’ai une Renault essence de 4 ans. Le tarif CEP+, c’est bien 69 € par mois ? »",
-      options: [
-        "Oui, pour un véhicule Renault essence ou GPL de 1 à 5 ans, le CEP+ est à 69 € par mois.",
-        "Non, le CEP+ est à 59 € par mois.",
-        "Oui, mais seulement pour les hybrides.",
-        "Non, à 4 ans il n’existe qu’une mensualité unique à 49 €."
-      ],
-      correct: 0,
-      explanation:
-        "Pour les véhicules Renault essence & GPL de 1 à 5 ans, les mensualités sont de 39 € en CEP et 69 € en CEP+."
-    },
-    {
-      theme: "Mensualités",
-      question: "Client : « Mon véhicule électrique Renault a 7 ans. Vous me confirmez que le CEP est à 25 € par mois et le CEP+ à 39 € ? »",
-      options: [
-        "Non, ce tarif correspond aux hybrides.",
-        "Oui, pour un véhicule électrique Renault de 6 à 8 ans + 6 mois, le CEP est à 25 € et le CEP+ à 39 €.",
-        "Non, après 6 ans il n’existe plus d’offre sur les véhicules électriques.",
-        "Oui, mais uniquement sur les utilitaires électriques."
-      ],
-      correct: 1,
-      explanation:
-        "Pour les véhicules électriques Renault de 6 à 8 ans + 6 mois, les mensualités sont bien de 25 € pour le CEP et 39 € pour le CEP+."
-    },
-    {
-      theme: "Client professionnel",
-      question: "Client : « Je suis artisan en nom propre avec 6 véhicules. Mon ami a une SARL avec 6 véhicules aussi. On peut souscrire tous les deux ? »",
-      options: [
-        "Oui, tant qu’on reste sous 10 véhicules, la forme juridique n’a pas d’importance.",
-        "Oui, mais uniquement si les véhicules sont tous entretenus dans le réseau Renault.",
-        "Non, l’artisan en nom propre peut être éligible, mais la SARL fait partie des formes juridiques exclues.",
-        "Non, car aucun professionnel n’est éligible à l’offre."
+        "Bon, vous me direz peut-être plus tard.",
+        "Je vous laisse réfléchir sans rien formaliser.",
+        "Souhaitez-vous qu’on le mette en place aujourd’hui pour sécuriser votre suivi ?",
+        "Je ne vais pas insister."
       ],
       correct: 2,
       explanation:
-        "L’offre est ouverte aux artisans, commerçants et professions libérales agissant en nom propre avec une flotte de moins de 10 véhicules. Les formes juridiques de type société, comme la SARL, sont exclues."
+        "Une conclusion solide doit formuler une proposition claire et inviter le client à décider."
     },
     {
-      theme: "Objection commerciale",
-      question: "Client : « Je roule peu, donc ce contrat n’a pas grand intérêt pour moi. » Quelle réponse est la plus juste ?",
+      theme: "Posture vendeur",
+      question: "Quel comportement affaiblit le plus la crédibilité du vendeur ?",
       options: [
-        "Vous avez raison, le contrat est surtout utile aux gros rouleurs.",
-        "Même en roulant peu, le temps et l’usure continuent d’agir. Le contrat permet justement d’anticiper ces frais et de garder de la tranquillité.",
-        "Dans ce cas il vaut mieux attendre une grosse panne avant de décider.",
-        "Le contrat ne sert qu’aux clients qui font plus de 30 000 km par an."
+        "Poser des questions sur l’usage.",
+        "Faire un lien entre besoin et solution.",
+        "Dire “comme vous voulez” sans défendre la valeur de la proposition.",
+        "Reformuler une objection."
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        "La bonne logique commerciale consiste à rappeler que même avec peu de kilomètres, le temps, l’usure et les échéances d’entretien continuent d’exister. L’intérêt du contrat reste donc réel."
+        "Une posture trop passive détruit la valeur perçue de la recommandation commerciale."
+    },
+    {
+      theme: "Parcours",
+      question: "Après un bon résultat au module d’apprentissage Renault, quelle est l’étape logique suivante ?",
+      options: [
+        "Sortir de la plateforme.",
+        "Passer directement à un autre vendeur.",
+        "Entrer dans la simulation Renault pour appliquer les acquis.",
+        "Supprimer le score."
+      ],
+      correct: 2,
+      explanation:
+        "Le module prépare la mise en situation. La suite logique est donc le simulateur Renault."
     }
   ];
 
@@ -162,6 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function getSelectedBrand() {
+    return (localStorage.getItem("selected_brand") || "").trim().toLowerCase();
+  }
+
   function ensureSellerIdentity() {
     const seller = getSellerIdentity();
 
@@ -170,6 +174,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     alert("Aucun vendeur actif n’est enregistré. Merci de revenir sur le portail pour renseigner le prénom et le nom du vendeur avant de lancer le module.");
+    window.location.href = "index.html";
+    return false;
+  }
+
+  function ensureRenaultEnvironment() {
+    const selectedBrand = getSelectedBrand();
+
+    if (!selectedBrand || selectedBrand === "renault") {
+      return true;
+    }
+
+    alert("Ce module correspond à l’univers Renault. Merci de revenir au portail pour sélectionner le bon environnement.");
     window.location.href = "index.html";
     return false;
   }
@@ -303,13 +319,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "Résultat calculé localement, mais non enregistré car aucun vendeur actif n’est défini. Revenez au portail pour renseigner le vendeur.";
     } else if (percent >= 75) {
       finalScoreText.textContent =
-        `Très bon résultat pour ${seller.fullName}. Vous maîtrisez les points techniques clés du produit Renault avant la mise en situation simulateur.`;
+        `Très bon résultat pour ${seller.fullName}. La base Renault est bien maîtrisée avant la simulation.`;
     } else if (percent >= 50) {
       finalScoreText.textContent =
-        `Résultat correct pour ${seller.fullName}, mais plusieurs règles produit Renault doivent encore être consolidées avant la simulation de vente.`;
+        `Résultat correct pour ${seller.fullName}, mais plusieurs réflexes Renault doivent encore être consolidés avant la mise en situation.`;
     } else {
       finalScoreText.textContent =
-        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux maîtriser les règles d’éligibilité, de couverture, de mensualités et de traitement client avant la mise en situation.`;
+        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux maîtriser la découverte, la valeur client, les objections et la conclusion avant la simulation.`;
     }
 
     resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -350,6 +366,10 @@ document.addEventListener("DOMContentLoaded", () => {
   restartBtn.addEventListener("click", restartQuiz);
 
   if (!ensureSellerIdentity()) {
+    return;
+  }
+
+  if (!ensureRenaultEnvironment()) {
     return;
   }
 
