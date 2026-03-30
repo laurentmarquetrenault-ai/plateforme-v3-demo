@@ -250,22 +250,21 @@ input:focus{
 }
 
 .chat-footer{
-  display:flex;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:minmax(280px, 1fr) auto auto auto;
   justify-content:center;
   align-items:center;
-  gap:10px;
+  gap:16px;
   margin-top:14px;
 }
 
 .chat-footer input{
-  flex:1 1 320px;
-  max-width:420px;
-  min-width:240px;
+  width:100%;
+  min-width:0;
 }
 
 .chat-footer .btn{
-  flex:0 0 auto;
+  white-space:nowrap;
 }
 
 .btn{
@@ -275,6 +274,10 @@ input:focus{
   border-radius:12px;
   cursor:pointer;
   transition:transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
 .btn:hover{
@@ -463,6 +466,11 @@ input:focus{
   .sim-header{
     grid-template-columns:repeat(3, minmax(0, 1fr));
   }
+
+  .chat-footer{
+    grid-template-columns:minmax(240px, 1fr) auto auto auto;
+    gap:12px;
+  }
 }
 
 @media (max-width:1180px){
@@ -477,6 +485,14 @@ input:focus{
   #chat{
     height:420px;
   }
+
+  .chat-footer{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .chat-footer input{
+    grid-column:1 / -1;
+  }
 }
 
 @media (max-width:700px){
@@ -490,13 +506,7 @@ input:focus{
   }
 
   .chat-footer{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .chat-footer input{
-    max-width:none;
-    min-width:0;
+    grid-template-columns:1fr;
   }
 
   .skills-row{
