@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module apprentissage Renault - Contrats de services</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <main class="home-page">
+    <section class="hero learning-page">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
 
+      <header class="hero-header">
+        <div class="brand">
+          <div class="brand-mark">CS</div>
+          <div>
+            <div class="brand-name">Contrats de Services Academy</div>
+            <div class="brand-sub">Module apprentissage Renault • V3.0</div>
+          </div>
+        </div>
+
+        <nav class="hero-nav">
+          <a href="index.html" class="nav-link">Accueil</a>
+          <a href="learning.html" class="nav-link">Apprentissage Dacia</a>
+          <a href="learning-renault.html" class="nav-link active">Apprentissage Renault</a>
+          <a href="certification.html" class="nav-link">Certification</a>
+        </nav>
+      </header>
+
+      <div class="hero-content certification-hero-content">
+        <div class="hero-kicker">Brique de training Renault</div>
+
+        <h1>
+          Module apprentissage Renault
+          <br />
+          Contrat Entretien Privilèges
+        </h1>
+
+        <p class="hero-subtitle">
+          Cette brique prépare le vendeur Renault avant la mise en situation commerciale.
+          Elle reprend la même logique que Dacia avec un QCM ciblé sur l’éligibilité,
+          l’offre, les mensualités, les objections et les bons réflexes de vente.
+        </p>
+
+        <div class="hero-proof">
+          <span class="proof-pill">Dacia actif</span>
+          <span class="proof-pill active">Renault actif</span>
+          <span class="proof-pill">Architecture multi-marques</span>
+        </div>
+      </div>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Choix de l’univers</div>
+              <h2>Sélectionnez votre brique d’apprentissage</h2>
+            </div>
+            <div class="journey-side-badge">Multi-marques</div>
+          </div>
+
+          <div class="journey-grid">
+            <a href="learning.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">01</span>
+                <span class="step-tag">Disponible</span>
+              </div>
+              <h3>Dacia</h3>
+              <p>
+                Module Dacia déjà disponible pour préparer le vendeur au simulateur
+                et aux fondamentaux des contrats de services Dacia.
+              </p>
+            </a>
+
+            <div class="step-card premium-step step-card-featured">
+              <div class="step-top">
+                <span class="step-number">02</span>
+                <span class="step-tag">Disponible</span>
+              </div>
+              <h3>Renault</h3>
+              <p>
+                Module Renault actif dans cette V3.0 avec la même logique pédagogique
+                que Dacia, adaptée au Contrat Entretien Privilèges Renault.
+              </p>
+            </div>
+
+            <a href="simulateur-renault.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">03</span>
+                <span class="step-tag">Étape suivante</span>
+              </div>
+              <h3>Simulateur Renault</h3>
+              <p>
+                Après le QCM, passez à la mise en situation commerciale Renault pour
+                valider la qualité réelle du discours vendeur.
+              </p>
+            </a>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">04</span>
+                <span class="step-tag">Objectif</span>
+              </div>
+              <h3>Préparer la simulation</h3>
+              <p>
+                Le but du module est de renforcer les bons réflexes avant la mise en
+                situation commerciale Renault.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Module Renault</div>
+              <h2>QCM vendeur — préparation au simulateur Renault</h2>
+            </div>
+            <div class="journey-side-badge">8 questions</div>
+          </div>
+
+          <div class="learning-active-universe">
+            <div class="proof-pill active">Univers actif : Renault</div>
+          </div>
+
+          <div class="step-card premium-step learning-question-card">
+            <div class="step-top learning-question-top">
+              <span class="step-number" id="questionNumber">Question 1 / 8</span>
+              <span class="step-tag" id="questionTheme">Éligibilité</span>
+            </div>
+
+            <h3 id="questionText" class="learning-question-title">
+              Chargement de la question...
+            </h3>
+
+            <div id="answersBox" class="learning-answers-box"></div>
+
+            <div id="feedbackBox" class="learning-feedback-box" style="display: none;">
+              <div id="feedbackTitle" class="learning-feedback-title"></div>
+              <div id="feedbackText" class="learning-feedback-text"></div>
+            </div>
+
+            <div class="learning-actions-row">
+              <button id="validateBtn" class="btn btn-primary btn-xl" type="button">
+                Valider ma réponse
+              </button>
+              <button id="nextBtn" class="btn btn-secondary btn-xl" type="button" style="display: none;">
+                Question suivante
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="journey-card" id="resultsCard" style="display: none;">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Résultat</div>
+              <h2>Fin du module Renault</h2>
+            </div>
+            <div class="journey-side-badge" id="scoreBadge">Score</div>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number" id="finalScoreValue">0/8</span>
+                <span class="step-tag" id="finalScorePercent">0%</span>
+              </div>
+              <h3>Score final</h3>
+              <p id="finalScoreText">Résultat du module Renault.</p>
+            </div>
+
+            <a href="simulateur-renault.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">A</span>
+                <span class="step-tag">Étape suivante</span>
+              </div>
+              <h3>Accéder au simulateur Renault</h3>
+              <p>Passez maintenant à la mise en situation commerciale Renault.</p>
+            </a>
+
+            <a href="index.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">B</span>
+                <span class="step-tag">Portail</span>
+              </div>
+              <h3>Retour au portail vendeur</h3>
+              <p>Revenez au hub central pour lancer une autre brique du parcours.</p>
+            </a>
+
+            <button id="restartBtn" class="step-card premium-step step-card-button" type="button">
+              <div class="step-top">
+                <span class="step-number">C</span>
+                <span class="step-tag">Rejouer</span>
+              </div>
+              <h3>Refaire le module</h3>
+              <p>Relancez le QCM Renault pour consolider vos réflexes avant la simulation.</p>
+            </button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="learning-renault.js"></script>
+</body>
+</html>
