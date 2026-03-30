@@ -23,10 +23,10 @@
 
         <nav class="hero-nav">
           <a href="index.html" class="nav-link active">Accueil</a>
-          <a href="learning-dacia.html" class="nav-link">Apprentissage Dacia</a>
-          <a href="simulateur-dacia.html" class="nav-link">Simulateur Dacia</a>
-          <a href="learning-renault.html" class="nav-link">Apprentissage Renault</a>
-          <a href="simulateur-renault.html" class="nav-link">Simulateur Renault</a>
+          <a href="learning-dacia.html" class="nav-link" id="headerLearningDaciaLink">Apprentissage Dacia</a>
+          <a href="simulateur-dacia.html" class="nav-link" id="headerSimulationDaciaLink">Simulateur Dacia</a>
+          <a href="learning-renault.html" class="nav-link" id="headerLearningRenaultLink">Apprentissage Renault</a>
+          <a href="simulateur-renault.html" class="nav-link" id="headerSimulationRenaultLink">Simulateur Renault</a>
           <a href="certification.html" class="nav-link">Certification</a>
         </nav>
       </header>
@@ -228,6 +228,11 @@
       const trainingLearningLink = document.getElementById("trainingLearningLink");
       const trainingSimulationLink = document.getElementById("trainingSimulationLink");
       const trainingCertificationLink = document.getElementById("trainingCertificationLink");
+
+      const headerLearningDaciaLink = document.getElementById("headerLearningDaciaLink");
+      const headerSimulationDaciaLink = document.getElementById("headerSimulationDaciaLink");
+      const headerLearningRenaultLink = document.getElementById("headerLearningRenaultLink");
+      const headerSimulationRenaultLink = document.getElementById("headerSimulationRenaultLink");
 
       const sellerKeys = [
         "seller_first_name",
@@ -470,6 +475,16 @@
         }
       }
 
+      function setBrandAndGo(event, brand) {
+        if (!hasSellerIdentity()) {
+          event.preventDefault();
+          alert("Merci d’enregistrer d’abord le vendeur avant d’ouvrir un module.");
+          return;
+        }
+
+        localStorage.setItem(brandKey, brand);
+      }
+
       saveSellerBtn.addEventListener("click", saveSeller);
       resetSellerBtn.addEventListener("click", resetSeller);
 
@@ -495,6 +510,11 @@
       trainingLearningLink.addEventListener("click", handleTrainingBlocked);
       trainingSimulationLink.addEventListener("click", handleTrainingBlocked);
       trainingCertificationLink.addEventListener("click", handleTrainingBlocked);
+
+      headerLearningDaciaLink.addEventListener("click", (event) => setBrandAndGo(event, "dacia"));
+      headerSimulationDaciaLink.addEventListener("click", (event) => setBrandAndGo(event, "dacia"));
+      headerLearningRenaultLink.addEventListener("click", (event) => setBrandAndGo(event, "renault"));
+      headerSimulationRenaultLink.addEventListener("click", (event) => setBrandAndGo(event, "renault"));
 
       fillFormFromStorage();
       refreshScreen();
