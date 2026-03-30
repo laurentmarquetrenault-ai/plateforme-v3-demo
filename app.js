@@ -187,12 +187,9 @@ function getValidatedSkillsCount() {
 
 function computeSimulationScore() {
   const skillsCount = getValidatedSkillsCount();
-
-  // Score V3.0 : 60% confiance finale + 40% compétences validées
   const trustPart = trust * 0.6;
   const skillsPart = (skillsCount / 5) * 40;
   const total = Math.round(trustPart + skillsPart);
-
   return Math.max(0, Math.min(100, total));
 }
 
@@ -207,6 +204,80 @@ function saveSimulationScore() {
   }
 
   return score;
+}
+
+function getQcmPercent() {
+  const raw = localStorage.getItem("qcm_dacia_percent");
+  return raw ? Number(raw) : null;
+}
+
+function getSimulationLastScore() {
+  const raw = localStorage.getItem("simulator_last_score");
+  return raw ? Number(raw) : null;
+}
+
+function buildFinalStatusMessage() {
+  const qcm = getQcmPercent();
+  const sim = getSimulationLastScore();
+
+  const qcmOk = qcm !== null && qcm >= 75;
+  const simOk = sim !== null && sim >= 75;
+
+  let title = "Parcours en cours";
+  let text = "La simulation est terminée. Vous pouvez relancer une nouvelle tentative ou revenir au portail vendeur.";
+
+  if (qcmOk && simOk) {
+    title = "Validation réussie";
+    text = `Très bon travail. QCM : ${qcm}% • Simulation : ${sim}/100. Les seuils de validation sont atteints. Vous pouvez consulter la certification ou poursuivre vos entraînements.`;
+  } else if (qcm !== null && sim !== null) {
+    title = "Nouvel essai recommandé";
+    text = `QCM : ${qcm}% • Simulation : ${sim}/100. La base est posée, mais un nouvel essai est conseillé pour consolider le parcours vendeur.`;
+  } else if (sim !== null) {
+    title = "Simulation terminée";
+    text = `Simulation : ${sim}/100. Vous pouvez revenir au portail, faire le QCM Dacia ou relancer une nouvelle simulation.`;
+  }
+
+  return { title, text };
+}
+
+function showPostEvaluationActions() {
+  const { title, text } = buildFinalStatusMessage();
+
+  input.disabled = true;
+  sendBtn.disabled = true;
+  sendBtn.style.display = "none";
+  finishBtn.disabled = true;
+  finishBtn.style.display = "none";
+  evalBtn.disabled = true;
+  evalBtn.style.display = "none";
+
+  endMessage.classList.remove("hidden");
+  endTitle.textContent = title;
+  endSubtitle.textContent = text;
+
+  let actionsBox = document.getElementById("postEvalActions");
+  if (!actionsBox) {
+    actionsBox = document.createElement("div");
+    actionsBox.id = "postEvalActions";
+    actionsBox.style.display = "flex";
+    actionsBox.style.gap = "12px";
+    actionsBox.style.flexWrap = "wrap";
+    actionsBox.style.marginTop = "14px";
+
+    const homeLink = document.createElement("a");
+    homeLink.href = "index.html";
+    homeLink.className = "btn btn-secondary";
+    homeLink.textContent = "Retour au portail";
+
+    const certLink = document.createElement("a");
+    certLink.href = "certification.html";
+    certLink.className = "btn btn-secondary";
+    certLink.textContent = "Voir certification";
+
+    actionsBox.appendChild(homeLink);
+    actionsBox.appendChild(certLink);
+    endMessage.appendChild(actionsBox);
+  }
 }
 
 function generateBrief() {
@@ -283,6 +354,17 @@ function resetDemo() {
   sendBtn.disabled = false;
   input.value = "";
   endMessage.classList.add("hidden");
+
+  sendBtn.style.display = "inline-flex";
+  finishBtn.style.display = "inline-flex";
+  evalBtn.style.display = "inline-flex";
+  evalBtn.disabled = false;
+  evalBtn.textContent = "Voir évaluation";
+
+  const actionsBox = document.getElementById("postEvalActions");
+  if (actionsBox) {
+    actionsBox.remove();
+  }
 
   resetTrustUI();
   updateAvatar();
@@ -667,6 +749,10 @@ function finishDemo() {
 async function evaluate() {
   if (evaluationShown) return;
 
+  evaluationShown = true;
+  evalBtn.disabled = true;
+  evalBtn.textContent = "Évaluation en cours...";
+
   try {
     const res = await fetch("/api/evaluate", {
       method: "POST",
@@ -688,15 +774,21 @@ async function evaluate() {
     const data = await res.json();
 
     if (!res.ok || !data.evaluation) {
+      evaluationShown = false;
+      evalBtn.disabled = false;
+      evalBtn.textContent = "Voir évaluation";
       display(data.error || "Erreur : évaluation invalide.", "coach");
       return;
     }
 
-    evaluationShown = true;
     endMessage.classList.add("hidden");
     display(data.evaluation, "coach");
+    showPostEvaluationActions();
   } catch (err) {
     console.error(err);
+    evaluationShown = false;
+    evalBtn.disabled = false;
+    evalBtn.textContent = "Voir évaluation";
     display("Erreur pendant l’évaluation.", "coach");
   }
 }
