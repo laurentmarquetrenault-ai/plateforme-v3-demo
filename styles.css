@@ -250,10 +250,22 @@ input:focus{
 }
 
 .chat-footer{
-  display:grid;
-  grid-template-columns:1fr auto auto auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
   gap:10px;
   margin-top:14px;
+}
+
+.chat-footer input{
+  flex:1 1 320px;
+  max-width:420px;
+  min-width:240px;
+}
+
+.chat-footer .btn{
+  flex:0 0 auto;
 }
 
 .btn{
@@ -478,7 +490,13 @@ input:focus{
   }
 
   .chat-footer{
-    grid-template-columns:1fr;
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .chat-footer input{
+    max-width:none;
+    min-width:0;
   }
 
   .skills-row{
