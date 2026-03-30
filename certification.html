@@ -23,8 +23,8 @@
 
         <nav class="hero-nav">
           <a href="index.html" class="nav-link">Accueil</a>
-          <a href="learning.html" class="nav-link">Apprentissage</a>
-          <a href="simulateur.html" class="nav-link">Simulateur</a>
+          <a href="learning.html" class="nav-link">Apprentissage Dacia</a>
+          <a href="learning-renault.html" class="nav-link">Apprentissage Renault</a>
           <a href="certification.html" class="nav-link active">Certification</a>
         </nav>
       </header>
@@ -39,14 +39,14 @@
         </h1>
 
         <p class="hero-subtitle">
-          Cette page centralise les validations du vendeur, affiche ses résultats
-          et donne accès à un certificat exportable en PDF.
+          Cette page centralise les validations du vendeur, affiche les résultats
+          Dacia et Renault, puis donne accès à un certificat exportable en PDF.
         </p>
 
         <div class="hero-proof">
           <span class="proof-pill active">Dacia actif</span>
+          <span class="proof-pill active">Renault actif</span>
           <span class="proof-pill">PDF exportable</span>
-          <span class="proof-pill">Scores vendeur actif</span>
         </div>
       </div>
 
@@ -104,10 +104,10 @@
         <div class="journey-card">
           <div class="journey-head">
             <div>
-              <div class="journey-kicker">Validation</div>
-              <h2>Résultats vendeur</h2>
+              <div class="journey-kicker">Bloc Dacia</div>
+              <h2>Résultats Dacia</h2>
             </div>
-            <div class="journey-side-badge" id="globalStatusBadge">En cours</div>
+            <div class="journey-side-badge" id="daciaStatusBadge">En cours</div>
           </div>
 
           <div class="journey-grid">
@@ -117,16 +117,16 @@
                 <span class="step-tag">QCM Dacia</span>
               </div>
               <h3>Score apprentissage</h3>
-              <p id="qcmScoreText">Aucun score enregistré pour le moment.</p>
+              <p id="qcmDaciaScoreText">Aucun score enregistré pour le moment.</p>
             </div>
 
             <div class="step-card premium-step">
               <div class="step-top">
                 <span class="step-number">S</span>
-                <span class="step-tag">Simulation</span>
+                <span class="step-tag">Simulation Dacia</span>
               </div>
               <h3>Dernier score simulateur</h3>
-              <p id="simScoreText">Aucun score enregistré pour le moment.</p>
+              <p id="simDaciaScoreText">Aucun score enregistré pour le moment.</p>
             </div>
 
             <div class="step-card premium-step">
@@ -135,7 +135,7 @@
                 <span class="step-tag">Meilleur essai</span>
               </div>
               <h3>Meilleur score simulateur</h3>
-              <p id="bestSimScoreText">Aucun meilleur score enregistré pour le moment.</p>
+              <p id="bestDaciaSimScoreText">Aucun meilleur score enregistré pour le moment.</p>
             </div>
 
             <div class="step-card premium-step">
@@ -143,9 +143,109 @@
                 <span class="step-number">C</span>
                 <span class="step-tag">Statut</span>
               </div>
-              <h3>Certification</h3>
-              <p id="certStatusText">Certification verrouillée.</p>
+              <h3>Validation Dacia</h3>
+              <p id="daciaCertStatusText">Validation Dacia verrouillée.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Bloc Renault</div>
+              <h2>Résultats Renault</h2>
+            </div>
+            <div class="journey-side-badge" id="renaultStatusBadge">En cours</div>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">Q</span>
+                <span class="step-tag">QCM Renault</span>
+              </div>
+              <h3>Score apprentissage</h3>
+              <p id="qcmRenaultScoreText">Aucun score enregistré pour le moment.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">S</span>
+                <span class="step-tag">Simulation Renault</span>
+              </div>
+              <h3>Dernier score simulateur</h3>
+              <p id="simRenaultScoreText">Aucun score enregistré pour le moment.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">B</span>
+                <span class="step-tag">Meilleur essai</span>
+              </div>
+              <h3>Meilleur score simulateur</h3>
+              <p id="bestRenaultSimScoreText">Aucun meilleur score enregistré pour le moment.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">C</span>
+                <span class="step-tag">Statut</span>
+              </div>
+              <h3>Validation Renault</h3>
+              <p id="renaultCertStatusText">Validation Renault verrouillée.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="journey-card">
+          <div class="journey-head">
+            <div>
+              <div class="journey-kicker">Synthèse globale</div>
+              <h2>Certification multi-marques</h2>
+            </div>
+            <div class="journey-side-badge" id="globalStatusBadge">En cours</div>
+          </div>
+
+          <div class="journey-grid">
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">G</span>
+                <span class="step-tag">Global</span>
+              </div>
+              <h3>Score global</h3>
+              <p id="globalScoreText">Le score global sera calculé à partir des résultats Dacia et Renault.</p>
+            </div>
+
+            <div class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">M</span>
+                <span class="step-tag">Mention</span>
+              </div>
+              <h3>Statut vendeur</h3>
+              <p id="certStatusText">Certification multi-marques verrouillée.</p>
+            </div>
+
+            <a href="learning.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">DA</span>
+                <span class="step-tag">Dacia</span>
+              </div>
+              <h3>Reprendre Dacia</h3>
+              <p>Retournez sur l’apprentissage Dacia pour consolider le parcours de la marque.</p>
+            </a>
+
+            <a href="learning-renault.html" class="step-card premium-step">
+              <div class="step-top">
+                <span class="step-number">RE</span>
+                <span class="step-tag">Renault</span>
+              </div>
+              <h3>Reprendre Renault</h3>
+              <p>Retournez sur l’apprentissage Renault pour consolider le parcours de la marque.</p>
+            </a>
           </div>
         </div>
       </section>
@@ -176,24 +276,43 @@
                   <div class="certificate-email" id="certificateEmail">email@entreprise.com</div>
 
                   <div class="certificate-body-text">
-                    pour la validation du parcours vendeur sur l’univers
-                    <strong>Dacia</strong>, incluant l’apprentissage métier,
+                    pour la validation du parcours vendeur sur les univers
+                    <strong>Dacia</strong> et <strong>Renault</strong>, incluant l’apprentissage métier,
                     la mise en situation commerciale et la logique de progression
-                    vers la certification.
+                    vers la certification multi-marques.
                   </div>
 
                   <div class="certificate-score-grid">
                     <div class="certificate-score-box">
                       <div class="certificate-score-label">QCM Dacia</div>
-                      <div class="certificate-score-value" id="certificateQcmValue">--</div>
+                      <div class="certificate-score-value" id="certificateQcmDaciaValue">--</div>
                     </div>
                     <div class="certificate-score-box">
-                      <div class="certificate-score-label">Dernier score simulation</div>
-                      <div class="certificate-score-value" id="certificateSimValue">--</div>
+                      <div class="certificate-score-label">Simulation Dacia</div>
+                      <div class="certificate-score-value" id="certificateSimDaciaValue">--</div>
                     </div>
                     <div class="certificate-score-box">
-                      <div class="certificate-score-label">Meilleur score simulation</div>
-                      <div class="certificate-score-value" id="certificateBestSimValue">--</div>
+                      <div class="certificate-score-label">QCM Renault</div>
+                      <div class="certificate-score-value" id="certificateQcmRenaultValue">--</div>
+                    </div>
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">Simulation Renault</div>
+                      <div class="certificate-score-value" id="certificateSimRenaultValue">--</div>
+                    </div>
+                  </div>
+
+                  <div class="certificate-score-grid">
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">Meilleur score Dacia</div>
+                      <div class="certificate-score-value" id="certificateBestDaciaSimValue">--</div>
+                    </div>
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">Meilleur score Renault</div>
+                      <div class="certificate-score-value" id="certificateBestRenaultSimValue">--</div>
+                    </div>
+                    <div class="certificate-score-box">
+                      <div class="certificate-score-label">Score global</div>
+                      <div class="certificate-score-value" id="certificateGlobalValue">--</div>
                     </div>
                   </div>
 
@@ -209,7 +328,7 @@
 
                     <div class="certificate-center-note">
                       <div class="certificate-center-note-label">Univers</div>
-                      <div class="certificate-center-note-value">Dacia</div>
+                      <div class="certificate-center-note-value">Dacia + Renault</div>
                     </div>
 
                     <div class="certificate-date-block">
@@ -229,7 +348,8 @@
             <button id="sendEmailBtn" class="btn btn-secondary btn-xl" type="button">
               Envoyer par email
             </button>
-            <a href="simulateur.html" class="btn btn-secondary btn-xl">Accéder au simulateur</a>
+            <a href="simulateur.html" class="btn btn-secondary btn-xl">Simulateur Dacia</a>
+            <a href="simulateur-renault.html" class="btn btn-secondary btn-xl">Simulateur Renault</a>
             <a href="index.html" class="btn btn-secondary btn-xl">Retour au portail</a>
           </div>
 
