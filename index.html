@@ -120,7 +120,7 @@
           <div class="brand-selection-grid">
             <button class="step-card premium-step brand-card brand-card-active" type="button" id="selectDaciaBtn">
               <div class="step-top">
-                <span class="step-number">DACIA</span>
+                <span class="step-number">Dacia</span>
                 <span class="step-tag">Actif</span>
               </div>
               <h3>Univers Dacia</h3>
@@ -132,7 +132,7 @@
 
             <button class="step-card premium-step brand-card brand-card-active" type="button" id="selectRenaultBtn">
               <div class="step-top">
-                <span class="step-number">RENAULT</span>
+                <span class="step-number">Renault</span>
                 <span class="step-tag">Actif</span>
               </div>
               <h3>Univers Renault</h3>
@@ -161,7 +161,6 @@
             </p>
           </div>
 
-        
           <div class="mode-grid">
             <div class="step-card premium-step">
               <div class="step-top">
@@ -170,8 +169,8 @@
               </div>
               <h3>Parcours guidé</h3>
               <p>
-                Le vendeur suit l’ordre conseillé : apprentissage d’abord,
-                puis simulation, puis certification.
+                Le vendeur suit l’ordre conseillé : formation d’abord,
+                puis apprentissage, puis simulation, puis certification.
               </p>
               <button id="guidedModeBtn" class="btn btn-primary btn-block" type="button" disabled>
                 Démarrer le parcours guidé
@@ -496,12 +495,12 @@
         const selectedBrand = getSelectedBrand();
 
         if (selectedBrand === "dacia") {
-          window.location.href = "learning-dacia.html";
+          window.location.href = "formation-dacia.html";
           return;
         }
 
         if (selectedBrand === "renault") {
-          window.location.href = "learning-renault.html";
+          window.location.href = "formation-renault.html";
           return;
         }
 
