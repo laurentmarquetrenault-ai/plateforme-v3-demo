@@ -11,7 +11,6 @@
       --panel: rgba(12, 20, 34, 0.92);
       --panel-soft: rgba(16, 26, 43, 0.88);
       --border: rgba(255, 255, 255, 0.08);
-      --border-strong: rgba(214, 179, 106, 0.22);
       --text: #f4f7fb;
       --muted: #aeb8c8;
       --accent: #d6b36a;
@@ -43,7 +42,7 @@
       min-height: 100vh;
       padding: 28px 22px 40px;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .bg {
@@ -187,40 +186,47 @@
       color: #f0d89b;
     }
 
-    .sticky-bar {
+    .sticky-progress {
       position: sticky;
-      top: 14px;
+      top: 10px;
       z-index: 20;
-      margin: 26px 0 22px;
+      margin: 22px 0 18px;
+    }
+
+    .sticky-progress-inner {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      padding: 16px 18px;
-      border-radius: 20px;
-      background: rgba(8, 17, 30, 0.75);
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(8, 17, 30, 0.82);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: var(--shadow);
     }
 
-    .progress-wrap {
-      flex: 1 1 420px;
+    .progress-label,
+    .progress-pct {
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #e6edf7;
     }
 
-    .progress-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 0.92rem;
+    .progress-label {
+      min-width: 48px;
+      text-align: left;
+    }
+
+    .progress-pct {
+      min-width: 44px;
+      text-align: right;
+      color: #f0d89b;
     }
 
     .progress-shell {
-      width: 100%;
-      height: 12px;
+      flex: 1;
+      height: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.07);
       overflow: hidden;
@@ -234,40 +240,9 @@
       transition: width 0.25s ease;
     }
 
-    .sticky-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #e1c27f 0%, #cfa35c 100%);
-      color: #111827;
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.035);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn:hover { transform: translateY(-1px); }
-
     .section {
       margin-top: 18px;
-      scroll-margin-top: 120px;
+      scroll-margin-top: 80px;
     }
 
     .card {
@@ -428,11 +403,33 @@
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 18px;
+      justify-content: center;
     }
 
-    .section-nav .btn {
-      min-height: 44px;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
     }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e1c27f 0%, #cfa35c 100%);
+      color: #111827;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.035);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
 
     @media (max-width: 1040px) {
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -443,9 +440,12 @@
     @media (max-width: 720px) {
       .page { padding: 18px 14px 28px; }
       .grid-4, .grid-3 { grid-template-columns: 1fr; }
-      .sticky-bar { top: 8px; }
+      .sticky-progress { top: 8px; }
+      .sticky-progress-inner { gap: 8px; padding: 9px 10px; }
+      .progress-label, .progress-pct { font-size: 0.82rem; }
       h1 { font-size: 2.1rem; }
       .card { padding: 20px; }
+      .section-nav { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
@@ -486,20 +486,13 @@
         </div>
       </section>
 
-      <div class="sticky-bar">
-        <div class="progress-wrap">
-          <div class="progress-top">
-            <span id="progressText">Progression 0 / 8</span>
-            <span id="progressPct">0%</span>
-          </div>
+      <div class="sticky-progress">
+        <div class="sticky-progress-inner">
+          <div class="progress-label" id="progressText">1 / 8</div>
           <div class="progress-shell">
             <div class="progress-bar" id="progressBar"></div>
           </div>
-        </div>
-
-        <div class="sticky-actions">
-          <button class="btn btn-secondary" id="prevBtn" type="button">Section précédente</button>
-          <button class="btn btn-primary" id="nextBtn" type="button">Section suivante</button>
+          <div class="progress-pct" id="progressPct">13%</div>
         </div>
       </div>
 
@@ -927,13 +920,13 @@
             </div>
           </div>
 
-        <div class="section-nav" style="justify-content:center;">
-  <button class="btn btn-secondary" type="button" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-    Revenir en haut
-  </button>
-  <a href="learning-dacia.html" class="btn btn-primary">Passer au QCM Dacia</a>
-  <a href="index.html" class="btn btn-secondary">Retour portail</a>
-</div>
+          <div class="section-nav">
+            <button class="btn btn-secondary" type="button" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+              Revenir en haut
+            </button>
+            <a href="learning-dacia.html" class="btn btn-primary">Passer au QCM Dacia</a>
+            <a href="index.html" class="btn btn-secondary">Retour portail</a>
+          </div>
         </div>
       </section>
     </div>
@@ -944,10 +937,6 @@
     const progressBar = document.getElementById("progressBar");
     const progressText = document.getElementById("progressText");
     const progressPct = document.getElementById("progressPct");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-
-    let currentIndex = 0;
 
     function updateProgress(index) {
       const total = sections.length;
@@ -955,25 +944,9 @@
       const pct = Math.round((viewed / total) * 100);
 
       progressBar.style.width = pct + "%";
-      progressText.textContent = `Progression ${viewed} / ${total}`;
+      progressText.textContent = `${viewed} / ${total}`;
       progressPct.textContent = `${pct}%`;
-
-      prevBtn.disabled = index === 0;
-      prevBtn.style.opacity = index === 0 ? "0.5" : "1";
-
-      nextBtn.disabled = index === total - 1;
-      nextBtn.style.opacity = index === total - 1 ? "0.5" : "1";
     }
-
-    function goToSection(index) {
-      if (index < 0 || index >= sections.length) return;
-      currentIndex = index;
-      sections[index].scrollIntoView({ behavior: "smooth", block: "start" });
-      updateProgress(index);
-    }
-
-    prevBtn.addEventListener("click", () => goToSection(currentIndex - 1));
-    nextBtn.addEventListener("click", () => goToSection(currentIndex + 1));
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -985,7 +958,6 @@
           const id = visible[0].target.id;
           const idx = sections.findIndex(section => section.id === id);
           if (idx !== -1) {
-            currentIndex = idx;
             updateProgress(idx);
           }
         }
