@@ -4,107 +4,107 @@ document.addEventListener("DOMContentLoaded", () => {
   const questions = [
     {
       theme: "Découverte client",
-      question: "Avant de proposer une solution Renault, quel est le meilleur premier réflexe vendeur ?",
+      question: "Avant de proposer un Contrat Entretien Privilèges, quel est le meilleur premier réflexe vendeur ?",
       options: [
-        "Présenter directement CEP+ pour gagner du temps.",
+        "Présenter directement le CEP+ pour gagner du temps.",
         "Commencer par découvrir l’usage du véhicule, les attentes du client et ce qui compte vraiment pour lui.",
-        "Attendre que le client pose lui-même une question sur les contrats.",
-        "Éviter les questions pour ne pas alourdir l’échange."
+        "Attendre que le client demande lui-même s’il existe un contrat.",
+        "Éviter les questions pour garder un échange rapide."
       ],
       correct: 1,
       explanation:
-        "La bonne posture Renault commence par la découverte. Le vendeur doit comprendre l’usage, les attentes et le cadre de décision du client avant de recommander une solution."
+        "La bonne posture vendeur commence par la découverte. Avant de proposer un contrat, il faut comprendre l’usage, les attentes et le cadre de décision du client."
     },
     {
-      theme: "Éligibilité",
-      question: "Quel contrôle est prioritaire avant d’aller plus loin dans la proposition d’un contrat Renault ?",
+      theme: "Éligibilité produit",
+      question: "Quel véhicule est éligible à la souscription d’un Contrat Entretien Privilèges ?",
       options: [
-        "Vérifier si le client connaît déjà le produit.",
-        "Vérifier l’éligibilité du véhicule selon son âge et son kilométrage.",
-        "Vérifier si le client préfère payer comptant.",
-        "Vérifier si le client a déjà acheté un véhicule neuf chez Renault."
-      ],
-      correct: 1,
-      explanation:
-        "Avant toute argumentation, le vendeur doit sécuriser la faisabilité. L’éligibilité du véhicule est un prérequis logique avant de présenter une offre."
-    },
-    {
-      theme: "Fin de garantie",
-      question: "Un client arrive avec un véhicule en fin de garantie. Quel angle est le plus pertinent ?",
-      options: [
-        "Dire qu’après la garantie, il n’y a plus vraiment de solution à proposer.",
-        "Présenter cela comme un moment logique pour sécuriser la suite de l’entretien et de la protection du véhicule.",
-        "Attendre la prochaine panne pour reparler du sujet.",
-        "Insister uniquement sur le prestige de la marque Renault."
-      ],
-      correct: 1,
-      explanation:
-        "La fin de garantie est un moment clé. Le bon réflexe est de relier ce passage à une continuité de protection, de suivi et de sérénité pour le client."
-    },
-    {
-      theme: "Facture atelier",
-      question: "Après une facture atelier élevée, quelle posture vendeur est la plus solide ?",
-      options: [
-        "Éviter le sujet pour ne pas raviver la frustration du client.",
-        "Dire que ce genre de facture est normal et qu’il faut s’y habituer.",
-        "Transformer la dépense subie en réflexion sur l’anticipation, la lisibilité budgétaire et les imprévus évitables.",
-        "Proposer immédiatement l’offre la plus complète sans explication."
+        "Un véhicule de 9 ans avec 110 000 km.",
+        "Un véhicule de 7 ans et 4 mois avec 125 000 km.",
+        "Un véhicule de 8 ans et 3 mois avec 95 000 km.",
+        "Un véhicule de 6 ans avec 150 000 km."
       ],
       correct: 2,
       explanation:
-        "Une facture élevée peut devenir un levier commercial si elle est reliée intelligemment à la maîtrise budgétaire et à l’intérêt d’anticiper plutôt que subir."
+        "La souscription est possible de 1 à 8 ans + 6 mois de souplesse, avec un maximum de 120 000 km au compteur au moment de la souscription."
     },
     {
-      theme: "Client professionnel",
-      question: "Avec un client professionnel, quel bénéfice doit être mis en avant en priorité ?",
+      theme: "Moment clé de vente",
+      question: "Dans quel cas la proposition du Contrat Entretien Privilèges est-elle particulièrement pertinente ?",
       options: [
-        "Le plaisir de conduite uniquement.",
-        "L’image premium du réseau.",
-        "La continuité d’usage, la maîtrise du budget et la limitation des immobilisations.",
-        "Le fait que d’autres professionnels prennent déjà ce type d’offre."
+        "Uniquement si le client demande explicitement un contrat.",
+        "À la livraison d’un VO, lors d’une intervention atelier, à la fin de garantie constructeur ou avec chaque devis entretien.",
+        "Seulement après une grosse panne.",
+        "Uniquement au moment de la vente d’un véhicule neuf."
       ],
-      correct: 2,
+      correct: 1,
       explanation:
-        "Pour un professionnel, l’argument central est concret : véhicule disponible, charges plus lisibles, activité moins perturbée par les imprévus."
+        "Le bon réflexe est de proposer le contrat à tous les moments clés : livraison VO, atelier, fin de garantie et accompagnement d’un devis entretien."
     },
     {
-      theme: "Recommandation vendeur",
-      question: "Quel comportement vendeur est le plus juste au moment de recommander une solution Renault ?",
+      theme: "Connaissance produit",
+      question: "Quelle différence majeure distingue le Contrat Entretien Privilèges + du Contrat Entretien Privilèges ?",
       options: [
-        "Faire une recommandation claire, reliée à l’usage réel du client.",
-        "Lister toutes les possibilités sans jamais prendre position.",
-        "Toujours pousser l’offre la plus haute, même si le besoin n’est pas démontré.",
-        "Attendre que le client choisisse seul pour éviter toute responsabilité."
+        "Le CEP+ ajoute les pièces d’usure et le contrôle technique.",
+        "Le CEP+ supprime l’assistance mais ajoute la carrosserie.",
+        "Le CEP+ couvre le multimédia et les rétroviseurs électriques.",
+        "Le CEP+ est réservé uniquement aux véhicules électriques."
       ],
       correct: 0,
       explanation:
-        "Le vendeur doit assumer sa recommandation. Une bonne proposition Renault est claire, argumentée et adaptée au besoin découvert."
+        "Le CEP comprend notamment assistance, entretien, véhicule de remplacement et éléments liés au programme d’entretien. Le CEP+ ajoute les pièces d’usure, le contrôle technique et d’autres postes complémentaires."
     },
     {
-      theme: "Objection",
-      question: "Client : « Je vais réfléchir. » Quelle réponse est la plus solide ?",
+      theme: "Mensualités",
+      question: "Pour un véhicule Renault diesel âgé de 1 à 5 ans, quelles sont les mensualités CEP et CEP+ ?",
       options: [
-        "D’accord, revenez quand vous voulez, on verra plus tard.",
-        "Très bien, je préfère ne pas influencer votre décision.",
-        "Je comprends. L’idée n’est pas de vous forcer, mais de voir si cette solution a vraiment du sens maintenant par rapport à votre usage et à ce qu’elle vous permet d’anticiper.",
-        "Si vous hésitez, c’est que vous n’en avez sans doute pas besoin."
+        "CEP 39 € / CEP+ 69 €",
+        "CEP 49 € / CEP+ 79 €",
+        "CEP 45 € / CEP+ 69 €",
+        "CEP 59 € / CEP+ 89 €"
       ],
-      correct: 2,
+      correct: 1,
       explanation:
-        "La bonne réponse ne casse pas le client, mais elle ne laisse pas non plus l’échange retomber. Elle recentre sur la cohérence de la solution au bon moment."
+        "Pour les véhicules Renault diesel de 1 à 5 ans, les mensualités sont de 49 € pour le CEP et 79 € pour le CEP+."
+    },
+    {
+      theme: "Professionnels éligibles",
+      question: "Quel professionnel est éligible à l’offre Contrat Entretien Privilèges ?",
+      options: [
+        "Une SARL avec 6 véhicules.",
+        "Un artisan agissant en nom propre avec 4 véhicules.",
+        "Une société commerciale avec 2 véhicules.",
+        "Une SARL familiale avec 1 véhicule."
+      ],
+      correct: 1,
+      explanation:
+        "Les professionnels éligibles sont les artisans, commerçants et professions libérales agissant exclusivement en nom propre, avec une flotte de moins de 10 véhicules. Les sociétés de type SARL sont exclues."
+    },
+    {
+      theme: "Objection client",
+      question: "Client : « Je verrai plus tard. » Quelle réponse est la plus juste ?",
+      options: [
+        "D’accord, on en reparle quand vous voulez.",
+        "Vous pourrez souscrire plus tard, mais la révision déjà faite ne sera pas comprise. En le prenant aujourd’hui, vous gardez l’avantage complet.",
+        "Si vous hésitez, c’est que vous n’en avez pas besoin.",
+        "Attendez une panne importante, ce sera plus parlant."
+      ],
+      correct: 1,
+      explanation:
+        "C’est la réponse conseillée dans le guide : plus tard reste possible, mais la révision déjà passée ne sera pas comprise. La prise aujourd’hui conserve l’intérêt complet du contrat."
     },
     {
       theme: "Closing",
       question: "Après une bonne découverte et une argumentation cohérente, quelle conclusion est la plus juste ?",
       options: [
         "Bon, à vous de voir, moi j’ai fini.",
-        "Si cette logique de protection, de suivi et de maîtrise correspond bien à votre besoin, est-ce qu’on le met en place aujourd’hui ?",
-        "Je peux vous laisser repartir et on en reparlera peut-être une autre fois.",
-        "Il faut décider vite, sinon vous allez forcément le regretter."
+        "Si cette logique de protection, de suivi et de maîtrise du budget correspond bien à votre besoin, est-ce qu’on le met en place aujourd’hui ?",
+        "Je peux vous laisser repartir et on verra peut-être plus tard.",
+        "Il faut décider vite sinon vous allez forcément le regretter."
       ],
       correct: 1,
       explanation:
-        "Le closing Renault doit être clair, naturel et assumé. Il prolonge la logique de valeur construite pendant l’échange, sans pression maladroite."
+        "Le closing doit être clair, naturel et assumé. Il prolonge la logique de valeur construite pendant l’échange, sans pression maladroite."
     }
   ];
 
@@ -321,13 +321,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "Résultat calculé localement, mais non enregistré car aucun vendeur actif n’est défini. Revenez au portail pour renseigner le vendeur.";
     } else if (percent >= 75) {
       finalScoreText.textContent =
-        `Très bon résultat pour ${seller.fullName}. Vous avez de bons réflexes Renault sur la découverte, la recommandation, l’objection et la conclusion commerciale.`;
+        `Très bon résultat pour ${seller.fullName}. Vous avez de bons réflexes vendeur pour proposer et défendre les Contrats Entretien Privilèges avec cohérence.`;
     } else if (percent >= 50) {
       finalScoreText.textContent =
-        `Résultat correct pour ${seller.fullName}, mais le parcours Renault doit encore être consolidé, notamment sur la logique de recommandation et la conduite d’échange.`;
+        `Résultat correct pour ${seller.fullName}, mais la vente des Contrats Entretien Privilèges doit encore être consolidée, notamment sur la découverte du besoin, la connaissance produit et la conclusion.`;
     } else {
       finalScoreText.textContent =
-        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux structurer la découverte, la proposition et la conclusion dans un échange vendeur Renault.`;
+        `Le module est à retravailler pour ${seller.fullName}. L’objectif est de mieux structurer la vente des Contrats Entretien Privilèges, de la découverte jusqu’au closing.`;
     }
 
     resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
