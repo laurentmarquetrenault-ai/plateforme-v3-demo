@@ -1,1 +1,998 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formation Dacia - Contrat Entretien Privilèges</title>
+  <style>
+    :root {
+      --bg: #08111e;
+      --bg-soft: #0d1727;
+      --panel: rgba(12, 20, 34, 0.92);
+      --panel-soft: rgba(16, 26, 43, 0.88);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(214, 179, 106, 0.22);
+      --text: #f4f7fb;
+      --muted: #aeb8c8;
+      --accent: #d6b36a;
+      --accent-soft: rgba(214, 179, 106, 0.12);
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --max-width: 1240px;
+    }
 
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(70, 109, 170, 0.12), transparent 26%),
+        linear-gradient(135deg, #050b14 0%, #09121f 42%, #0c1625 100%);
+    }
+
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border: none; cursor: pointer; }
+
+    .page {
+      min-height: 100vh;
+      padding: 28px 22px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(72, 113, 176, 0.14), transparent 20%),
+        radial-gradient(circle at 86% 14%, rgba(214, 179, 106, 0.08), transparent 15%),
+        radial-gradient(circle at 68% 72%, rgba(90, 135, 205, 0.06), transparent 18%);
+      pointer-events: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 10, 18, 0.18) 0%,
+        rgba(5, 10, 18, 0.05) 24%,
+        rgba(5, 10, 18, 0.2) 100%
+      );
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-name {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .brand-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      padding: 10px 15px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.025);
+      color: #dce5f3;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(214, 179, 106, 0.24);
+      color: #edd7a1;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 4.7vw, 4.3rem);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      max-width: 980px;
+    }
+
+    .subtitle {
+      margin: 20px 0 0;
+      max-width: 820px;
+      font-size: clamp(1rem, 1.6vw, 1.12rem);
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .proof-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid var(--border);
+      color: #dbe3f1;
+      font-size: 0.92rem;
+    }
+
+    .proof-pill.active {
+      background: rgba(214, 179, 106, 0.1);
+      border-color: rgba(214, 179, 106, 0.26);
+      color: #f0d89b;
+    }
+
+    .sticky-bar {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      margin: 26px 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(8, 17, 30, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .progress-wrap {
+      flex: 1 1 420px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .progress-shell {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #e1c27f 0%, #cfa35c 100%);
+      transition: width 0.25s ease;
+    }
+
+    .sticky-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e1c27f 0%, #cfa35c 100%);
+      color: #111827;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.035);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .section {
+      margin-top: 18px;
+      scroll-margin-top: 120px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--panel-soft) 0%, var(--panel) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+      line-height: 1.1;
+    }
+
+    .badge {
+      white-space: nowrap;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(214, 179, 106, 0.1);
+      border: 1px solid rgba(214, 179, 106, 0.26);
+      color: #f0d89b;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .intro-box {
+      margin-bottom: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: #d8e2f2;
+      line-height: 1.75;
+    }
+
+    .grid-2, .grid-3, .grid-4 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .mini-card {
+      min-height: 100%;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.07);
+      background: linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.02) 100%);
+    }
+
+    .mini-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .mini-number {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .mini-tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #d5ddeb;
+      font-size: 0.8rem;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .mini-card p, .mini-card li {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    .mini-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retain-box {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(214, 179, 106, 0.08);
+      border: 1px solid rgba(214, 179, 106, 0.18);
+    }
+
+    .retain-title {
+      color: #f0d89b;
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .retain-box p, .retain-box li {
+      margin: 0;
+      color: #e6edf7;
+      line-height: 1.75;
+    }
+
+    .retain-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .objection {
+      border-left: 3px solid rgba(214, 179, 106, 0.6);
+      padding-left: 14px;
+      margin-top: 14px;
+    }
+
+    .footer-card {
+      text-align: center;
+    }
+
+    .footer-card p {
+      max-width: 780px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .section-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .section-nav .btn {
+      min-height: 44px;
+    }
+
+    @media (max-width: 1040px) {
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 18px 14px 28px; }
+      .grid-4, .grid-3 { grid-template-columns: 1fr; }
+      .sticky-bar { top: 8px; }
+      h1 { font-size: 2.1rem; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bg"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+      <header class="header">
+        <div class="brand">
+          <div class="brand-mark">CS</div>
+          <div>
+            <div class="brand-name">Contrats de Services Academy</div>
+            <div class="brand-sub">Formation Dacia • Contrat Entretien Privilèges</div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <span class="nav-pill">Module autonome</span>
+          <span class="nav-pill">Dacia</span>
+          <span class="nav-pill">V3</span>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="kicker">Module de formation visuel</div>
+        <h1>Former le vendeur Dacia à proposer efficacement le Contrat Entretien Privilèges.</h1>
+        <p class="subtitle">
+          Ce module transforme la base métier Dacia en repères visuels, simples et actionnables.
+          L’objectif est de faire retenir l’essentiel vendeur avant le QCM et la simulation.
+        </p>
+
+        <div class="proof">
+          <span class="proof-pill active">8 blocs pédagogiques</span>
+          <span class="proof-pill active">Base métier Dacia</span>
+          <span class="proof-pill">Formation avant QCM</span>
+        </div>
+      </section>
+
+      <div class="sticky-bar">
+        <div class="progress-wrap">
+          <div class="progress-top">
+            <span id="progressText">Progression 0 / 8</span>
+            <span id="progressPct">0%</span>
+          </div>
+          <div class="progress-shell">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <div class="sticky-actions">
+          <button class="btn btn-secondary" id="prevBtn" type="button">Section précédente</button>
+          <button class="btn btn-primary" id="nextBtn" type="button">Section suivante</button>
+        </div>
+      </div>
+
+      <section class="section" id="section-1">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 1</div>
+              <h2>Pourquoi le proposer ?</h2>
+            </div>
+            <div class="badge">Base commerciale</div>
+          </div>
+
+          <div class="grid-3">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">01</div>
+                <div class="mini-tag">Business</div>
+              </div>
+              <h3>Sécuriser du chiffre d’affaires</h3>
+              <p>Le contrat permet de créer des revenus récurrents, d’augmenter le panier moyen et de mieux sécuriser l’activité atelier.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">02</div>
+                <div class="mini-tag">Client</div>
+              </div>
+              <h3>Vendre la tranquillité</h3>
+              <p>Le client gagne en lisibilité budgétaire, en suivi d’entretien et en sérénité sur la durée.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">03</div>
+                <div class="mini-tag">Réseau</div>
+              </div>
+              <h3>Fidéliser et anticiper</h3>
+              <p>Le contrat aide à fidéliser le client et à anticiper plutôt que subir des visites atelier purement réactives.</p>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">À retenir</div>
+            <ul>
+              <li>Le contrat est un levier de fidélité, de chiffre d’affaires et de satisfaction client.</li>
+              <li>Le vendeur Dacia propose une logique d’anticipation, de protection et de tranquillité.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 2</div>
+              <h2>Conditions de souscription</h2>
+            </div>
+            <div class="badge">Éligibilité</div>
+          </div>
+
+          <div class="grid-4">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">1</div>
+                <div class="mini-tag">Âge</div>
+              </div>
+              <h3>Véhicule éligible</h3>
+              <p>Souscription possible pour un véhicule de <strong>1 à 8 ans + 6 mois</strong>.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">2</div>
+                <div class="mini-tag">Kilométrage</div>
+              </div>
+              <h3>Seuil d’entrée</h3>
+              <p>Le véhicule doit avoir <strong>moins de 120 000 km</strong> au moment de la souscription.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">3</div>
+                <div class="mini-tag">Durée</div>
+              </div>
+              <h3>Couverture</h3>
+              <p>Le contrat peut couvrir jusqu’à <strong>48 mois maximum</strong>.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">4</div>
+                <div class="mini-tag">Fin</div>
+              </div>
+              <h3>Limite de fin</h3>
+              <p>Le contrat se termine au plus tard à <strong>200 000 km</strong> et peut aller jusqu’à <strong>12 ans et demi</strong> selon le point de départ.</p>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">Réflexe vendeur</div>
+            <ul>
+              <li>Vérifier année, kilométrage, contrat existant sur ICM et faisabilité sur Particeep.</li>
+              <li>Ne pas argumenter loin si l’éligibilité n’est pas confirmée.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-3">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 3</div>
+              <h2>Dacia Zen et cadre pro</h2>
+            </div>
+            <div class="badge">Spécificités Dacia</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">ZEN</div>
+                <div class="mini-tag">Garantie</div>
+              </div>
+              <h3>Dacia Zen à retenir</h3>
+              <ul>
+                <li>Déclenchement extension de garantie</li>
+                <li>Véhicule entre 3 et 7 ans maximum</li>
+                <li>Couverture constructeur max 150 000 km</li>
+                <li>30 000 km maximum par an</li>
+                <li>Uniquement avec forfait Essentielle ou Essentielle+</li>
+              </ul>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">PRO</div>
+                <div class="mini-tag">Éligibilité</div>
+              </div>
+              <h3>Professionnels acceptés</h3>
+              <ul>
+                <li>Artisans, commerçants, professions libérales</li>
+                <li>Moins de 10 véhicules</li>
+                <li>Exclusivement en nom propre</li>
+                <li>SARL et structures sociétaires exclues</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">À retenir</div>
+            <ul>
+              <li>Dacia Zen renforce la logique protection/garantie, surtout dans certains cas d’âge véhicule.</li>
+              <li>Avec un professionnel, il faut toujours vérifier le cadre juridique avant d’aller trop loin.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-4">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 4</div>
+              <h2>CEP vs CEP+</h2>
+            </div>
+            <div class="badge">Connaissance produit</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">CEP</div>
+                <div class="mini-tag">Base</div>
+              </div>
+              <h3>Ce que le client achète</h3>
+              <ul>
+                <li>Assistance 24/24, 7/7</li>
+                <li>Révision constructeur</li>
+                <li>Véhicule de remplacement pour la révision constructeur</li>
+                <li>Vidange, filtres, liquides</li>
+                <li>Courroies et certains éléments du programme d’entretien</li>
+              </ul>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">CEP+</div>
+                <div class="mini-tag">Renforcé</div>
+              </div>
+              <h3>Ce que le client ajoute</h3>
+              <ul>
+                <li>Pièces d’usure</li>
+                <li>Contrôle technique et contre-visite</li>
+                <li>Balais, batterie 12V, ampoules, freinage</li>
+                <li>Amortisseurs AV/AR + kit de butée AV</li>
+                <li>Autres éléments selon équipement</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">Réflexe vendeur</div>
+            <p>Proposer le <strong>CEP+</strong> en premier, puis ajuster si le besoin du client est plus simple.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-5">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 5</div>
+              <h2>Mensualités repères Dacia</h2>
+            </div>
+            <div class="badge">Tarification</div>
+          </div>
+
+          <div class="intro-box">
+            L’objectif n’est pas de tout retenir d’un coup, mais d’avoir les bons repères pour rester crédible face au client.
+          </div>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">1–5</div>
+                <div class="mini-tag">Ans</div>
+              </div>
+              <h3>De 1 à 5 ans</h3>
+              <ul>
+                <li>Électrique : CEP 19 € / CEP+ 39 €</li>
+                <li>Essence & GPL : CEP 29 € / CEP+ 59 €</li>
+                <li>Hybride : CEP 39 € / CEP+ 59 €</li>
+                <li>Diesel : CEP 39 € / CEP+ 69 €</li>
+              </ul>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">6–8</div>
+                <div class="mini-tag">Ans + 6 mois</div>
+              </div>
+              <h3>De 6 à 8 ans + 6 mois</h3>
+              <ul>
+                <li>Électrique : CEP 15 € / CEP+ 29 €</li>
+                <li>Essence & GPL : CEP 25 € / CEP+ 49 €</li>
+                <li>Hybride : CEP 35 € / CEP+ 49 €</li>
+                <li>Diesel : CEP 35 € / CEP+ 59 €</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">À retenir</div>
+            <p>Le vendeur doit vite se repérer dans la bonne tranche d’âge et la bonne motorisation avant d’annoncer un tarif.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-6">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 6</div>
+              <h2>Quand le proposer ?</h2>
+            </div>
+            <div class="badge">Moments clés</div>
+          </div>
+
+          <div class="grid-4">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">A</div>
+                <div class="mini-tag">VO</div>
+              </div>
+              <h3>Livraison véhicule d’occasion</h3>
+              <p>Très bon point d’entrée pour installer une logique de protection dès la remise du véhicule.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">B</div>
+                <div class="mini-tag">Atelier</div>
+              </div>
+              <h3>Intervention atelier</h3>
+              <p>Entretien, usure, carrosserie : chaque visite atelier peut devenir une opportunité de proposition.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">C</div>
+                <div class="mini-tag">Garantie</div>
+              </div>
+              <h3>Fin de garantie constructeur</h3>
+              <p>Moment clé pour relancer une logique de protection et poser la question Dacia Zen.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">D</div>
+                <div class="mini-tag">Devis</div>
+              </div>
+              <h3>Avec chaque devis entretien</h3>
+              <p>Le devis devient un support naturel pour projeter le client sur l’anticipation plutôt que la réaction.</p>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">Réflexe vendeur</div>
+            <ul>
+              <li>Le proposer si possible dès la prise de rendez-vous.</li>
+              <li>Astuce : poser la question <strong>“Et si votre garantie pouvait aller jusqu’à 7 ans ?”</strong></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-7">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 7</div>
+              <h2>Arguments et objections</h2>
+            </div>
+            <div class="badge">Posture vendeur</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">+</div>
+                <div class="mini-tag">Arguments</div>
+              </div>
+              <h3>Ce qu’il faut vendre</h3>
+              <ul>
+                <li>Budget maîtrisé pendant 4 ans</li>
+                <li>Respect du programme d’entretien</li>
+                <li>Longévité du véhicule avec pièces d’origine Dacia</li>
+                <li>Revente facilitée</li>
+                <li>Assistance + véhicule de remplacement</li>
+                <li>Extension de garantie sur toute la durée du contrat jusqu’à 7 ans d’âge du véhicule selon les cas</li>
+              </ul>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">!</div>
+                <div class="mini-tag">Objections</div>
+              </div>
+              <h3>Réponses à maîtriser</h3>
+
+              <div class="objection">
+                <strong>“C’est trop cher”</strong>
+                <p>Une panne hors garantie peut coûter bien plus.</p>
+              </div>
+
+              <div class="objection">
+                <strong>“Je verrai plus tard”</strong>
+                <p>Plus tard reste possible, mais la révision déjà faite ne sera pas comprise.</p>
+              </div>
+
+              <div class="objection">
+                <strong>“Je roule peu”</strong>
+                <p>La garantie est liée au temps, pas seulement aux kilomètres.</p>
+              </div>
+
+              <div class="objection">
+                <strong>“Et si je revends ?”</strong>
+                <p>Le contrat augmente la valeur de revente avec entretien + garantie inclus.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="retain-box">
+            <div class="retain-title">À retenir</div>
+            <p>Le vendeur ne récite pas des réponses. Il relie chaque objection à un bénéfice concret pour le client Dacia.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-8">
+        <div class="card footer-card">
+          <div class="card-head">
+            <div>
+              <div class="section-kicker">Bloc 8</div>
+              <h2>Ce que le vendeur doit retenir</h2>
+            </div>
+            <div class="badge">Synthèse</div>
+          </div>
+
+          <p>
+            Un bon vendeur Dacia sur le Contrat Entretien Privilèges ne commence pas par le produit.
+            Il commence par la découverte, vérifie l’éligibilité, recommande avec clarté,
+            traite les objections avec logique et conclut sans mollesse.
+          </p>
+
+          <div class="grid-3">
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">1</div>
+                <div class="mini-tag">Savoir</div>
+              </div>
+              <h3>Connaître les règles</h3>
+              <p>Âge, kilométrage, durée, Dacia Zen, cadre pro, logique CEP / CEP+.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">2</div>
+                <div class="mini-tag">Savoir-faire</div>
+              </div>
+              <h3>Proposer au bon moment</h3>
+              <p>VO, atelier, fin de garantie, devis entretien, prise de rendez-vous.</p>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-top">
+                <div class="mini-number">3</div>
+                <div class="mini-tag">Savoir-dire</div>
+              </div>
+              <h3>Vendre la tranquillité</h3>
+              <p>Maîtrise budgétaire, extension de garantie, assistance, revente, anticipation.</p>
+            </div>
+          </div>
+
+          <div class="section-nav" style="justify-content:center;">
+            <button class="btn btn-primary" type="button" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+              Revenir en haut
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const sections = [...document.querySelectorAll(".section")];
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const progressPct = document.getElementById("progressPct");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let currentIndex = 0;
+
+    function updateProgress(index) {
+      const total = sections.length;
+      const viewed = index + 1;
+      const pct = Math.round((viewed / total) * 100);
+
+      progressBar.style.width = pct + "%";
+      progressText.textContent = `Progression ${viewed} / ${total}`;
+      progressPct.textContent = `${pct}%`;
+
+      prevBtn.disabled = index === 0;
+      prevBtn.style.opacity = index === 0 ? "0.5" : "1";
+
+      nextBtn.disabled = index === total - 1;
+      nextBtn.style.opacity = index === total - 1 ? "0.5" : "1";
+    }
+
+    function goToSection(index) {
+      if (index < 0 || index >= sections.length) return;
+      currentIndex = index;
+      sections[index].scrollIntoView({ behavior: "smooth", block: "start" });
+      updateProgress(index);
+    }
+
+    prevBtn.addEventListener("click", () => goToSection(currentIndex - 1));
+    nextBtn.addEventListener("click", () => goToSection(currentIndex + 1));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length) {
+          const id = visible[0].target.id;
+          const idx = sections.findIndex(section => section.id === id);
+          if (idx !== -1) {
+            currentIndex = idx;
+            updateProgress(idx);
+          }
+        }
+      },
+      { threshold: [0.35, 0.55, 0.75] }
+    );
+
+    sections.forEach(section => observer.observe(section));
+    updateProgress(0);
+  </script>
+</body>
+</html>
