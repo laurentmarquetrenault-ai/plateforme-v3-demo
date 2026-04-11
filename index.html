@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -207,8 +208,35 @@
     </section>
   </main>
 
+  <div id="guidedIntroOverlay" class="guided-intro-overlay" aria-hidden="true">
+    <div id="guidedIntroVideoShell" class="guided-intro-video-shell">
+      <video
+        id="guidedIntroVideo"
+        class="guided-intro-video"
+        playsinline
+        preload="auto"
+      ></video>
+      <div class="guided-intro-vignette"></div>
+    </div>
+
+    <div id="guidedIntroFadeout" class="guided-intro-fadeout"></div>
+
+    <button id="guidedIntroSkip" class="guided-intro-skip" type="button">
+      Passer l’introduction
+    </button>
+
+    <div id="guidedIntroPhase" class="guided-intro-phase"></div>
+
+    <div class="guided-intro-content">
+      <h2 id="guidedIntroName" class="guided-intro-name"></h2>
+      <div id="guidedIntroSubline" class="guided-intro-subline">Parcours guidé certifiant</div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      const homePage = document.querySelector(".home-page");
+
       const sellerFirstName = document.getElementById("sellerFirstName");
       const sellerLastName = document.getElementById("sellerLastName");
       const sellerEmail = document.getElementById("sellerEmail");
@@ -235,6 +263,15 @@
       const headerLearningRenaultLink = document.getElementById("headerLearningRenaultLink");
       const headerSimulationRenaultLink = document.getElementById("headerSimulationRenaultLink");
 
+      const guidedIntroOverlay = document.getElementById("guidedIntroOverlay");
+      const guidedIntroVideoShell = document.getElementById("guidedIntroVideoShell");
+      const guidedIntroVideo = document.getElementById("guidedIntroVideo");
+      const guidedIntroName = document.getElementById("guidedIntroName");
+      const guidedIntroSubline = document.getElementById("guidedIntroSubline");
+      const guidedIntroSkip = document.getElementById("guidedIntroSkip");
+      const guidedIntroPhase = document.getElementById("guidedIntroPhase");
+      const guidedIntroFadeout = document.getElementById("guidedIntroFadeout");
+
       const sellerKeys = [
         "seller_first_name",
         "seller_last_name",
@@ -255,6 +292,24 @@
       ];
 
       const brandKey = "selected_brand";
+
+      const guidedIntroConfig = {
+        dacia: {
+          videoSrc: "teaser-dacia.mp4",
+          nextPage: "formation-dacia.html",
+          phase: "Parcours guidé certifiant · Dacia"
+        },
+        renault: {
+          videoSrc: "teaser-renault.mp4",
+          nextPage: "formation-renault.html",
+          phase: "Parcours guidé certifiant · Renault"
+        }
+      };
+
+      let guidedIntroStarted = false;
+      let currentGuidedBrand = "";
+      let guidedIntroHideTimer = null;
+      let guidedIntroRedirectTimer = null;
 
       function getStoredSeller() {
         return {
@@ -486,6 +541,98 @@
         localStorage.setItem(brandKey, brand);
       }
 
+      function clearGuidedIntroTimers() {
+        if (guidedIntroHideTimer) {
+          clearTimeout(guidedIntroHideTimer);
+          guidedIntroHideTimer = null;
+        }
+
+        if (guidedIntroRedirectTimer) {
+          clearTimeout(guidedIntroRedirectTimer);
+          guidedIntroRedirectTimer = null;
+        }
+      }
+
+      function finishGuidedIntro(brand) {
+        const config = guidedIntroConfig[brand];
+        if (!config) return;
+
+        clearGuidedIntroTimers();
+        guidedIntroFadeout.classList.add("is-visible");
+
+        setTimeout(() => {
+          window.location.href = config.nextPage;
+        }, 520);
+      }
+
+      function startGuidedIntro(brand) {
+        if (guidedIntroStarted) return;
+
+        const config = guidedIntroConfig[brand];
+        if (!config) {
+          alert("Merci de sélectionner une marque.");
+          return;
+        }
+
+        const firstName = (sellerFirstName.value.trim() || localStorage.getItem("seller_first_name") || "").trim();
+
+        if (!firstName) {
+          alert("Merci d’enregistrer d’abord le prénom du vendeur.");
+          return;
+        }
+
+        guidedIntroStarted = true;
+        currentGuidedBrand = brand;
+
+        document.body.classList.add("guided-intro-lock");
+        homePage.classList.add("guided-intro-active");
+
+        guidedIntroOverlay.classList.add("is-visible");
+        guidedIntroOverlay.setAttribute("aria-hidden", "false");
+
+        guidedIntroPhase.textContent = config.phase;
+        guidedIntroPhase.classList.add("is-visible");
+
+        guidedIntroName.textContent = firstName;
+        guidedIntroName.classList.add("is-visible");
+
+        guidedIntroSubline.textContent = "Parcours guidé certifiant";
+        guidedIntroSubline.classList.add("is-visible");
+
+        setTimeout(() => {
+          guidedIntroSkip.classList.add("is-visible");
+        }, 900);
+
+        guidedIntroHideTimer = setTimeout(() => {
+          guidedIntroName.classList.add("is-leaving");
+          guidedIntroSubline.classList.add("is-leaving");
+        }, 1800);
+
+        if (config.videoSrc) {
+          guidedIntroVideoShell.classList.add("is-visible");
+          guidedIntroVideo.src = config.videoSrc;
+          guidedIntroVideo.currentTime = 0;
+          guidedIntroVideo.load();
+
+          const playPromise = guidedIntroVideo.play();
+
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {
+              guidedIntroVideo.muted = true;
+              return guidedIntroVideo.play().catch(() => {
+                guidedIntroRedirectTimer = setTimeout(() => {
+                  finishGuidedIntro(brand);
+                }, 2600);
+              });
+            });
+          }
+        } else {
+          guidedIntroRedirectTimer = setTimeout(() => {
+            finishGuidedIntro(brand);
+          }, 2600);
+        }
+      }
+
       saveSellerBtn.addEventListener("click", saveSeller);
       resetSellerBtn.addEventListener("click", resetSeller);
 
@@ -495,17 +642,30 @@
       guidedModeBtn.addEventListener("click", () => {
         const selectedBrand = getSelectedBrand();
 
-        if (selectedBrand === "dacia") {
-          window.location.href = "formation-dacia.html";
-          return;
-        }
-
-        if (selectedBrand === "renault") {
-          window.location.href = "formation-renault.html";
+        if (selectedBrand === "dacia" || selectedBrand === "renault") {
+          startGuidedIntro(selectedBrand);
           return;
         }
 
         alert("Merci de sélectionner une marque.");
+      });
+
+      guidedIntroSkip.addEventListener("click", () => {
+        if (!guidedIntroStarted || !currentGuidedBrand) return;
+        finishGuidedIntro(currentGuidedBrand);
+      });
+
+      guidedIntroVideo.addEventListener("ended", () => {
+        if (!guidedIntroStarted || !currentGuidedBrand) return;
+        finishGuidedIntro(currentGuidedBrand);
+      });
+
+      guidedIntroVideo.addEventListener("error", () => {
+        if (!guidedIntroStarted || !currentGuidedBrand) return;
+
+        guidedIntroRedirectTimer = setTimeout(() => {
+          finishGuidedIntro(currentGuidedBrand);
+        }, 1200);
       });
 
       trainingLearningLink.addEventListener("click", handleTrainingBlocked);
